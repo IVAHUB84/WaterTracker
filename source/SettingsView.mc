@@ -1,6 +1,7 @@
 // SettingsView.mc — экран настроек
 import Toybox.Graphics;
 import Toybox.Lang;
+import Toybox.System;
 import Toybox.WatchUi;
 
 // =============================================================================
@@ -25,6 +26,10 @@ class SettingsView extends WatchUi.View {
     private var _intrIdx  as Number;
     private var _unitsIdx as Number;
 
+    // Параметры пунктов (для tap-детектора)
+    private var _itemH  as Number = 0;
+    private var _startY as Number = 0;
+
     function initialize() {
         View.initialize();
         _cursor   = ITEM_GOAL;
@@ -36,6 +41,9 @@ class SettingsView extends WatchUi.View {
     function onUpdate(dc as Graphics.Dc) as Void {
         var w = dc.getWidth();
         var h = dc.getHeight();
+
+        _itemH  = h * 26 / 100;
+        _startY = h * 20 / 100;
 
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
@@ -54,59 +62,42 @@ class SettingsView extends WatchUi.View {
         dc.drawLine(16, h * 18 / 100, w - 16, h * 18 / 100);
 
         // Пункты
-        var itemH  = h * 25 / 100;
-        var startY = h * 20 / 100;
-
         for (var i = 0; i < ITEM_COUNT; i++) {
-            _drawItem(dc, w, startY + i * itemH, itemH, i);
+            _drawItem(dc, w, _startY + i * _itemH, _itemH, i);
         }
-
-        // Подсказка: SELECT = изменить
-        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(
-            w / 2, h * 96 / 100,
-            Graphics.FONT_XTINY,
-            "SELECT = change",
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
-        );
     }
 
     // Нарисовать один пункт настроек
     private function _drawItem(
-        dc     as Graphics.Dc,
-        w      as Number,
-        y      as Number,
-        h      as Number,
-        idx    as Number
+        dc  as Graphics.Dc,
+        w   as Number,
+        y   as Number,
+        h   as Number,
+        idx as Number
     ) as Void {
         var isActive = (idx == _cursor);
+        var centerY  = y + h / 2;
 
-        // Фон активного пункта
+        // Фон активного пункта — ярко-синий
         if (isActive) {
-            dc.setColor(0x003366, Graphics.COLOR_TRANSPARENT);
-            dc.fillRoundedRectangle(8, y + 2, w - 16, h - 4, 6);
+            dc.setColor(0x0055FF, Graphics.COLOR_TRANSPARENT);
+            dc.fillRoundedRectangle(8, y + 2, w - 16, h - 4, 8);
         }
 
-        // Название — слева, маленький серый
-        dc.setColor(
-            isActive ? Graphics.COLOR_LT_GRAY : Graphics.COLOR_DK_GRAY,
-            Graphics.COLOR_TRANSPARENT
-        );
+        // Название — слева, FONT_TINY, белый
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
-            14, y + h * 30 / 100,
-            Graphics.FONT_XTINY,
+            14, centerY,
+            Graphics.FONT_TINY,
             _itemName(idx),
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
-        // Значение — справа, белый/жёлтый, FONT_TINY
-        dc.setColor(
-            isActive ? Graphics.COLOR_YELLOW : Graphics.COLOR_WHITE,
-            Graphics.COLOR_TRANSPARENT
-        );
+        // Значение — справа, FONT_SMALL, белый
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
-            w - 14, y + h * 68 / 100,
-            Graphics.FONT_TINY,
+            w - 14, centerY,
+            Graphics.FONT_SMALL,
             _itemValue(idx),
             Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
         );
@@ -159,7 +150,6 @@ class SettingsView extends WatchUi.View {
         } else if (_cursor == ITEM_INTERVAL) {
             _intrIdx = _wrap(_intrIdx + direction, INTERVALS.size());
             DataStore.setInterval(INTERVALS[_intrIdx]);
-            // Обновить расписание напоминаний немедленно
             WaterTrackerApp.scheduleReminder();
 
         } else if (_cursor == ITEM_UNITS) {
@@ -167,6 +157,26 @@ class SettingsView extends WatchUi.View {
             DataStore.setUnits(_unitsIdx);
         }
         WatchUi.requestUpdate();
+    }
+
+    // Возвращает индекс пункта по Y-координате тапа; -1 если мимо
+    function getItemAtY(tapY as Number) as Number {
+        for (var i = 0; i < ITEM_COUNT; i++) {
+            var itemY = _startY + i * _itemH;
+            if (tapY >= itemY && tapY <= itemY + _itemH) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    function setCursor(idx as Number) as Void {
+        _cursor = idx;
+        WatchUi.requestUpdate();
+    }
+
+    function getCursor() as Number {
+        return _cursor;
     }
 
     // -------------------------------------------------------------------------
@@ -211,6 +221,31 @@ class SettingsDelegate extends WatchUi.BehaviorDelegate {
     // SELECT — изменить значение вперёд
     function onSelect() as Boolean {
         _view.changeValue(1);
+        return true;
+    }
+
+    // TAP — выбрать пункт или изменить значение активного
+    function onTap(evt as WatchUi.ClickEvent) as Boolean {
+        var coords = evt.getCoordinates();
+        var idx = _view.getItemAtY(coords[1]);
+        if (idx >= 0) {
+            if (idx == _view.getCursor()) {
+                _view.changeValue(1);
+            } else {
+                _view.setCursor(idx);
+            }
+        }
+        return true;
+    }
+
+    // SWIPE UP — следующий пункт
+    function onSwipe(evt as WatchUi.SwipeEvent) as Boolean {
+        var dir = evt.getDirection();
+        if (dir == WatchUi.SWIPE_UP) {
+            _view.cursorNext();
+        } else if (dir == WatchUi.SWIPE_DOWN) {
+            _view.cursorPrev();
+        }
         return true;
     }
 

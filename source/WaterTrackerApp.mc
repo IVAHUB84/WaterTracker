@@ -84,6 +84,13 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         return true;
     }
 
+    // TAP — добавить воду (касание главного экрана)
+    function onTap(evt as WatchUi.ClickEvent) as Boolean {
+        var view = new AddWaterView();
+        WatchUi.pushView(view, new AddWaterDelegate(view), WatchUi.SLIDE_UP);
+        return true;
+    }
+
     // BACK — выход
     function onBack() as Boolean {
         WatchUi.popView(WatchUi.SLIDE_DOWN);

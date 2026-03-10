@@ -14,7 +14,6 @@ class WaterTrackerView extends WatchUi.View {
     function onLayout(dc as Graphics.Dc) as Void {
     }
 
-    // Вызывается при возврате на этот экран (после popView)
     function onShow() as Void {
         WatchUi.requestUpdate();
     }
@@ -22,8 +21,9 @@ class WaterTrackerView extends WatchUi.View {
     function onUpdate(dc as Graphics.Dc) as Void {
         var w = dc.getWidth();
         var h = dc.getHeight();
+        var cx = w / 2;
+        var cy = h / 2;
 
-        // Читаем все данные за один проход — одна проверка даты
         var amount  = DataStore.getAmount();
         var goal    = DataStore.getGoal();
         var units   = DataStore.getUnits();
@@ -32,50 +32,48 @@ class WaterTrackerView extends WatchUi.View {
             : 0;
         var reached = (amount >= goal);
 
-        // Фон
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
 
-        // Прогресс-бар
-        _drawProgressBar(dc, w, h, percent, reached);
+        // Круговой прогресс-бар (кольцо)
+        _drawArcProgress(dc, cx, cy, w, percent, reached);
 
-        // Объём (большой шрифт)
-        var amountStr = _formatAmount(amount, units);
+        // Объём — крупно в центре
+        var amountStr = _fmt(amount, units);
         dc.setColor(
             reached ? Graphics.COLOR_GREEN : Graphics.COLOR_WHITE,
             Graphics.COLOR_TRANSPARENT
         );
         dc.drawText(
-            w / 2, h * 33 / 100,
+            cx, cy - h * 6 / 100,
             Graphics.FONT_NUMBER_MEDIUM,
             amountStr,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
-        // "/ цель единица"
-        var unitLabel  = (units == 0) ? "ml" : "oz";
-        var goalStr    = _formatAmount(goal, units);
+        // Единица + цель
+        var unitLabel = (units == 0) ? "ml" : "oz";
         dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
-            w / 2, h * 50 / 100,
+            cx, cy + h * 9 / 100,
             Graphics.FONT_TINY,
-            "/ " + goalStr + " " + unitLabel,
+            "/ " + _fmt(goal, units) + " " + unitLabel,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
-        // Процент или "Цель достигнута!"
+        // Процент или "Цель достигнута"
         if (reached) {
             dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
             dc.drawText(
-                w / 2, h * 63 / 100,
+                cx, cy + h * 22 / 100,
                 Graphics.FONT_TINY,
                 WatchUi.loadResource(Rez.Strings.LabelGoalReached) as String,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
             );
         } else {
-            dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_TRANSPARENT);
+            dc.setColor(0x0088FF, Graphics.COLOR_TRANSPARENT);
             dc.drawText(
-                w / 2, h * 63 / 100,
+                cx, cy + h * 22 / 100,
                 Graphics.FONT_SMALL,
                 percent.toString() + "%",
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
@@ -83,40 +81,43 @@ class WaterTrackerView extends WatchUi.View {
         }
 
         // Время последнего приёма
-        _drawLastTime(dc, w, h);
+        _drawLastTime(dc, cx, h);
     }
 
     // -------------------------------------------------------------------------
-    // Приватные методы
 
-    private function _drawProgressBar(
+    // Круговое кольцо прогресса (gap внизу, заполняется по часовой начиная с 7:30)
+    private function _drawArcProgress(
         dc      as Graphics.Dc,
+        cx      as Number,
+        cy      as Number,
         w       as Number,
-        h       as Number,
         percent as Number,
         reached as Boolean
     ) as Void {
-        var barY    = h * 80 / 100;
-        var barH    = 10;
-        var padX    = 20;
-        var barW    = w - padX * 2;
-        var fillW   = (barW * percent) / 100;
+        var r    = w * 43 / 100;
+        var penW = 14;
+        dc.setPenWidth(penW);
 
-        // Фон полосы
-        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
-        dc.fillRoundedRectangle(padX, barY, barW, barH, 5);
+        // Фоновая дуга: тёмно-серая, 270° от 315° до 225° (CCW через верх)
+        dc.setColor(0x333333, Graphics.COLOR_TRANSPARENT);
+        dc.drawArc(cx, cy, r, Graphics.ARC_COUNTER_CLOCKWISE, 315, 225);
 
-        // Заполнение
-        if (fillW > 0) {
+        // Дуга прогресса: заполняется от 7:30 (225°) по часовой стрелке
+        if (percent > 0) {
+            var sweep  = percent * 270 / 100;
+            var endPt  = ((225 - sweep) + 360) % 360;
             dc.setColor(
-                reached ? Graphics.COLOR_GREEN : Graphics.COLOR_BLUE,
+                reached ? Graphics.COLOR_GREEN : 0x0077FF,
                 Graphics.COLOR_TRANSPARENT
             );
-            dc.fillRoundedRectangle(padX, barY, fillW, barH, 5);
+            dc.drawArc(cx, cy, r, Graphics.ARC_COUNTER_CLOCKWISE, endPt, 225);
         }
+
+        dc.setPenWidth(1);
     }
 
-    private function _drawLastTime(dc as Graphics.Dc, w as Number, h as Number) as Void {
+    private function _drawLastTime(dc as Graphics.Dc, cx as Number, h as Number) as Void {
         var lastTs  = DataStore.getLastTime();
         var timeStr = WatchUi.loadResource(Rez.Strings.LabelNever) as String;
 
@@ -128,19 +129,15 @@ class WaterTrackerView extends WatchUi.View {
 
         dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
-            w / 2, h * 91 / 100,
+            cx, h * 90 / 100,
             Graphics.FONT_TINY,
             timeStr,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
     }
 
-    // мл → строка в выбранных единицах
-    private function _formatAmount(ml as Number, units as Number) as String {
-        if (units == 0) {
-            return ml.toString();
-        }
-        // 1 fl oz = 29.5735 мл
+    private function _fmt(ml as Number, units as Number) as String {
+        if (units == 0) { return ml.toString(); }
         return (ml.toFloat() / 29.5735f).format("%.1f");
     }
 }

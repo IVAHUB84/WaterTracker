@@ -3,7 +3,7 @@
   <iq:application
     entry="WaterTrackerApp"
     id="A3D8C1F24B7E4A9C8D2F1E6B3A5C9D0E"
-    minSdkVersion="3.1.0"
+    minSdkVersion="3.3.0"
     name="@Strings.AppName"
     type="widget"
     launcherIcon="@Drawables.LauncherIcon"
