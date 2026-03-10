@@ -14,7 +14,6 @@ class WaterTrackerApp extends Application.AppBase {
 
     // Вызывается при запуске виджета
     function onStart(state as Dictionary?) as Void {
-        _scheduleReminder();
     }
 
     // Вызывается при закрытии виджета
@@ -47,10 +46,14 @@ class WaterTrackerApp extends Application.AppBase {
     }
 
     private static function _scheduleReminder() as Void {
+        if (!(Background has :registerForTemporalEvent)) {
+            return;
+        }
         var intervalMin = DataStore.getInterval();
         if (intervalMin <= 0) {
-            // Напоминания отключены — удалить существующее расписание
-            Background.deleteTemporalEvent();
+            if (Background has :deleteTemporalEvent) {
+                Background.deleteTemporalEvent();
+            }
             return;
         }
         var nextEvent = Time.now().add(new Time.Duration(intervalMin * 60));
