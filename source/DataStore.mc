@@ -55,7 +55,7 @@ class DataStore {
     static function setGoal(goal as Number) as Void {
         // Ограничиваем допустимый диапазон согласно ТЗ
         if (goal < 1000) { goal = 1000; }
-        if (goal > 5000) { goal = 5000; }
+        if (goal > 10000) { goal = 10000; }
         Application.Storage.setValue(KEY_GOAL, goal);
     }
 

@@ -15,7 +15,7 @@ class SettingsView extends WatchUi.View {
 
     // Допустимые значения целей (мл)
     private static const GOALS as Array<Number> =
-        [1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000];
+        [1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
 
     // Интервалы напоминаний (мин); 0 = выкл
     private static const INTERVALS as Array<Number> = [0, 30, 60, 90, 120];
@@ -79,35 +79,34 @@ class SettingsView extends WatchUi.View {
         h      as Number,
         idx    as Number
     ) as Void {
-        var isActive  = (idx == _cursor);
-        var centerY   = y + h / 2;
+        var isActive = (idx == _cursor);
 
         // Фон активного пункта
         if (isActive) {
-            dc.setColor(0x003366, Graphics.COLOR_TRANSPARENT); // тёмно-синий
+            dc.setColor(0x003366, Graphics.COLOR_TRANSPARENT);
             dc.fillRoundedRectangle(8, y + 2, w - 16, h - 4, 6);
         }
 
-        // Название пункта (левая часть)
+        // Название — слева, маленький серый
         dc.setColor(
-            isActive ? Graphics.COLOR_WHITE : Graphics.COLOR_LT_GRAY,
+            isActive ? Graphics.COLOR_LT_GRAY : Graphics.COLOR_DK_GRAY,
             Graphics.COLOR_TRANSPARENT
         );
         dc.drawText(
-            14, centerY,
-            Graphics.FONT_TINY,
+            14, y + h * 30 / 100,
+            Graphics.FONT_XTINY,
             _itemName(idx),
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
-        // Значение пункта (правая часть)
+        // Значение — справа, белый/жёлтый, FONT_TINY
         dc.setColor(
-            isActive ? Graphics.COLOR_YELLOW : Graphics.COLOR_LT_GRAY,
+            isActive ? Graphics.COLOR_YELLOW : Graphics.COLOR_WHITE,
             Graphics.COLOR_TRANSPARENT
         );
         dc.drawText(
-            w - 14, centerY,
-            Graphics.FONT_SMALL,
+            w - 14, y + h * 68 / 100,
+            Graphics.FONT_TINY,
             _itemValue(idx),
             Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
         );
