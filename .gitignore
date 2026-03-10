@@ -1,0 +1,11 @@
+# Garmin Connect IQ build output
+bin/
+*.prg
+*.prg.debug
+
+# VS Code
+.vscode/settings.json
+
+# OS
+.DS_Store
+Thumbs.db

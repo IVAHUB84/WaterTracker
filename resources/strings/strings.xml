@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<strings>
+  <!-- App -->
+  <string id="AppName">Water Tracker</string>
+
+  <!-- Main screen -->
+  <string id="LabelGoal">Goal</string>
+  <string id="LabelDrank">Drank</string>
+  <string id="LabelLastDrink">Last</string>
+  <string id="LabelNever">Never</string>
+  <string id="LabelGoalReached">Goal reached!</string>
+  <string id="LabelGoalReachedMsg">Great job! Stay hydrated!</string>
+
+  <!-- Add water screen -->
+  <string id="TitleAddWater">Add Water</string>
+  <string id="Btn150">+150 ml</string>
+  <string id="Btn250">+250 ml</string>
+  <string id="Btn350">+350 ml</string>
+  <string id="LabelAdded">Added!</string>
+
+  <!-- Settings -->
+  <string id="TitleSettings">Settings</string>
+  <string id="SettingGoal">Daily Goal</string>
+  <string id="SettingInterval">Reminder</string>
+  <string id="SettingUnits">Units</string>
+  <string id="SettingLanguage">Language</string>
+  <string id="UnitMl">ml</string>
+  <string id="UnitOz">oz</string>
+  <string id="Interval30">30 min</string>
+  <string id="Interval60">60 min</string>
+  <string id="Interval90">90 min</string>
+  <string id="Interval120">120 min</string>
+  <string id="IntervalOff">Off</string>
+
+  <!-- Reminder notification -->
+  <string id="ReminderTitle">Water Tracker</string>
+  <string id="ReminderBody">Time to drink water!</string>
+</strings>

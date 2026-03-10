@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<strings>
+  <!-- App -->
+  <string id="AppName">تتبع الماء</string>
+
+  <!-- Main screen -->
+  <string id="LabelGoal">الهدف</string>
+  <string id="LabelDrank">شربت</string>
+  <string id="LabelLastDrink">آخر شرب</string>
+  <string id="LabelNever">لا يوجد</string>
+  <string id="LabelGoalReached">تم الهدف!</string>
+  <string id="LabelGoalReachedMsg">عمل رائع!</string>
+
+  <!-- Add water screen -->
+  <string id="TitleAddWater">أضف ماء</string>
+  <string id="Btn150">+150 مل</string>
+  <string id="Btn250">+250 مل</string>
+  <string id="Btn350">+350 مل</string>
+  <string id="LabelAdded">تمت الإضافة!</string>
+
+  <!-- Settings -->
+  <string id="TitleSettings">الإعدادات</string>
+  <string id="SettingGoal">الهدف اليومي</string>
+  <string id="SettingInterval">التذكير</string>
+  <string id="SettingUnits">الوحدات</string>
+  <string id="SettingLanguage">اللغة</string>
+  <string id="UnitMl">مل</string>
+  <string id="UnitOz">أوقية</string>
+  <string id="Interval30">30 دقيقة</string>
+  <string id="Interval60">60 دقيقة</string>
+  <string id="Interval90">90 دقيقة</string>
+  <string id="Interval120">120 دقيقة</string>
+  <string id="IntervalOff">إيقاف</string>
+
+  <!-- Reminder notification -->
+  <string id="ReminderTitle">تتبع الماء</string>
+  <string id="ReminderBody">حان وقت شرب الماء!</string>
+</strings>

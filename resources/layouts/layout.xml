@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<layout id="MainLayout">
+  <!-- Прогресс: выпито / цель -->
+  <label
+    id="LabelAmount"
+    x="center"
+    y="40%"
+    font="Graphics.FONT_NUMBER_MEDIUM"
+    justification="Graphics.TEXT_JUSTIFY_CENTER"
+    color="Graphics.COLOR_WHITE"/>
+
+  <!-- Процент выполнения -->
+  <label
+    id="LabelPercent"
+    x="center"
+    y="60%"
+    font="Graphics.FONT_SMALL"
+    justification="Graphics.TEXT_JUSTIFY_CENTER"
+    color="Graphics.COLOR_BLUE"/>
+
+  <!-- Время последнего приёма -->
+  <label
+    id="LabelLastTime"
+    x="center"
+    y="75%"
+    font="Graphics.FONT_TINY"
+    justification="Graphics.TEXT_JUSTIFY_CENTER"
+    color="Graphics.COLOR_LT_GRAY"/>
+</layout>
