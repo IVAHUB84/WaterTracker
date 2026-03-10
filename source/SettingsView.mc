@@ -3,31 +3,33 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
+// =============================================================================
+// Экран настроек
+
 class SettingsView extends WatchUi.View {
 
-    // Пункты меню
-    private static const ITEM_GOAL     = 0;
-    private static const ITEM_INTERVAL = 1;
-    private static const ITEM_UNITS    = 2;
+    private static const ITEM_GOAL     as Number = 0;
+    private static const ITEM_INTERVAL as Number = 1;
+    private static const ITEM_UNITS    as Number = 2;
+    private static const ITEM_COUNT    as Number = 3;
 
-    private static const ITEM_COUNT = 3;
+    // Допустимые значения целей (мл)
+    private static const GOALS as Array<Number> =
+        [1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000];
 
-    // Варианты целей (мл)
-    private static const GOALS = [1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000] as Array<Number>;
+    // Интервалы напоминаний (мин); 0 = выкл
+    private static const INTERVALS as Array<Number> = [0, 30, 60, 90, 120];
 
-    // Варианты интервалов (минуты), 0 = выкл
-    private static const INTERVALS = [0, 30, 60, 90, 120] as Array<Number>;
-
-    private var _cursor   as Number = ITEM_GOAL;
-    private var _goalIdx  as Number = 0;
-    private var _intrIdx  as Number = 0;
-    private var _unitsIdx as Number = 0;
+    private var _cursor   as Number;
+    private var _goalIdx  as Number;
+    private var _intrIdx  as Number;
+    private var _unitsIdx as Number;
 
     function initialize() {
         View.initialize();
-        // Загрузить текущие значения
-        _goalIdx  = _findIndex(GOALS,     DataStore.getGoal());
-        _intrIdx  = _findIndex(INTERVALS, DataStore.getInterval());
+        _cursor   = ITEM_GOAL;
+        _goalIdx  = _findIdx(GOALS,     DataStore.getGoal());
+        _intrIdx  = _findIdx(INTERVALS, DataStore.getInterval());
         _unitsIdx = DataStore.getUnits();
     }
 
@@ -47,104 +49,152 @@ class SettingsView extends WatchUi.View {
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
-        // Пункты настроек
-        var items = [
-            [WatchUi.loadResource(Rez.Strings.SettingGoal) as String,
-             GOALS[_goalIdx].toString() + " ml"],
-            [WatchUi.loadResource(Rez.Strings.SettingInterval) as String,
-             _intervalLabel(INTERVALS[_intrIdx])],
-            [WatchUi.loadResource(Rez.Strings.SettingUnits) as String,
-             _unitsIdx == 0 ? "ml" : "oz"]
-        ] as Array<Array<String>>;
+        // Разделитель под заголовком
+        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
+        dc.drawLine(16, h * 18 / 100, w - 16, h * 18 / 100);
 
-        var itemH  = h * 22 / 100;
-        var startY = h * 22 / 100;
+        // Пункты
+        var itemH  = h * 25 / 100;
+        var startY = h * 20 / 100;
 
         for (var i = 0; i < ITEM_COUNT; i++) {
-            var isActive = (i == _cursor);
-            var itemY    = startY + i * itemH;
-
-            // Фон активного пункта
-            if (isActive) {
-                dc.setColor(Graphics.COLOR_DK_BLUE, Graphics.COLOR_TRANSPARENT);
-                dc.fillRoundedRectangle(10, itemY - 2, w - 20, itemH - 4, 6);
-            }
-
-            // Название пункта
-            dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(
-                15, itemY + itemH / 4,
-                Graphics.FONT_TINY,
-                items[i][0],
-                Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-            );
-
-            // Значение
-            dc.setColor(isActive ? Graphics.COLOR_WHITE : Graphics.COLOR_LT_GRAY,
-                        Graphics.COLOR_TRANSPARENT);
-            dc.drawText(
-                w - 15, itemY + itemH * 3 / 4,
-                Graphics.FONT_SMALL,
-                items[i][1],
-                Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
-            );
+            _drawItem(dc, w, startY + i * itemH, itemH, i);
         }
+
+        // Подсказка: SELECT = изменить
+        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(
+            w / 2, h * 96 / 100,
+            Graphics.FONT_XTINY,
+            "SELECT = change",
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
+        );
     }
 
-    // Курсор вниз
+    // Нарисовать один пункт настроек
+    private function _drawItem(
+        dc     as Graphics.Dc,
+        w      as Number,
+        y      as Number,
+        h      as Number,
+        idx    as Number
+    ) as Void {
+        var isActive  = (idx == _cursor);
+        var centerY   = y + h / 2;
+
+        // Фон активного пункта
+        if (isActive) {
+            dc.setColor(0x003366, Graphics.COLOR_TRANSPARENT); // тёмно-синий
+            dc.fillRoundedRectangle(8, y + 2, w - 16, h - 4, 6);
+        }
+
+        // Название пункта (левая часть)
+        dc.setColor(
+            isActive ? Graphics.COLOR_WHITE : Graphics.COLOR_LT_GRAY,
+            Graphics.COLOR_TRANSPARENT
+        );
+        dc.drawText(
+            14, centerY,
+            Graphics.FONT_TINY,
+            _itemName(idx),
+            Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
+        );
+
+        // Значение пункта (правая часть)
+        dc.setColor(
+            isActive ? Graphics.COLOR_YELLOW : Graphics.COLOR_LT_GRAY,
+            Graphics.COLOR_TRANSPARENT
+        );
+        dc.drawText(
+            w - 14, centerY,
+            Graphics.FONT_SMALL,
+            _itemValue(idx),
+            Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
+        );
+    }
+
+    // Название пункта
+    private function _itemName(idx as Number) as String {
+        if (idx == ITEM_GOAL)     { return WatchUi.loadResource(Rez.Strings.SettingGoal)     as String; }
+        if (idx == ITEM_INTERVAL) { return WatchUi.loadResource(Rez.Strings.SettingInterval) as String; }
+                                    return WatchUi.loadResource(Rez.Strings.SettingUnits)    as String;
+    }
+
+    // Текущее значение пункта
+    private function _itemValue(idx as Number) as String {
+        if (idx == ITEM_GOAL) {
+            var ml = GOALS[_goalIdx];
+            if (_unitsIdx == 0) {
+                return ml.toString() + " ml";
+            }
+            return (ml.toFloat() / 29.5735f).format("%.0f") + " oz";
+        }
+        if (idx == ITEM_INTERVAL) {
+            var min = INTERVALS[_intrIdx];
+            if (min == 0) { return WatchUi.loadResource(Rez.Strings.IntervalOff) as String; }
+            return min.toString() + " min";
+        }
+        // ITEM_UNITS
+        return (_unitsIdx == 0) ? "ml" : "oz";
+    }
+
+    // -------------------------------------------------------------------------
+    // Методы для делегата
+
     function cursorNext() as Void {
         _cursor = (_cursor + 1) % ITEM_COUNT;
         WatchUi.requestUpdate();
     }
 
-    // Курсор вверх
     function cursorPrev() as Void {
         _cursor = (_cursor + ITEM_COUNT - 1) % ITEM_COUNT;
         WatchUi.requestUpdate();
     }
 
-    // Изменить значение активного пункта (вправо / увеличить)
+    // direction: +1 вперёд, -1 назад по списку значений
     function changeValue(direction as Number) as Void {
         if (_cursor == ITEM_GOAL) {
-            _goalIdx = _wrapIndex(_goalIdx + direction, GOALS.size());
+            _goalIdx = _wrap(_goalIdx + direction, GOALS.size());
             DataStore.setGoal(GOALS[_goalIdx]);
+
         } else if (_cursor == ITEM_INTERVAL) {
-            _intrIdx = _wrapIndex(_intrIdx + direction, INTERVALS.size());
+            _intrIdx = _wrap(_intrIdx + direction, INTERVALS.size());
             DataStore.setInterval(INTERVALS[_intrIdx]);
+            // Обновить расписание напоминаний немедленно
+            WaterTrackerApp.scheduleReminder();
+
         } else if (_cursor == ITEM_UNITS) {
-            _unitsIdx = _wrapIndex(_unitsIdx + direction, 2);
+            _unitsIdx = _wrap(_unitsIdx + direction, 2);
             DataStore.setUnits(_unitsIdx);
         }
         WatchUi.requestUpdate();
     }
 
-    private function _intervalLabel(minutes as Number) as String {
-        if (minutes == 0) {
-            return WatchUi.loadResource(Rez.Strings.IntervalOff) as String;
-        }
-        return minutes.toString() + " min";
-    }
+    // -------------------------------------------------------------------------
+    // Приватные утилиты
 
-    private function _findIndex(arr as Array<Number>, value as Number) as Number {
+    private function _findIdx(arr as Array<Number>, value as Number) as Number {
         for (var i = 0; i < arr.size(); i++) {
             if (arr[i] == value) { return i; }
         }
         return 0;
     }
 
-    private function _wrapIndex(idx as Number, size as Number) as Number {
+    private function _wrap(idx as Number, size as Number) as Number {
         return ((idx % size) + size) % size;
     }
 }
 
+// =============================================================================
 // Делегат настроек
+
 class SettingsDelegate extends WatchUi.BehaviorDelegate {
 
     private var _view as SettingsView;
 
-    function initialize() {
+    function initialize(view as SettingsView) {
         BehaviorDelegate.initialize();
-        _view = WatchUi.getCurrentView()[0] as SettingsView;
+        _view = view;
     }
 
     // DOWN — следующий пункт
@@ -159,13 +209,13 @@ class SettingsDelegate extends WatchUi.BehaviorDelegate {
         return true;
     }
 
-    // SELECT — увеличить значение
+    // SELECT — изменить значение вперёд
     function onSelect() as Boolean {
         _view.changeValue(1);
         return true;
     }
 
-    // BACK — сохранить и вернуться
+    // BACK — выйти из настроек (данные уже сохранены в DataStore)
     function onBack() as Boolean {
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         return true;

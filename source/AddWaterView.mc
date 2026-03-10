@@ -1,21 +1,25 @@
-// AddWaterView.mc — экран добавления воды (3 кнопки)
+// AddWaterView.mc — экран добавления воды + подтверждение
 import Toybox.Graphics;
 import Toybox.Lang;
+import Toybox.Timer;
 import Toybox.WatchUi;
+
+// =============================================================================
+// Экран выбора порции (3 кнопки)
 
 class AddWaterView extends WatchUi.View {
 
-    // Порции в мл
-    private static const PORTIONS = [150, 250, 350] as Array<Number>;
-    private var _selected as Number = 1; // по умолчанию средняя кнопка
+    private static const PORTIONS as Array<Number> = [150, 250, 350];
+    private var _selected as Number = 1; // средняя кнопка по умолчанию
 
     function initialize() {
         View.initialize();
     }
 
     function onUpdate(dc as Graphics.Dc) as Void {
-        var w = dc.getWidth();
-        var h = dc.getHeight();
+        var w     = dc.getWidth();
+        var h     = dc.getHeight();
+        var units = DataStore.getUnits();
 
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
@@ -31,38 +35,29 @@ class AddWaterView extends WatchUi.View {
 
         // Кнопки
         var btnH   = h * 20 / 100;
-        var btnW   = w * 70 / 100;
+        var btnW   = w * 72 / 100;
         var btnX   = (w - btnW) / 2;
-        var startY = h * 22 / 100;
-        var gapY   = h * 24 / 100;
-
-        var units = DataStore.getUnits();
+        var startY = h * 23 / 100;
+        var gapY   = h * 25 / 100;
 
         for (var i = 0; i < 3; i++) {
-            var isSelected = (i == _selected);
-            var btnY = startY + i * gapY;
+            var isActive = (i == _selected);
+            var btnY     = startY + i * gapY;
 
-            // Фон кнопки
             dc.setColor(
-                isSelected ? Graphics.COLOR_BLUE : Graphics.COLOR_DK_GRAY,
+                isActive ? Graphics.COLOR_BLUE : Graphics.COLOR_DK_GRAY,
                 Graphics.COLOR_TRANSPARENT
             );
             dc.fillRoundedRectangle(btnX, btnY, btnW, btnH, 8);
 
-            // Текст кнопки
             dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-            var label = _portionLabel(PORTIONS[i], units);
             dc.drawText(
                 w / 2, btnY + btnH / 2,
                 Graphics.FONT_SMALL,
-                label,
+                _portionLabel(PORTIONS[i], units),
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
             );
         }
-    }
-
-    function getSelected() as Number {
-        return _selected;
     }
 
     function selectNext() as Void {
@@ -71,7 +66,7 @@ class AddWaterView extends WatchUi.View {
     }
 
     function selectPrev() as Void {
-        _selected = (_selected + 2) % 3; // -1 с wrap
+        _selected = (_selected + 2) % 3;
         WatchUi.requestUpdate();
     }
 
@@ -83,62 +78,67 @@ class AddWaterView extends WatchUi.View {
         if (units == 0) {
             return "+" + ml.toString() + " ml";
         }
-        var oz = (ml * 10 / 296).toFloat() / 10.0;
-        return "+" + oz.format("%.1f") + " oz";
+        return "+" + (ml.toFloat() / 29.5735f).format("%.1f") + " oz";
     }
 }
 
-// Делегат экрана добавления
+// =============================================================================
+// Делегат экрана выбора порции
+
 class AddWaterDelegate extends WatchUi.BehaviorDelegate {
 
-    private var _view as AddWaterView;
+    private var _view      as AddWaterView;
     private var _confirmed as Boolean = false;
 
-    function initialize() {
+    // view передаётся снаружи при pushView
+    function initialize(view as AddWaterView) {
         BehaviorDelegate.initialize();
-        _view = WatchUi.getCurrentView()[0] as AddWaterView;
+        _view = view;
     }
 
-    // SELECT — подтвердить выбранную порцию
+    // SELECT — записать и показать подтверждение
     function onSelect() as Boolean {
         if (_confirmed) { return true; }
         _confirmed = true;
 
-        var ml = _view.getPortionMl();
+        var ml        = _view.getPortionMl();
         var newAmount = DataStore.addAmount(ml);
 
-        // Показать экран подтверждения
+        var confirmView = new ConfirmView(ml, newAmount);
         WatchUi.pushView(
-            new ConfirmView(ml, newAmount),
-            new ConfirmDelegate(),
+            confirmView,
+            new ConfirmDelegate(confirmView),
             WatchUi.SLIDE_UP
         );
         return true;
     }
 
-    // UP / DOWN — переключение кнопок
-    function onPreviousPage() as Boolean {
-        _view.selectPrev();
-        return true;
-    }
-
+    // DOWN — следующая кнопка
     function onNextPage() as Boolean {
         _view.selectNext();
         return true;
     }
 
-    // BACK — назад на главный экран
+    // UP — предыдущая кнопка
+    function onPreviousPage() as Boolean {
+        _view.selectPrev();
+        return true;
+    }
+
+    // BACK — вернуться на главный без записи
     function onBack() as Boolean {
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         return true;
     }
 }
 
+// =============================================================================
 // Экран подтверждения добавления
+
 class ConfirmView extends WatchUi.View {
 
-    private var _addedMl  as Number;
-    private var _totalMl  as Number;
+    private var _addedMl as Number;
+    private var _totalMl as Number;
 
     function initialize(added as Number, total as Number) {
         View.initialize();
@@ -147,63 +147,80 @@ class ConfirmView extends WatchUi.View {
     }
 
     function onUpdate(dc as Graphics.Dc) as Void {
-        var w = dc.getWidth();
-        var h = dc.getHeight();
+        var w     = dc.getWidth();
+        var h     = dc.getHeight();
         var units = DataStore.getUnits();
 
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
 
-        // Иконка галочки
+        // Большая галочка
         dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
-            w / 2, h * 35 / 100,
+            w / 2, h * 30 / 100,
             Graphics.FONT_NUMBER_MEDIUM,
-            "+",
+            "\u2713", // ✓
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
-        // Добавлено X мл
+        // Добавленный объём
+        var unitStr = (units == 0) ? " ml" : " oz";
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        var addedLabel = _formatAmount(_addedMl, units);
-        var unitStr    = (units == 0) ? " ml" : " oz";
         dc.drawText(
-            w / 2, h * 55 / 100,
+            w / 2, h * 54 / 100,
             Graphics.FONT_MEDIUM,
-            "+" + addedLabel + unitStr,
+            "+" + _fmt(_addedMl, units) + unitStr,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
-        // Новый итог
+        // Итог / цель
         dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
             w / 2, h * 72 / 100,
             Graphics.FONT_TINY,
-            _formatAmount(_totalMl, units) + unitStr + " / " +
-            _formatAmount(DataStore.getGoal(), units) + unitStr,
+            _fmt(_totalMl, units) + " / " +
+            _fmt(DataStore.getGoal(), units) + unitStr,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
     }
 
-    private function _formatAmount(ml as Number, units as Number) as String {
+    private function _fmt(ml as Number, units as Number) as String {
         if (units == 0) { return ml.toString(); }
-        var oz = (ml * 10 / 296).toFloat() / 10.0;
-        return oz.format("%.1f");
+        return (ml.toFloat() / 29.5735f).format("%.1f");
     }
 }
 
+// =============================================================================
 // Делегат экрана подтверждения (авто-возврат через 2 сек)
+
 class ConfirmDelegate extends WatchUi.BehaviorDelegate {
 
-    function initialize() {
+    private var _timer as Timer.Timer;
+    private var _view  as ConfirmView;
+
+    function initialize(view as ConfirmView) {
         BehaviorDelegate.initialize();
-        // Авто-возврат через 2 секунды
-        // Реализуется через Timer в onShow или таймер в App
+        _view  = view;
+        _timer = new Timer.Timer();
+        // Авто-возврат через 2000 мс
+        _timer.start(method(:onTimeout), 2000, false);
     }
 
+    // Таймер сработал — вернуться на главный экран
+    function onTimeout() as Void {
+        _popToMain();
+    }
+
+    // BACK — остановить таймер и вернуться вручную
     function onBack() as Boolean {
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
+        _timer.stop();
+        _popToMain();
         return true;
+    }
+
+    // Снять ConfirmView + AddWaterView, вернуться на главный экран
+    private function _popToMain() as Void {
+        WatchUi.popView(WatchUi.SLIDE_DOWN); // ConfirmView → AddWaterView
+        WatchUi.popView(WatchUi.SLIDE_DOWN); // AddWaterView → MainView
     }
 }

@@ -1,11 +1,12 @@
 // BackgroundService.mc — фоновые напоминания о воде
-import Toybox.Application;
+import Toybox.Attention;
 import Toybox.Background;
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.Time;
 
-// Фоновый сервис (выполняется независимо от UI)
+// Фоновый сервис: выполняется в отдельном фоновом процессе
+// Аннотация (:background) обязательна — включает класс в background-сборку
 (:background)
 class BackgroundService extends System.ServiceDelegate {
 
@@ -13,62 +14,53 @@ class BackgroundService extends System.ServiceDelegate {
         ServiceDelegate.initialize();
     }
 
-    // Вызывается по расписанию temporalEvent
+    // Вызывается по расписанию temporal event
     function onTemporalEvent() as Void {
-        // Не беспокоить если цель уже достигнута
+        // 1. Проверить: цель выполнена — не беспокоить
         if (DataStore.isGoalReached()) {
-            _scheduleNext(); // перенести следующий тик
+            _scheduleNext();
             return;
         }
 
-        // Не беспокоить в тихие часы (22:00 — 07:00)
+        // 2. Проверить: тихие часы (22:00 — 07:00) — не беспокоить
         if (_isQuietHours()) {
             _scheduleNext();
             return;
         }
 
-        // Вибрировать
+        // 3. Вибрировать и запланировать следующее напоминание
         _vibrate();
-
         _scheduleNext();
     }
 
-    // Зарегистрировать следующее событие
+    // -------------------------------------------------------------------------
+    // Приватные методы
+
+    // Запланировать следующее событие по текущему интервалу
     private function _scheduleNext() as Void {
         var intervalMin = DataStore.getInterval();
         if (intervalMin <= 0) {
             Background.deleteTemporalEvent();
             return;
         }
-        var intervalSec = new Time.Duration(intervalMin * 60);
-        Background.registerForTemporalEvent(Time.now().add(intervalSec));
+        var next = Time.now().add(new Time.Duration(intervalMin * 60));
+        Background.registerForTemporalEvent(next);
     }
 
     // Тихие часы: 22:00 — 07:00
     private function _isQuietHours() as Boolean {
-        var info = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
-        var hour = info.hour;
+        var hour = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT).hour as Number;
         return (hour >= 22 || hour < 7);
     }
 
-    // Паттерн вибрации — одиночный сигнал
+    // Вибрация: два коротких импульса (напоминание о воде)
     private function _vibrate() as Void {
         if (Attention has :vibrate) {
-            var pattern = [
-                new Attention.VibeProfile(100, 500), // 100% мощность, 500мс
-                new Attention.VibeProfile(0,   200), // пауза 200мс
-                new Attention.VibeProfile(100, 300)  // ещё один импульс
-            ] as Array<Attention.VibeProfile>;
-            Attention.vibrate(pattern);
+            Attention.vibrate([
+                new Attention.VibeProfile(100, 400),
+                new Attention.VibeProfile(0,   150),
+                new Attention.VibeProfile(100, 250)
+            ] as Array<Attention.VibeProfile>);
         }
     }
-}
-
-// Вызывается из WaterTrackerApp при первом запуске для регистрации напоминаний
-function registerBackgroundReminder() as Void {
-    var intervalMin = DataStore.getInterval();
-    if (intervalMin <= 0) { return; }
-
-    var intervalSec = new Time.Duration(intervalMin * 60);
-    Background.registerForTemporalEvent(Time.now().add(intervalSec));
 }

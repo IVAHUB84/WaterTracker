@@ -75,7 +75,8 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
 
     // UP — настройки
     function onPreviousPage() as Boolean {
-        WatchUi.pushView(new SettingsView(), new SettingsDelegate(), WatchUi.SLIDE_DOWN);
+        var settingsView = new SettingsView();
+        WatchUi.pushView(settingsView, new SettingsDelegate(settingsView), WatchUi.SLIDE_DOWN);
         return true;
     }
 
