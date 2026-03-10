@@ -196,11 +196,9 @@ class ConfirmView extends WatchUi.View {
 class ConfirmDelegate extends WatchUi.BehaviorDelegate {
 
     private var _timer as Timer.Timer;
-    private var _view  as ConfirmView;
 
     function initialize(view as ConfirmView) {
         BehaviorDelegate.initialize();
-        _view  = view;
         _timer = new Timer.Timer();
         // Авто-возврат через 2000 мс
         _timer.start(method(:onTimeout), 2000, false);
