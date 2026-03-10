@@ -1,6 +1,8 @@
 // WaterTrackerApp.mc — точка входа приложения
 import Toybox.Application;
+import Toybox.Background;
 import Toybox.Lang;
+import Toybox.Time;
 import Toybox.WatchUi;
 
 class WaterTrackerApp extends Application.AppBase {
@@ -9,62 +11,84 @@ class WaterTrackerApp extends Application.AppBase {
         AppBase.initialize();
     }
 
-    // Возвращает начальный View
+    // Вызывается при запуске виджета
+    function onStart(state as Dictionary?) as Void {
+        _scheduleReminder();
+    }
+
+    // Вызывается при закрытии виджета
+    function onStop(state as Dictionary?) as Void {
+    }
+
+    // Начальный экран
     function getInitialView() as [WatchUi.Views] or [WatchUi.Views, WatchUi.InputDelegates] {
         var view = new WaterTrackerView();
-        var delegate = new WaterTrackerDelegate(view);
+        var delegate = new WaterTrackerDelegate();
         return [view, delegate];
     }
 
-    // Точка входа фонового сервиса
+    // Точка входа фонового сервиса — аннотация обязательна
+    (:background)
     function getServiceDelegate() as [System.ServiceDelegate] {
         return [new BackgroundService()];
     }
 
-    // Вызывается при возврате из фонового режима
+    // Фоновый сервис не передаёт данные обратно
     function onBackgroundData(data as Application.PersistableType) as Void {
-        // Фоновый сервис не передаёт данные, только вибрирует
+    }
+
+    // -------------------------------------------------------------------------
+    // Управление расписанием напоминаний
+
+    // Зарегистрировать следующее напоминание согласно настройке интервала
+    static function scheduleReminder() as Void {
+        _scheduleReminder();
+    }
+
+    private static function _scheduleReminder() as Void {
+        var intervalMin = DataStore.getInterval();
+        if (intervalMin <= 0) {
+            // Напоминания отключены — удалить существующее расписание
+            Background.deleteTemporalEvent();
+            return;
+        }
+        var nextEvent = Time.now().add(new Time.Duration(intervalMin * 60));
+        Background.registerForTemporalEvent(nextEvent);
     }
 }
 
+// -----------------------------------------------------------------------------
 // Делегат кнопок главного экрана
+
 class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
 
-    private var _view as WaterTrackerView;
-
-    function initialize(view as WaterTrackerView) {
+    function initialize() {
         BehaviorDelegate.initialize();
-        _view = view;
     }
 
-    // SELECT — переход на экран добавления воды
+    // SELECT — добавить воду
     function onSelect() as Boolean {
-        WatchUi.pushView(
-            new AddWaterView(),
-            new AddWaterDelegate(),
-            WatchUi.SLIDE_UP
-        );
+        var view = new AddWaterView();
+        WatchUi.pushView(view, new AddWaterDelegate(view), WatchUi.SLIDE_UP);
         return true;
     }
 
-    // UP — переход в настройки
+    // UP — настройки
     function onPreviousPage() as Boolean {
-        WatchUi.pushView(
-            new SettingsView(),
-            new SettingsDelegate(),
-            WatchUi.SLIDE_DOWN
-        );
+        WatchUi.pushView(new SettingsView(), new SettingsDelegate(), WatchUi.SLIDE_DOWN);
         return true;
     }
 
-    // BACK — выход из виджета
+    // BACK — выход
     function onBack() as Boolean {
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         return true;
     }
 }
 
-// Регистрация приложения
+// -----------------------------------------------------------------------------
+// Глобальный доступ к экземпляру приложения
+
 function getApp() as WaterTrackerApp {
     return Application.getApp() as WaterTrackerApp;
 }
