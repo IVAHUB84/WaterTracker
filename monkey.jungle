@@ -1,0 +1,14 @@
+# monkey.jungle — конфигурация сборки WaterTracker
+
+project.manifest = manifest.xml
+
+# Исходный код
+base.sourcePath = source
+
+# Ресурсы
+base.resourcePath = resources
+
+# Строки по языкам
+base.lang.eng = resources/strings
+base.lang.rus = resources/strings
+base.lang.ara = resources/strings

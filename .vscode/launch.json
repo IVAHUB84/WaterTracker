@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run — fenix7",
+      "request": "launch",
+      "type": "monkeyc",
+      "device": "fenix7",
+      "jungleFiles": "monkey.jungle",
+      "developerKeyPath": "C:\\Users\\iva\\AppData\\Roaming\\Garmin\\ConnectIQ\\garmin_dev_key.jks",
+      "typeCheckLevel": "Strict",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Run — venu3",
+      "request": "launch",
+      "type": "monkeyc",
+      "device": "venu3",
+      "jungleFiles": "monkey.jungle",
+      "developerKeyPath": "C:\\Users\\iva\\AppData\\Roaming\\Garmin\\ConnectIQ\\garmin_dev_key.jks",
+      "typeCheckLevel": "Strict",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Run — fr965",
+      "request": "launch",
+      "type": "monkeyc",
+      "device": "fr965",
+      "jungleFiles": "monkey.jungle",
+      "developerKeyPath": "C:\\Users\\iva\\AppData\\Roaming\\Garmin\\ConnectIQ\\garmin_dev_key.jks",
+      "typeCheckLevel": "Strict",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Run — vivoactive5",
+      "request": "launch",
+      "type": "monkeyc",
+      "device": "vivoactive5",
+      "jungleFiles": "monkey.jungle",
+      "developerKeyPath": "C:\\Users\\iva\\AppData\\Roaming\\Garmin\\ConnectIQ\\garmin_dev_key.jks",
+      "typeCheckLevel": "Strict",
+      "stopAtEntry": false
+    }
+  ]
+}

@@ -118,11 +118,9 @@ class WaterTrackerView extends WatchUi.View {
 
     private function _drawLastTime(dc as Graphics.Dc, w as Number, h as Number) as Void {
         var lastTs  = DataStore.getLastTime();
-        var timeStr as String;
+        var timeStr = WatchUi.loadResource(Rez.Strings.LabelNever) as String;
 
-        if (lastTs == null) {
-            timeStr = WatchUi.loadResource(Rez.Strings.LabelNever) as String;
-        } else {
+        if (lastTs != null) {
             var info = Gregorian.info(new Time.Moment(lastTs as Number), Time.FORMAT_SHORT);
             timeStr = (info.hour as Number).format("%02d") + ":" +
                       (info.min  as Number).format("%02d");
