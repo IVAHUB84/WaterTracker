@@ -1,7 +1,13 @@
 // DataStore.mc — хранение и управление данными
+import Toybox.ActivityMonitor;
 import Toybox.Application;
+import Toybox.Attention;
 import Toybox.Lang;
 import Toybox.Time;
+import Toybox.UserProfile;
+
+// Module-level флаг: true если профиль пользователя неполный
+var _profileIncomplete as Boolean = false;
 
 class DataStore {
 
@@ -37,8 +43,29 @@ class DataStore {
         Application.Storage.setValue(KEY_AMOUNT, newAmount);
         if (ml > 0) {
             Application.Storage.setValue(KEY_LAST_TIME, Time.now().value());
+            _checkVibration(current, newAmount);
         }
         return newAmount;
+    }
+
+    // Вибрация при достижении GOAL (1 раз) или REC (2 раза)
+    private static function _checkVibration(oldAmt as Number, newAmt as Number) as Void {
+        if (!(Toybox has :Attention) || !(Attention has :vibrate)) { return; }
+        var goal = getGoal();
+        var rec  = getRecommendedGoal();
+        var crossedGoal = (oldAmt < goal && newAmt >= goal);
+        var crossedRec  = (oldAmt < rec  && newAmt >= rec);
+        if (crossedRec) {
+            // Две вибрации (включая случай REC == GOAL)
+            Attention.vibrate([
+                new Attention.VibeProfile(75, 250),
+                new Attention.VibeProfile(0,  150),
+                new Attention.VibeProfile(75, 250)
+            ]);
+        } else if (crossedGoal) {
+            // Одна вибрация
+            Attention.vibrate([new Attention.VibeProfile(75, 400)]);
+        }
     }
 
     // Сбросить счётчик вручную (например кнопкой)
@@ -89,6 +116,76 @@ class DataStore {
 
     static function setUnits(units as Number) as Void {
         Application.Storage.setValue(KEY_UNITS, units);
+    }
+
+    // -------------------------------------------------------------------------
+    // Рекомендованная норма воды
+
+    // Рассчитывает рекомендованную норму по весу, полу и активности.
+    // Устанавливает module-level флаг _profileIncomplete если данных нет.
+    static function getRecommendedGoal() as Number {
+        _profileIncomplete = false;
+
+        // Проверяем наличие UserProfile API
+        if (!(Toybox has :UserProfile)) {
+            _profileIncomplete = true;
+            return 2000;
+        }
+
+        var profile = UserProfile.getProfile();
+        if (profile == null) {
+            _profileIncomplete = true;
+            return 2000;
+        }
+
+        var weightG = profile.weight;
+        var gender  = profile.gender;
+
+        if (weightG == null || gender == null ||
+            gender == UserProfile.GENDER_UNSPECIFIED) {
+            _profileIncomplete = true;
+            return 2000;
+        }
+
+        var weightKg    = (weightG as Number).toFloat() / 1000.0;
+        var base        = (weightKg * 33.0).toNumber();
+        var genderBonus = (gender == UserProfile.GENDER_MALE) ? 200 : 0;
+
+        // Активные минуты → бонус к норме (~8ml/мин умеренной активности)
+        var actBonus = 0;
+        if (Toybox has :ActivityMonitor) {
+            var info = ActivityMonitor.getInfo();
+            if (info != null) {
+                var am = info.activeMinutesDay;
+                if (am != null) {
+                    var mod = (am.moderate != null) ? (am.moderate as Number) : 0;
+                    var vig = (am.vigorous != null) ? (am.vigorous as Number) : 0;
+                    actBonus = (mod + vig * 2) * 8;
+                }
+            }
+        }
+
+        return base + genderBonus + actBonus;
+    }
+
+    // Базовая норма без учёта активности (вес × 33 + пол)
+    static function getBaseRecommendedGoal() as Number {
+        if (!(Toybox has :UserProfile)) { return 2000; }
+        var profile = UserProfile.getProfile();
+        if (profile == null) { return 2000; }
+        var weightG = profile.weight;
+        var gender  = profile.gender;
+        if (weightG == null || gender == null ||
+            gender == UserProfile.GENDER_UNSPECIFIED) { return 2000; }
+        var weightKg    = (weightG as Number).toFloat() / 1000.0;
+        var base        = (weightKg * 33.0).toNumber();
+        var genderBonus = (gender == UserProfile.GENDER_MALE) ? 200 : 0;
+        return base + genderBonus;
+    }
+
+    // Возвращает флаг неполноты профиля (обновляется при вызове getRecommendedGoal)
+    static function isProfileIncomplete() as Boolean {
+        return _profileIncomplete;
     }
 
     // -------------------------------------------------------------------------

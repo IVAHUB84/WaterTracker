@@ -11,6 +11,8 @@ const ZONE_SLOT2       as Number = 2;
 const ZONE_SLOT3       as Number = 3;
 const ZONE_SCROLL_UP   as Number = 5;
 const ZONE_SCROLL_DOWN as Number = 6;
+const ZONE_WARNING     as Number = 7;
+const ZONE_REC         as Number = 8;
 
 const RIGHT_ITEM_COUNT as Number = 6;
 
@@ -27,6 +29,12 @@ class WaterTrackerView extends WatchUi.View {
     private var _scrollTop  as Number = 0;
     private var _activeZone as Number = ZONE_NONE;
     private var _timer      as Timer.Timer;
+
+    // Позиция иконки предупреждения и REC строки (левая часть)
+    private var _warnX as Number = 0;
+    private var _warnY as Number = 0;
+    private var _warnR as Number = 0;
+    private var _recY  as Number = 0;
 
     private var _itemLabels as Array<String>;
     private var _itemColors as Array<Number>;
@@ -73,48 +81,124 @@ class WaterTrackerView extends WatchUi.View {
 
         var amount  = DataStore.getAmount();
         var goal    = DataStore.getGoal();
+        var rec     = DataStore.getRecommendedGoal();
         var units   = DataStore.getUnits();
         var unitLbl = (units == 0) ? "ml" : "oz";
-        var reached = (amount >= goal);
+        var goalReached = (amount >= goal);
+        var recReached  = (amount >= rec);
+        var profileIncomplete = DataStore.isProfileIncomplete();
+
+        // Цвета по новой логике:
+        // < goal: TODAY белый, GOAL серый, REC серый
+        // >= goal: TODAY оранжевый, GOAL оранжевый, REC серый
+        // >= rec:  TODAY зелёный, GOAL зелёный, REC зелёный
+        var minTarget = (goal < rec) ? goal : rec;
+        var maxTarget = (goal > rec) ? goal : rec;
+        var amountColor; var goalColor; var recColor;
+        if (recReached) {
+            amountColor = Graphics.COLOR_GREEN;
+            goalColor   = Graphics.COLOR_GREEN;
+            recColor    = Graphics.COLOR_GREEN;
+        } else if (goalReached) {
+            amountColor = 0xFFAA00;
+            goalColor   = 0xFFAA00;
+            recColor    = 0x444444;
+        } else {
+            amountColor = Graphics.COLOR_WHITE;
+            goalColor   = 0x666666;
+            recColor    = 0x444444;
+        }
 
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
 
-        // ── Разделитель ──────────────────────────────────
-        var divX = w / 2;
-        dc.setColor(0x333333, Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(divX, h * 12 / 100, divX, h * 88 / 100);
+        // ── Прогресс-бар по центру экрана ────────────────
+        var divX      = w / 2;
+        var barTop    = h * 10 / 100;
+        var barBottom = h * 90 / 100;
+        var barH      = barBottom - barTop;
+        var barW      = 10;
+        var barX      = divX - barW / 2;  // центрирован на divX
+
+        // Фон
+        dc.setColor(0x1C2833, Graphics.COLOR_TRANSPARENT);
+        dc.fillRectangle(barX, barTop, barW, barH);
+
+        // Заливка снизу вверх
+        var fillPct = (maxTarget > 0) ? (amount * 100 / maxTarget) : 0;
+        if (fillPct > 100) { fillPct = 100; }
+        var fillH = barH * fillPct / 100;
+        if (fillH > 0) {
+            var fillColor;
+            if (recReached)       { fillColor = Graphics.COLOR_GREEN; }
+            else if (goalReached) { fillColor = 0xFFAA00; }
+            else                  { fillColor = 0x1565C0; }
+            dc.setColor(fillColor, Graphics.COLOR_TRANSPARENT);
+            dc.fillRectangle(barX, barBottom - fillH, barW, fillH);
+        }
+
+        // Метка первой цели (если goal ≠ rec)
+        if (goal != rec && maxTarget > 0) {
+            var tickY = barBottom - (barH * minTarget / maxTarget);
+            dc.setColor(0x445566, Graphics.COLOR_TRANSPARENT);
+            dc.fillRectangle(barX, tickY, barW, 2);
+        }
 
         // ── Левая часть ───────────────────────────────────
         var leftCx = divX / 2;
 
+        // TODAY label (чуть ниже для симметрии)
         dc.setColor(0x777777, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(leftCx, h * 20 / 100, Graphics.FONT_XTINY,
-            "GOAL",
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-
-        dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(leftCx, h * 32 / 100, Graphics.FONT_SMALL,
-            _fmtNum(goal, units) + " " + unitLbl,
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-
-        dc.setColor(0x222222, Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(leftCx - 28, h * 50 / 100, leftCx + 28, h * 50 / 100);
-
-        dc.setColor(0x777777, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(leftCx, h * 60 / 100, Graphics.FONT_XTINY,
+        dc.drawText(leftCx, h * 22 / 100, Graphics.FONT_XTINY,
             "TODAY",
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        dc.setColor(
-            reached ? Graphics.COLOR_GREEN : Graphics.COLOR_WHITE,
-            Graphics.COLOR_TRANSPARENT);
-        dc.drawText(leftCx, h * 73 / 100, Graphics.FONT_SMALL,
+        // TODAY value
+        dc.setColor(amountColor, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(leftCx, h * 35 / 100, Graphics.FONT_SMALL,
             _fmtNum(amount, units) + " " + unitLbl,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
+        // Разделитель
+        dc.setColor(0x222222, Graphics.COLOR_TRANSPARENT);
+        dc.drawLine(leftCx - 20, h * 46 / 100, leftCx + 20, h * 46 / 100);
+
+        // GOAL строка
+        dc.setColor(goalColor, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(leftCx, h * 56 / 100, Graphics.FONT_XTINY,
+            "GOAL " + _fmtNum(goal, units) + " " + unitLbl,
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+        // Разделитель
+        dc.setColor(0x222222, Graphics.COLOR_TRANSPARENT);
+        dc.drawLine(leftCx - 20, h * 65 / 100, leftCx + 20, h * 65 / 100);
+
+        // REC строка + предупреждение (если профиль неполный)
+        _warnR = 0;
+        var recY = h * 74 / 100;
+        _recY  = recY;
+        _warnY = recY;
+        if (profileIncomplete) {
+            _warnR = h * 4 / 100;
+            _warnX = leftCx + 30;
+            dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
+            dc.drawText(leftCx - 8, recY, Graphics.FONT_XTINY,
+                "REC " + _fmtNum(rec, units) + " " + unitLbl,
+                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            dc.setColor(0xFFAA00, Graphics.COLOR_TRANSPARENT);
+            dc.fillCircle(_warnX, _warnY, _warnR);
+            dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+            dc.drawText(_warnX, _warnY, Graphics.FONT_XTINY, "!",
+                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        } else {
+            dc.setColor(recColor, Graphics.COLOR_TRANSPARENT);
+            dc.drawText(leftCx, recY, Graphics.FONT_XTINY,
+                "REC " + _fmtNum(rec, units) + " " + unitLbl,
+                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        }
+
         // ── Правая часть: прокручиваемые кнопки ──────────
-        _btnX = divX + 4;
+        _btnX = divX + barW / 2 + 3;
         _btnW = w - _btnX - 6;
         _arrowH = h * 6 / 100;
         _btnH   = h * 13 / 100;
@@ -154,6 +238,20 @@ class WaterTrackerView extends WatchUi.View {
     }
 
     function getZoneForTap(tapX as Number, tapY as Number) as Number {
+        // Иконка предупреждения на левой стороне
+        if (_warnR > 0 && tapX < _btnX) {
+            var dx = tapX - _warnX;
+            var dy = tapY - _warnY;
+            if (dx * dx + dy * dy <= (_warnR + 6) * (_warnR + 6)) {
+                return ZONE_WARNING;
+            }
+        }
+        // Строка REC на левой части — установить базовую цель
+        if (_warnR == 0 && tapX < _btnX && _recY > 0) {
+            if (tapY >= _recY - 16 && tapY <= _recY + 16) {
+                return ZONE_REC;
+            }
+        }
         if (tapX < _btnX) { return ZONE_NONE; }
         if (tapY >= _scrollUpY && tapY < _slotY[0]) {
             return ZONE_SCROLL_UP;
