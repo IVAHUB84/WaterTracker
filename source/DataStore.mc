@@ -22,6 +22,7 @@ class DataStore {
     // Основные методы работы с объёмом
 
     // Текущий выпитый объём за день (с автосбросом)
+    (:background)
     static function getAmount() as Number {
         _checkAndResetIfNewDay();
         var value = Application.Storage.getValue(KEY_AMOUNT);
@@ -50,6 +51,7 @@ class DataStore {
     // -------------------------------------------------------------------------
     // Дневная цель
 
+    (:background)
     static function getGoal() as Number {
         var value = Application.Storage.getValue(KEY_GOAL);
         return (value instanceof Number) ? (value as Number) : DEFAULT_GOAL;
@@ -66,6 +68,7 @@ class DataStore {
     // Интервал напоминаний
 
     // Возвращает интервал в минутах; 0 = напоминания выключены
+    (:background)
     static function getInterval() as Number {
         var value = Application.Storage.getValue(KEY_INTERVAL);
         return (value instanceof Number) ? (value as Number) : DEFAULT_INTERVAL;
@@ -107,6 +110,7 @@ class DataStore {
     }
 
     // Цель выполнена?
+    (:background)
     static function isGoalReached() as Boolean {
         return getAmount() >= getGoal();
     }
@@ -115,6 +119,7 @@ class DataStore {
     // Приватные методы
 
     // Автосброс при смене дня
+    (:background)
     private static function _checkAndResetIfNewDay() as Void {
         var savedDate = Application.Storage.getValue(KEY_DATE);
         var today = _todayString();
@@ -128,6 +133,7 @@ class DataStore {
     }
 
     // Строка текущей даты "YYYY-M-D" (для сравнения, не для отображения)
+    (:background)
     private static function _todayString() as String {
         var info = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
         return info.year.toString() + "-" +

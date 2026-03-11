@@ -73,17 +73,11 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         _view = view;
     }
 
-    // Долгое нажатие на левую половину (GOAL) → настройки
+    // Долгое нажатие на левую половину (GOAL) → установка цели
     function onHold(evt as WatchUi.ClickEvent) as Boolean {
         if (evt.getCoordinates()[0] < _view.getBtnX()) {
-            pushSettingsMenu();
+            pushGoalPickerView();
         }
-        return true;
-    }
-
-    // MENU (долгое нажатие UP на часах) — тоже настройки
-    function onMenu() as Boolean {
-        pushSettingsMenu();
         return true;
     }
 

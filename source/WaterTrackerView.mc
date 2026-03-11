@@ -120,7 +120,7 @@ class WaterTrackerView extends WatchUi.View {
         _btnH   = h * 13 / 100;
         var gap = h * 3 / 100;
 
-        var areaTop  = h * 10 / 100;
+        var areaTop  = h * 14 / 100;
         _scrollUpY   = areaTop;
         _slotY[0]    = areaTop + _arrowH;
         _slotY[1]    = _slotY[0] + _btnH + gap;
