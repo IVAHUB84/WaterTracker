@@ -28,12 +28,15 @@ class DataStore {
         return (value instanceof Number) ? (value as Number) : 0;
     }
 
-    // Добавить объём; возвращает новое итоговое значение
+    // Добавить объём (может быть отрицательным); не уходит ниже 0
     static function addAmount(ml as Number) as Number {
         var current = getAmount();
         var newAmount = current + ml;
+        if (newAmount < 0) { newAmount = 0; }
         Application.Storage.setValue(KEY_AMOUNT, newAmount);
-        Application.Storage.setValue(KEY_LAST_TIME, Time.now().value());
+        if (ml > 0) {
+            Application.Storage.setValue(KEY_LAST_TIME, Time.now().value());
+        }
         return newAmount;
     }
 

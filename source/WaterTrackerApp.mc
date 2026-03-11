@@ -23,8 +23,7 @@ class WaterTrackerApp extends Application.AppBase {
     // Начальный экран
     function getInitialView() as [WatchUi.Views] or [WatchUi.Views, WatchUi.InputDelegates] {
         var view = new WaterTrackerView();
-        var delegate = new WaterTrackerDelegate();
-        return [view, delegate];
+        return [view, new WaterTrackerDelegate(view)];
     }
 
     // Точка входа фонового сервиса — аннотация обязательна
@@ -66,32 +65,84 @@ class WaterTrackerApp extends Application.AppBase {
 
 class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
 
-    function initialize() {
+    private var _view       as WaterTrackerView;
+    private var _lastDragY  as Number = -1;
+
+    function initialize(view as WaterTrackerView) {
         BehaviorDelegate.initialize();
+        _view = view;
     }
 
-    // SELECT — добавить воду
-    function onSelect() as Boolean {
-        var view = new AddWaterView();
-        WatchUi.pushView(view, new AddWaterDelegate(view), WatchUi.SLIDE_UP);
+    // Долгое нажатие на левую половину (GOAL) → настройки
+    function onHold(evt as WatchUi.ClickEvent) as Boolean {
+        if (evt.getCoordinates()[0] < _view.getBtnX()) {
+            pushSettingsMenu();
+        }
         return true;
     }
 
-    // UP — настройки
+    // MENU (долгое нажатие UP на часах) — тоже настройки
+    function onMenu() as Boolean {
+        pushSettingsMenu();
+        return true;
+    }
+
+    // Физ. кнопки UP/DOWN — прокрутка
     function onPreviousPage() as Boolean {
-        var settingsView = new SettingsView();
-        WatchUi.pushView(settingsView, new SettingsDelegate(settingsView), WatchUi.SLIDE_DOWN);
+        _view.scrollUp();
         return true;
     }
 
-    // TAP — добавить воду (касание главного экрана)
+    function onNextPage() as Boolean {
+        _view.scrollDown();
+        return true;
+    }
+
+    // Drag пальцем — надёжная прокрутка правого столбца
+    function onDrag(evt as WatchUi.DragEvent) as Boolean {
+        var y = evt.getCoordinates()[1];
+        if (_lastDragY < 0) {
+            _lastDragY = y;
+            return true;
+        }
+        var diff = _lastDragY - y;
+        // Большой скачок = начало нового жеста, просто запомнить
+        if (diff > 70 || diff < -70) {
+            _lastDragY = y;
+            return true;
+        }
+        if (diff > 30) {
+            _view.scrollDown();
+            _lastDragY = y;
+        } else if (diff < -30) {
+            _view.scrollUp();
+            _lastDragY = y;
+        }
+        return true;
+    }
+
+    // TAP — определяем зону, подсвечиваем, выполняем действие
     function onTap(evt as WatchUi.ClickEvent) as Boolean {
-        var view = new AddWaterView();
-        WatchUi.pushView(view, new AddWaterDelegate(view), WatchUi.SLIDE_UP);
+        _lastDragY = -1;
+        var coords = evt.getCoordinates();
+        var zone   = _view.getZoneForTap(coords[0], coords[1]);
+        if (zone == ZONE_NONE) { return true; }
+
+        if (zone == ZONE_SCROLL_UP)   { _view.scrollUp();   return true; }
+        if (zone == ZONE_SCROLL_DOWN) { _view.scrollDown(); return true; }
+
+        var itemIdx = (_view.getScrollTop() + zone) % RIGHT_ITEM_COUNT;
+        _view.flashZone(zone);
+
+        if      (itemIdx == 0) { DataStore.addAmount(-100); }
+        else if (itemIdx == 1) { DataStore.addAmount(100); }
+        else if (itemIdx == 2) { DataStore.addAmount(250); }
+        else if (itemIdx == 3) { DataStore.addAmount(500); }
+        else if (itemIdx == 4) { pushQuickAddView(); }
+        else if (itemIdx == 5) { pushResetConfirm(); }
         return true;
     }
 
-    // BACK — выход
     function onBack() as Boolean {
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         return true;
@@ -104,3 +155,4 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
 function getApp() as WaterTrackerApp {
     return Application.getApp() as WaterTrackerApp;
 }
+
