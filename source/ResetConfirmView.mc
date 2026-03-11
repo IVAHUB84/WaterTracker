@@ -32,21 +32,16 @@ class ResetConfirmView extends WatchUi.View {
         var w = dc.getWidth();
         var h = dc.getHeight();
         centerX = w / 2;
-        btnY    = h * 50 / 100;
         btnH    = h * 25 / 100;
+        btnY    = h / 2 - btnH / 2;  // кнопки по центру экрана
 
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
 
-        // ── Иконка / вопрос ──────────────────────────────────
+        // ── Вопрос ───────────────────────────────────────────
         dc.setColor(0x777777, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(w / 2, h * 18 / 100, Graphics.FONT_XTINY,
+        dc.drawText(w / 2, h * 32 / 100, Graphics.FONT_XTINY,
             "Reset today's water?",
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(w / 2, h * 35 / 100, Graphics.FONT_MEDIUM,
-            "0 ml",
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // ── Кнопки No / Yes (pill-shape) ─────────────────────
@@ -90,6 +85,7 @@ class ResetConfirmDelegate extends WatchUi.BehaviorDelegate {
         var zone   = _view.getZone(coords[0], coords[1]);
         if (zone == RC_ZONE_YES) {
             DataStore.reset();
+            DataStore.setGoal(DataStore.getBaseRecommendedGoal());
         }
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         return true;

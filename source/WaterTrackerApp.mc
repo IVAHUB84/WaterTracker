@@ -13,7 +13,14 @@ class WaterTrackerApp extends Application.AppBase {
     }
 
     // Вызывается при запуске виджета
+    // При первом запуске авто-устанавливаем цель из профиля пользователя
     function onStart(state as Dictionary?) as Void {
+        var initialized = Application.Storage.getValue("goalInitialized");
+        if (!(initialized instanceof Boolean) || !(initialized as Boolean)) {
+            var rec = DataStore.getRecommendedGoal();
+            DataStore.setGoal(rec);
+            Application.Storage.setValue("goalInitialized", true);
+        }
     }
 
     // Вызывается при закрытии виджета
@@ -81,6 +88,12 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         return true;
     }
 
+    // MENU (долгое нажатие UP) — debug-экран профиля пользователя
+    function onMenu() as Boolean {
+        pushDebugProfileView();
+        return true;
+    }
+
     // Физ. кнопки UP/DOWN — прокрутка
     function onPreviousPage() as Boolean {
         _view.scrollUp();
@@ -122,8 +135,10 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         var zone   = _view.getZoneForTap(coords[0], coords[1]);
         if (zone == ZONE_NONE) { return true; }
 
-        if (zone == ZONE_SCROLL_UP)   { _view.scrollUp();   return true; }
-        if (zone == ZONE_SCROLL_DOWN) { _view.scrollDown(); return true; }
+        if (zone == ZONE_SCROLL_UP)   { _view.scrollUp();                    return true; }
+        if (zone == ZONE_SCROLL_DOWN) { _view.scrollDown();                   return true; }
+        if (zone == ZONE_WARNING)     { pushProfileWarningView();             return true; }
+
 
         var itemIdx = (_view.getScrollTop() + zone) % RIGHT_ITEM_COUNT;
         _view.flashZone(zone);
