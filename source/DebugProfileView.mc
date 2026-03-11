@@ -94,7 +94,7 @@ class DebugProfileView extends WatchUi.View {
         // Заголовок (фиксированный — не прокручивается)
         dc.setColor(0xFFAA00, Graphics.COLOR_TRANSPARENT);
         dc.drawText(cx, margin, Graphics.FONT_XTINY,
-            "DEBUG: Formula",
+            "Formula",
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // Разделитель под заголовком
