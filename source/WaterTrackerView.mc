@@ -44,7 +44,7 @@ class WaterTrackerView extends WatchUi.View {
         _timer = new Timer.Timer();
         _slotY = new [4] as Array<Number>;
         _itemLabels = ["-100", "+100", "+250", "+500", "+/-", "Reset"] as Array<String>;
-        _itemColors = [0xA93226, 0x1A5E8A, 0x1F7DB5, 0x2196CF, 0x148F77, 0x5D6D7E] as Array<Number>;
+        _itemColors = [0xB71C1C, 0x0D47A1, 0x1565C0, 0x1976D2, 0x00695C, 0x37474F] as Array<Number>;
     }
 
     function onShow() as Void {
@@ -96,17 +96,17 @@ class WaterTrackerView extends WatchUi.View {
         var maxTarget = (goal > rec) ? goal : rec;
         var amountColor; var goalColor; var recColor;
         if (recReached) {
-            amountColor = Graphics.COLOR_GREEN;
-            goalColor   = Graphics.COLOR_GREEN;
-            recColor    = Graphics.COLOR_GREEN;
+            amountColor = 0x1E8449;  // мягкий зелёный
+            goalColor   = 0x1E8449;
+            recColor    = 0x1E8449;
         } else if (goalReached) {
-            amountColor = 0xFFAA00;
-            goalColor   = 0xFFAA00;
-            recColor    = 0x444444;
+            amountColor = 0xFFB300;  // янтарный
+            goalColor   = 0xFFB300;
+            recColor    = 0x3A3A3A;
         } else {
-            amountColor = Graphics.COLOR_WHITE;
-            goalColor   = 0x666666;
-            recColor    = 0x444444;
+            amountColor = 0xE0E0E0;  // тёплый белый
+            goalColor   = 0x707070;
+            recColor    = 0x3A3A3A;
         }
 
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
@@ -117,88 +117,95 @@ class WaterTrackerView extends WatchUi.View {
         var barTop    = h * 10 / 100;
         var barBottom = h * 90 / 100;
         var barH      = barBottom - barTop;
-        var barW      = 10;
-        var barX      = divX - barW / 2;  // центрирован на divX
+        var barW      = 12;
+        var barX      = divX - barW / 2;
+        var barR      = barW / 2;  // радиус скругления = pill-форма
 
-        // Фон
-        dc.setColor(0x1C2833, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle(barX, barTop, barW, barH);
+        // Фон бара — тёмно-синий с тонкой обводкой, виден даже пустым
+        dc.setColor(0x16304A, Graphics.COLOR_TRANSPARENT);
+        dc.fillRoundedRectangle(barX, barTop, barW, barH, barR);
+        dc.setColor(0x1E5080, Graphics.COLOR_TRANSPARENT);
+        dc.drawRoundedRectangle(barX, barTop, barW, barH, barR);
 
-        // Заливка снизу вверх
+        // Заливка снизу вверх (скруглённая)
         var fillPct = (maxTarget > 0) ? (amount * 100 / maxTarget) : 0;
         if (fillPct > 100) { fillPct = 100; }
         var fillH = barH * fillPct / 100;
         if (fillH > 0) {
             var fillColor;
-            if (recReached)       { fillColor = Graphics.COLOR_GREEN; }
-            else if (goalReached) { fillColor = 0xFFAA00; }
-            else                  { fillColor = 0x1565C0; }
+            if (recReached)       { fillColor = 0x1E8449; }
+            else if (goalReached) { fillColor = 0xFFB300; }
+            else                  { fillColor = 0x29B6F6; }
             dc.setColor(fillColor, Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(barX, barBottom - fillH, barW, fillH);
+            var fillY = barBottom - fillH;
+            if (fillH >= barW) {
+                dc.fillRoundedRectangle(barX, fillY, barW, fillH, barR);
+            } else {
+                dc.fillRectangle(barX, fillY, barW, fillH);
+            }
         }
 
         // Метка первой цели (если goal ≠ rec)
         if (goal != rec && maxTarget > 0) {
             var tickY = barBottom - (barH * minTarget / maxTarget);
-            dc.setColor(0x445566, Graphics.COLOR_TRANSPARENT);
+            dc.setColor(0x2E3F50, Graphics.COLOR_TRANSPARENT);
             dc.fillRectangle(barX, tickY, barW, 2);
         }
 
-        // ── Левая часть ───────────────────────────────────
-        var leftCx = divX / 2;
+        // ── Левая часть — всё выровнено по правому краю у бара ───
+        var rightX = barX - 5;  // правый край всех элементов
+        var jRight = Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER;
 
-        // TODAY label (чуть ниже для симметрии)
-        dc.setColor(0x777777, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(leftCx, h * 22 / 100, Graphics.FONT_XTINY,
-            "TODAY",
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        // "TODAY" метка — зелёный только при достижении REC
+        dc.setColor(recReached ? 0x1E8449 : 0x4A4A4A, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(rightX, h * 18 / 100, Graphics.FONT_XTINY, "TODAY", jRight);
 
-        // TODAY value
+        // Число + единица в одну строку (единица вплотную к бару, число левее)
+        var numY   = h * 32 / 100;
+        var numStr = _fmtNum(amount, units);
+        var unitW  = dc.getTextWidthInPixels(unitLbl, Graphics.FONT_XTINY);
+        dc.setColor(recReached ? 0x1E8449 : (amountColor & 0x888888), Graphics.COLOR_TRANSPARENT);
+        dc.drawText(rightX, numY, Graphics.FONT_XTINY, unitLbl, jRight);
         dc.setColor(amountColor, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(leftCx, h * 35 / 100, Graphics.FONT_SMALL,
-            _fmtNum(amount, units) + " " + unitLbl,
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(rightX - unitW - 3, numY, Graphics.FONT_LARGE, numStr, jRight);
 
         // Разделитель
-        dc.setColor(0x222222, Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(leftCx - 20, h * 46 / 100, leftCx + 20, h * 46 / 100);
+        dc.setColor(0x252525, Graphics.COLOR_TRANSPARENT);
+        dc.drawLine(rightX - 46, h * 43 / 100, rightX, h * 43 / 100);
 
-        // GOAL строка
+        // GOAL
         dc.setColor(goalColor, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(leftCx, h * 56 / 100, Graphics.FONT_XTINY,
-            "GOAL " + _fmtNum(goal, units) + " " + unitLbl,
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(rightX, h * 54 / 100, Graphics.FONT_TINY,
+            "GOAL  " + _fmtNum(goal, units), jRight);
 
         // Разделитель
-        dc.setColor(0x222222, Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(leftCx - 20, h * 65 / 100, leftCx + 20, h * 65 / 100);
+        dc.setColor(0x252525, Graphics.COLOR_TRANSPARENT);
+        dc.drawLine(rightX - 46, h * 64 / 100, rightX, h * 64 / 100);
 
-        // REC строка + предупреждение (если профиль неполный)
+        // REC + предупреждение (если профиль неполный)
         _warnR = 0;
         var recY = h * 74 / 100;
         _recY  = recY;
         _warnY = recY;
         if (profileIncomplete) {
-            _warnR = h * 4 / 100;
-            _warnX = leftCx + 30;
-            dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(leftCx - 8, recY, Graphics.FONT_XTINY,
-                "REC " + _fmtNum(rec, units) + " " + unitLbl,
-                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-            dc.setColor(0xFFAA00, Graphics.COLOR_TRANSPARENT);
+            _warnR = 5;
+            _warnX = 14;
+            dc.setColor(0x4A4A4A, Graphics.COLOR_TRANSPARENT);
+            dc.drawText(rightX, recY, Graphics.FONT_TINY,
+                "REC  " + _fmtNum(rec, units), jRight);
+            dc.setColor(0xFFB300, Graphics.COLOR_TRANSPARENT);
             dc.fillCircle(_warnX, _warnY, _warnR);
             dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
             dc.drawText(_warnX, _warnY, Graphics.FONT_XTINY, "!",
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         } else {
             dc.setColor(recColor, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(leftCx, recY, Graphics.FONT_XTINY,
-                "REC " + _fmtNum(rec, units) + " " + unitLbl,
-                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            dc.drawText(rightX, recY, Graphics.FONT_TINY,
+                "REC  " + _fmtNum(rec, units), jRight);
         }
 
         // ── Правая часть: прокручиваемые кнопки ──────────
-        _btnX = divX + barW / 2 + 3;
+        _btnX = divX + barW / 2 + 4;
         _btnW = w - _btnX - 6;
         _arrowH = h * 6 / 100;
         _btnH   = h * 13 / 100;
@@ -212,14 +219,14 @@ class WaterTrackerView extends WatchUi.View {
         _slotY[3]    = _slotY[2] + _btnH + gap;
         _scrollDownY = _slotY[3] + _btnH;
 
-        // Стрелка вверх — жирная двойная
+        // Стрелка вверх
         var ax  = _btnX + _btnW / 2;
         var ayu = _scrollUpY + _arrowH / 2;
-        dc.setColor(0x888888, Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(ax - 8, ayu + 4, ax,     ayu - 4);
-        dc.drawLine(ax,     ayu - 4, ax + 8, ayu + 4);
-        dc.drawLine(ax - 7, ayu + 4, ax,     ayu - 3);
-        dc.drawLine(ax,     ayu - 3, ax + 7, ayu + 4);
+        dc.setColor(0x5A5A5A, Graphics.COLOR_TRANSPARENT);
+        dc.drawLine(ax - 7, ayu + 3, ax,     ayu - 3);
+        dc.drawLine(ax,     ayu - 3, ax + 7, ayu + 3);
+        dc.drawLine(ax - 6, ayu + 3, ax,     ayu - 2);
+        dc.drawLine(ax,     ayu - 2, ax + 6, ayu + 3);
 
         // 4 видимых кнопки
         for (var slot = 0; slot < 4; slot++) {
@@ -228,13 +235,13 @@ class WaterTrackerView extends WatchUi.View {
                 _itemLabels[itemIdx], slot, _itemColors[itemIdx]);
         }
 
-        // Стрелка вниз — жирная двойная
+        // Стрелка вниз
         var ayd = _scrollDownY + _arrowH / 2;
-        dc.setColor(0x888888, Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(ax - 8, ayd - 4, ax,     ayd + 4);
-        dc.drawLine(ax,     ayd + 4, ax + 8, ayd - 4);
-        dc.drawLine(ax - 7, ayd - 4, ax,     ayd + 3);
-        dc.drawLine(ax,     ayd + 3, ax + 7, ayd - 4);
+        dc.setColor(0x5A5A5A, Graphics.COLOR_TRANSPARENT);
+        dc.drawLine(ax - 7, ayd - 3, ax,     ayd + 3);
+        dc.drawLine(ax,     ayd + 3, ax + 7, ayd - 3);
+        dc.drawLine(ax - 6, ayd - 3, ax,     ayd + 2);
+        dc.drawLine(ax,     ayd + 2, ax + 6, ayd - 3);
     }
 
     function getZoneForTap(tapX as Number, tapY as Number) as Number {
@@ -276,24 +283,18 @@ class WaterTrackerView extends WatchUi.View {
         baseColor as Number
     ) as Void {
         var isActive = (_activeZone == zone);
-        var r = 10;   // умеренное скругление — современный "card" стиль
+        var r = 10;
 
         if (isActive) {
-            // Нажато: яркий белый фон + цветное кольцо снаружи
+            // Нажато: белая вспышка
             dc.setColor(0xFFFFFF, Graphics.COLOR_TRANSPARENT);
             dc.fillRoundedRectangle(x, y, w, h, r);
-            dc.setColor(baseColor, Graphics.COLOR_TRANSPARENT);
-            dc.drawRoundedRectangle(x - 2, y - 2, w + 4, h + 4, r + 2);
-            dc.drawRoundedRectangle(x - 1, y - 1, w + 2, h + 2, r + 1);
             dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
         } else {
-            // Обычное: цветная заливка, без бордера
+            // Обычное: насыщенный цвет, чистая заливка
             dc.setColor(baseColor, Graphics.COLOR_TRANSPARENT);
             dc.fillRoundedRectangle(x, y, w, h, r);
-            // Тонкий блик — полоска сверху чуть светлее
-            dc.setColor(0x333333, Graphics.COLOR_TRANSPARENT);
-            dc.drawLine(x + r, y + 1, x + w - r, y + 1);
-            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+            dc.setColor(0xE0E0E0, Graphics.COLOR_TRANSPARENT);
         }
 
         dc.drawText(x + w / 2, y + h / 2, Graphics.FONT_TINY,
