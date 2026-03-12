@@ -121,10 +121,10 @@ class WaterTrackerView extends WatchUi.View {
         var barX      = divX - barW / 2;
         var barR      = barW / 2;  // радиус скругления = pill-форма
 
-        // Фон бара — тёмно-синий с тонкой обводкой, виден даже пустым
-        dc.setColor(0x16304A, Graphics.COLOR_TRANSPARENT);
+        // Фон бара — почти невидимый, только контур
+        dc.setColor(0x050A10, Graphics.COLOR_TRANSPARENT);
         dc.fillRoundedRectangle(barX, barTop, barW, barH, barR);
-        dc.setColor(0x1E5080, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(0x0F1E2A, Graphics.COLOR_TRANSPARENT);
         dc.drawRoundedRectangle(barX, barTop, barW, barH, barR);
 
         // Заливка снизу вверх (скруглённая)
