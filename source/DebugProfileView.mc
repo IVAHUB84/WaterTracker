@@ -16,7 +16,7 @@ class DebugProfileView extends WatchUi.View {
 
     private var _scrollY as Number = 0;
     private static const LINE as Number = 25;  // высота строки в px
-    private static const TOTAL as Number = 230; // общая высота контента
+    private static const TOTAL as Number = 250; // общая высота контента
 
     function initialize() {
         View.initialize();
@@ -91,65 +91,67 @@ class DebugProfileView extends WatchUi.View {
         // Рисует текст только если y попадает в видимую область
         var margin = 18;
 
-        // Заголовок (фиксированный — не прокручивается)
+        // Дата
+        var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var mm = today.month as Number;
+        var dd = today.day as Number;
+        var hr = today.hour as Number;
+        var mn = today.min as Number;
+        var monthStr = (mm < 10) ? ("0" + mm.toString()) : mm.toString();
+        var dayStr   = (dd < 10) ? ("0" + dd.toString()) : dd.toString();
+        var hrStr    = (hr < 10) ? ("0" + hr.toString()) : hr.toString();
+        var mnStr    = (mn < 10) ? ("0" + mn.toString()) : mn.toString();
+        var dateStr  = dayStr + "." + monthStr + "." + today.year.toString();
+        var timeStr  = hrStr + ":" + mnStr;
+
+        var lx = cx - 52;
+        var rx = cx + 52;
+
+        // ── Заголовок (фиксированный, не прокручивается) ─────
         dc.setColor(0xFFAA00, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, margin, Graphics.FONT_XTINY,
-            "Formula",
+        dc.drawText(cx, 14, Graphics.FONT_XTINY, "Formula",
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(cx, 32, Graphics.FONT_XTINY, dateStr,
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.setColor(0x333333, Graphics.COLOR_TRANSPARENT);
+        dc.drawLine(cx - 60, 44, cx + 60, 44);
 
-        // Разделитель под заголовком
-        dc.setColor(0x444444, Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(cx - 60, 32, cx + 60, 32);
+        // ── Профиль: два столбца ──────────────────────────────
+        _drawLine(dc, lx,  58 - s, 0xE0E0E0, "Wt: " + weightKg.format("%.1f") + "kg", h);
+        _drawLine(dc, rx,  58 - s, 0xE0E0E0, "Ht: " + heightStr, h);
+        _drawLine(dc, lx,  80 - s, 0xE0E0E0, "Age: " + ageStr, h);
+        _drawLine(dc, rx,  80 - s, 0xE0E0E0, "Sex: " + genderLbl, h);
+        _drawLine(dc, cx, 104 - s, 0xE0E0E0,
+            "ActivityScore = " + mod.toString() + " mod + " + vig.toString() + " vig", h);
+        _drawLine(dc, cx, 118 - s, 0x546E7A, "moderate + vigorous \u00D72", h);
 
-        // ── Прокручиваемый контент (начало y=40 в контент-координатах) ──
-        var base_y = 40;  // верхняя граница контента
-
-        // ── Профиль пользователя ─────────────────────────────
-        _drawLine(dc, cx, base_y + LINE * 0 - s, 0x888888,
-            "Weight:  " + weightKg.format("%.1f") + " kg", h);
-        _drawLine(dc, cx, base_y + LINE * 1 - s, 0x888888,
-            "Height:  " + heightStr, h);
-        _drawLine(dc, cx, base_y + LINE * 2 - s, 0x888888,
-            "Age:     " + ageStr, h);
-        _drawLine(dc, cx, base_y + LINE * 3 - s, 0x888888,
-            "Gender:  " + genderLbl, h);
-        _drawLine(dc, cx, base_y + LINE * 4 - s, 0x888888,
-            "ActMin:  " + mod.toString() + "m + " + vig.toString() + "v", h);
-
-        _drawDivider(dc, cx, base_y + LINE * 5 - 5 - s, h);
-
-        // ── Формулы ──────────────────────────────────────────
-        // GOAL base = weight×33 + genderBonus = baseGoal
-        var goalLine = "GOAL = " + weightKg.format("%.1f") + "x33+" +
-                       genderBonus.toString() + " = " + baseGoal.toString();
-        _drawLine(dc, cx, base_y + LINE * 5 + 12 - s, 0x666666, goalLine, h);
-
-        // REC = baseGoal + actBonus = recVal
-        var recLine = "REC = " + baseGoal.toString() + "+" +
-                      actBonus.toString() + " = " + recVal.toString();
-        _drawLine(dc, cx, base_y + LINE * 6 + 12 - s, 0x00AAFF, recLine, h);
-
-        // Скролл-индикатор
-        if (_scrollY > 0 || TOTAL - 220 > 0) {
-            var trackH = h - 60;
-            var trackX = w - 6;
-            var trackY = 40;
-            dc.setColor(0x222222, Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(trackX, trackY, 3, trackH);
-            var maxS = TOTAL - 220;
-            if (maxS > 0) {
-                var thumbH = trackH * 220 / TOTAL;
-                var thumbY = trackY + (trackH - thumbH) * _scrollY / maxS;
-                dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
-                dc.fillRectangle(trackX, thumbY, 3, thumbH);
-            }
+        // ── Разделитель ──────────────────────────────────────
+        var dv = 132 - s;
+        if (dv > 44 && dv < h - 10) {
+            dc.setColor(0x333333, Graphics.COLOR_TRANSPARENT);
+            dc.drawLine(cx - 55, dv, cx + 55, dv);
         }
 
-        // Подсказка (фиксированная)
-        dc.setColor(0x333333, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, h - 12, Graphics.FONT_XTINY,
-            "swipe ^ v  |  tap=close",
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        // ── Формулы ──────────────────────────────────────────
+        var goalLine = "GOAL = " + weightKg.format("%.1f") + "x33+" +
+                       genderBonus.toString() + " = " + baseGoal.toString();
+        _drawLine(dc, cx, 152 - s, 0xFFB300, goalLine, h);
+        _drawLine(dc, cx, 168 - s, 0x546E7A, "base daily norm", h);
+
+        var recLine = "REC = " + baseGoal.toString() + "+" +
+                      actBonus.toString() + " = " + recVal.toString();
+        _drawLine(dc, cx, 196 - s, 0x29B6F6, recLine, h);
+        _drawLine(dc, cx, 212 - s, 0x546E7A, "base + ActivityScore", h);
+
+        // ── Время последнего обновления данных ───────────────
+        var dv2 = 228 - s;
+        if (dv2 > 44 && dv2 < h - 10) {
+            dc.setColor(0x2A2A2A, Graphics.COLOR_TRANSPARENT);
+            dc.drawLine(cx - 55, dv2, cx + 55, dv2);
+        }
+        _drawLine(dc, cx, 240 - s, 0x3A3A3A, "Activity updated " + timeStr, h);
+
     }
 
     private function _drawLine(dc as Graphics.Dc, cx as Number, y as Number,
