@@ -4,7 +4,7 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 
 const GP_STEP_MINUS as Number = 100;
-const GP_STEP_PLUS  as Number = 500;
+const GP_STEP_PLUS  as Number = 100;
 const GP_MIN        as Number = 500;
 const GP_MAX        as Number = 10000;
 
@@ -77,7 +77,7 @@ class GoalPickerView extends WatchUi.View {
             valStr + unitLbl,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        // ── Кнопки −100 / +500 (pill-shape) ──────────────────
+        // ── Кнопки −100 / +100 (pill-shape) ──────────────────
         var btnH  = h * 25 / 100;
         var btnR  = btnH / 2;
         var gap   = w * 4 / 100;
@@ -87,19 +87,19 @@ class GoalPickerView extends WatchUi.View {
         var rightX = margin + btnW + gap;
 
         // Красная -100
-        dc.setColor(0x7B241C, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
         dc.fillRoundedRectangle(leftX, btnSplitY, btnW, btnH, btnR);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(leftX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_SMALL,
             "-100",
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        // Синяя +500
+        // Синяя +100
         dc.setColor(0x1F618D, Graphics.COLOR_TRANSPARENT);
         dc.fillRoundedRectangle(rightX, btnSplitY, btnW, btnH, btnR);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(rightX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_SMALL,
-            "+500",
+            "+100",
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // ── Кнопка Set (широкая таблетка) ────────────────────

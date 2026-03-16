@@ -4,9 +4,9 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 
 const QA_STEP    as Number = 50;
-const QA_MIN     as Number = 50;
+const QA_MIN     as Number = -2000;
 const QA_MAX     as Number = 2000;
-const QA_DEFAULT as Number = 200;
+const QA_DEFAULT as Number = 0;
 
 // Зоны тапа внутри QuickAdd
 const QA_ZONE_NONE  as Number = -1;
@@ -73,7 +73,7 @@ class QuickAddView extends WatchUi.View {
             ? _value.toString()
             : (_value.toFloat() / 29.5735f).format("%.0f");
 
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(_value < 0 ? 0xD50000 : Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(w / 2, h * 27 / 100, Graphics.FONT_MEDIUM,
             valStr + unitLbl,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
@@ -87,7 +87,7 @@ class QuickAddView extends WatchUi.View {
         var leftX = margin;
         var rightX = margin + btnW + gap;
 
-        dc.setColor(0x7B241C, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
         dc.fillRoundedRectangle(leftX, btnSplitY, btnW, btnH, btnR);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(leftX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_SMALL,
