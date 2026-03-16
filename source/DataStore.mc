@@ -142,7 +142,7 @@ class DataStore {
         var gender  = profile.gender;
 
         if (weightG == null || gender == null ||
-            gender == UserProfile.GENDER_UNSPECIFIED) {
+            gender != UserProfile.GENDER_MALE && gender != UserProfile.GENDER_FEMALE) {
             _profileIncomplete = true;
             return 2000;
         }
@@ -176,7 +176,7 @@ class DataStore {
         var weightG = profile.weight;
         var gender  = profile.gender;
         if (weightG == null || gender == null ||
-            gender == UserProfile.GENDER_UNSPECIFIED) { return 2000; }
+            gender != UserProfile.GENDER_MALE && gender != UserProfile.GENDER_FEMALE) { return 2000; }
         var weightKg    = (weightG as Number).toFloat() / 1000.0;
         var base        = (weightKg * 33.0).toNumber();
         var genderBonus = (gender == UserProfile.GENDER_MALE) ? 200 : 0;

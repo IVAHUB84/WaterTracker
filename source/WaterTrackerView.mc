@@ -1,6 +1,7 @@
 // WaterTrackerView.mc — split layout: левая = данные, правая = прокручиваемые кнопки
 import Toybox.Graphics;
 import Toybox.Lang;
+import Toybox.Math;
 import Toybox.Timer;
 import Toybox.WatchUi;
 
@@ -123,12 +124,16 @@ class WaterTrackerView extends WatchUi.View {
         dc.drawLine(divX, h * 8 / 100, divX, h * 78 / 100);
 
         // ── Горизонтальный прогресс бар внизу ────────────────
-        // На y≈218 (84% от 260) доступная ширина круга ≈ 182px → x=39, w=182
-        var hBarX = 46;
-        var hBarW = 168;
+        // Динамический расчёт ширины под любой круглый экран
         var hBarY = h * 84 / 100;
         var hBarH = 10;
         var hBarR = hBarH / 2;
+        var radius   = w / 2;
+        var barMidY  = hBarY + hBarH / 2;
+        var dist     = barMidY - h / 2;
+        var halfW    = Math.sqrt((radius * radius - dist * dist).toFloat()).toNumber();
+        var hBarX = w / 2 - halfW + 8;
+        var hBarW = (halfW - 8) * 2;
 
         // Фон бара
         dc.setColor(0x050A10, Graphics.COLOR_TRANSPARENT);
@@ -167,8 +172,8 @@ class WaterTrackerView extends WatchUi.View {
         var jRight = Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER;
 
         dc.setColor(recReached ? 0xFFFFFF : 0x4A4A4A, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(rightX, h * 18 / 100, Graphics.FONT_XTINY,
-            recReached ? "HYDRATED!" : "TODAY", jRight);
+        var topLabel = recReached ? "DONE!" : "TODAY";
+        dc.drawText(rightX, h * 18 / 100, Graphics.FONT_XTINY, topLabel, jRight);
 
         // Число + единица в одну строку (единица вплотную к бару, число левее)
         var numY   = h * 32 / 100;
