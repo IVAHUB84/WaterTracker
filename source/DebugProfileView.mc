@@ -87,10 +87,6 @@ class DebugProfileView extends WatchUi.View {
         var baseGoal    = profileOk ? (base + genderBonus) : 2000;
         var genderLbl   = genderMale ? "M" : "F";
 
-        // ── Вспомогательная функция отрисовки строки ─────────
-        // Рисует текст только если y попадает в видимую область
-        var margin = 18;
-
         // Дата
         var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
         var mm = today.month as Number;
@@ -104,9 +100,6 @@ class DebugProfileView extends WatchUi.View {
         var dateStr  = dayStr + "." + monthStr + "." + today.year.toString();
         var timeStr  = hrStr + ":" + mnStr;
 
-        var lx = cx - 52;
-        var rx = cx + 52;
-
         // ── Заголовок (фиксированный, не прокручивается) ─────
         dc.setColor(0xFFAA00, Graphics.COLOR_TRANSPARENT);
         dc.drawText(cx, 14, Graphics.FONT_XTINY, "Formula",
@@ -118,10 +111,10 @@ class DebugProfileView extends WatchUi.View {
         dc.drawLine(cx - 60, 44, cx + 60, 44);
 
         // ── Профиль: два столбца ──────────────────────────────
-        _drawLine(dc, lx,  58 - s, 0xE0E0E0, "Wt: " + weightKg.format("%.1f") + "kg", h);
-        _drawLine(dc, rx,  58 - s, 0xE0E0E0, "Ht: " + heightStr, h);
-        _drawLine(dc, lx,  80 - s, 0xE0E0E0, "Age: " + ageStr, h);
-        _drawLine(dc, rx,  80 - s, 0xE0E0E0, "Sex: " + genderLbl, h);
+        _drawLine(dc, cx - 52, 58 - s, 0xE0E0E0, "Wt: " + weightKg.format("%.1f") + "kg", h);
+        _drawLine(dc, cx + 52, 58 - s, 0xE0E0E0, "Ht: " + heightStr, h);
+        _drawLine(dc, cx - 52, 80 - s, 0xE0E0E0, "Age: " + ageStr, h);
+        _drawLine(dc, cx + 52, 80 - s, 0xE0E0E0, "Sex: " + genderLbl, h);
         _drawLine(dc, cx, 104 - s, 0xE0E0E0,
             "ActivityScore = " + mod.toString() + " mod + " + vig.toString() + " vig", h);
         _drawLine(dc, cx, 118 - s, 0x546E7A, "moderate + vigorous \u00D72", h);
@@ -162,12 +155,6 @@ class DebugProfileView extends WatchUi.View {
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 
-    private function _drawDivider(dc as Graphics.Dc, cx as Number,
-                                   y as Number, h as Number) as Void {
-        if (y < 34 || y > h - 20) { return; }
-        dc.setColor(0x333333, Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(cx - 50, y, cx + 50, y);
-    }
 }
 
 // =============================================================================
