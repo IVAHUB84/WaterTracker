@@ -100,28 +100,42 @@ class DebugProfileView extends WatchUi.View {
         var dateStr  = dayStr + "." + monthStr + "." + today.year.toString();
         var timeStr  = hrStr + ":" + mnStr;
 
-        // ── Заголовок (фиксированный, не прокручивается) ─────
+        // Масштаб под любой экран (эталон 260px)
+        var sc = h;
+
+        // ── Заголовок ─────────────────────────────────────────
         dc.setColor(0xFFAA00, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, 14, Graphics.FONT_XTINY, "Formula",
+        dc.drawText(cx, sc * 14 / 260, Graphics.FONT_XTINY, "Formula",
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, 32, Graphics.FONT_XTINY, dateStr,
+        dc.drawText(cx, sc * 32 / 260, Graphics.FONT_XTINY, dateStr,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         dc.setColor(0x333333, Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(cx - 60, 44, cx + 60, 44);
+        dc.drawLine(cx - 60, sc * 44 / 260, cx + 60, sc * 44 / 260);
 
-        // ── Профиль: два столбца ──────────────────────────────
-        _drawLine(dc, cx - 52, 58 - s, 0xE0E0E0, "Wt: " + weightKg.format("%.1f") + "kg", h);
-        _drawLine(dc, cx + 52, 58 - s, 0xE0E0E0, "Ht: " + heightStr, h);
-        _drawLine(dc, cx - 52, 80 - s, 0xE0E0E0, "Age: " + ageStr, h);
-        _drawLine(dc, cx + 52, 80 - s, 0xE0E0E0, "Sex: " + genderLbl, h);
-        _drawLine(dc, cx, 104 - s, 0xE0E0E0,
+        // ── Профиль: два столбца (левый — right-align, правый — left-align) ──
+        var jL = Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER;
+        var jR = Graphics.TEXT_JUSTIFY_LEFT  | Graphics.TEXT_JUSTIFY_VCENTER;
+        var col1x = cx - 8;
+        var col2x = cx + 8;
+        var row1y = sc * 60  / 260 - s;
+        var row2y = sc * 84  / 260 - s;
+        dc.setColor(0xE0E0E0, Graphics.COLOR_TRANSPARENT);
+        if (row1y > sc * 44 / 260 && row1y < h - 10) {
+            dc.drawText(col1x, row1y, Graphics.FONT_XTINY, "Wt: " + weightKg.format("%.1f") + " kg", jL);
+            dc.drawText(col2x, row1y, Graphics.FONT_XTINY, "Ht: " + heightStr, jR);
+        }
+        if (row2y > sc * 44 / 260 && row2y < h - 10) {
+            dc.drawText(col1x, row2y, Graphics.FONT_XTINY, "Age: " + ageStr, jL);
+            dc.drawText(col2x, row2y, Graphics.FONT_XTINY, "Sex: " + genderLbl, jR);
+        }
+        _drawLine(dc, cx, sc * 110 / 260 - s, 0xE0E0E0,
             "ActivityScore = " + mod.toString() + " mod + " + vig.toString() + " vig", h);
-        _drawLine(dc, cx, 118 - s, 0x546E7A, "moderate + vigorous \u00D72", h);
+        _drawLine(dc, cx, sc * 126 / 260 - s, 0x546E7A, "moderate + vigorous \u00D72", h);
 
         // ── Разделитель ──────────────────────────────────────
-        var dv = 132 - s;
-        if (dv > 44 && dv < h - 10) {
+        var dv = sc * 142 / 260 - s;
+        if (dv > sc * 44 / 260 && dv < h - 10) {
             dc.setColor(0x333333, Graphics.COLOR_TRANSPARENT);
             dc.drawLine(cx - 55, dv, cx + 55, dv);
         }
@@ -129,21 +143,21 @@ class DebugProfileView extends WatchUi.View {
         // ── Формулы ──────────────────────────────────────────
         var goalLine = "GOAL = " + weightKg.format("%.1f") + "x33+" +
                        genderBonus.toString() + " = " + baseGoal.toString();
-        _drawLine(dc, cx, 152 - s, 0xFFB300, goalLine, h);
-        _drawLine(dc, cx, 168 - s, 0x546E7A, "base daily norm", h);
+        _drawLine(dc, cx, sc * 162 / 260 - s, 0xFFB300, goalLine, h);
+        _drawLine(dc, cx, sc * 178 / 260 - s, 0x546E7A, "base daily norm", h);
 
         var recLine = "REC = " + baseGoal.toString() + "+" +
                       actBonus.toString() + " = " + recVal.toString();
-        _drawLine(dc, cx, 196 - s, 0x29B6F6, recLine, h);
-        _drawLine(dc, cx, 212 - s, 0x546E7A, "base + ActivityScore", h);
+        _drawLine(dc, cx, sc * 204 / 260 - s, 0x29B6F6, recLine, h);
+        _drawLine(dc, cx, sc * 220 / 260 - s, 0x546E7A, "base + ActivityScore", h);
 
-        // ── Время последнего обновления данных ───────────────
-        var dv2 = 228 - s;
-        if (dv2 > 44 && dv2 < h - 10) {
+        // ── Время обновления ──────────────────────────────────
+        var dv2 = sc * 236 / 260 - s;
+        if (dv2 > sc * 44 / 260 && dv2 < h - 10) {
             dc.setColor(0x2A2A2A, Graphics.COLOR_TRANSPARENT);
             dc.drawLine(cx - 55, dv2, cx + 55, dv2);
         }
-        _drawLine(dc, cx, 240 - s, 0x3A3A3A, "Activity updated " + timeStr, h);
+        _drawLine(dc, cx, sc * 248 / 260 - s, 0x3A3A3A, "Activity updated " + timeStr, h);
 
     }
 
