@@ -132,7 +132,7 @@ class GoalPickerDelegate extends WatchUi.BehaviorDelegate {
         if      (zone == GP_ZONE_MINUS) { _view.step(-GP_STEP_MINUS); }
         else if (zone == GP_ZONE_PLUS)  { _view.step(GP_STEP_PLUS); }
         else if (zone == GP_ZONE_SET)   {
-            DataStore.setGoal(_view.getValue());
+            DataStore.setGoal(_view.getValue(), true);
             WatchUi.popView(WatchUi.SLIDE_DOWN);
         }
         return true;

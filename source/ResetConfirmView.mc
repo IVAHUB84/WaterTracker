@@ -85,7 +85,6 @@ class ResetConfirmDelegate extends WatchUi.BehaviorDelegate {
         var zone   = _view.getZone(coords[0], coords[1]);
         if (zone == RC_ZONE_YES) {
             DataStore.reset();
-            DataStore.setGoal(DataStore.getBaseRecommendedGoal());
         }
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         return true;

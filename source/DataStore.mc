@@ -12,12 +12,13 @@ var _profileIncomplete as Boolean = false;
 class DataStore {
 
     // Ключи хранилища
-    private static const KEY_AMOUNT    as String = "amount";
-    private static const KEY_DATE      as String = "date";
-    private static const KEY_LAST_TIME as String = "lastTime";
-    private static const KEY_GOAL      as String = "goal";
-    private static const KEY_INTERVAL  as String = "interval";
-    private static const KEY_UNITS     as String = "units";
+    private static const KEY_AMOUNT      as String = "amount";
+    private static const KEY_DATE        as String = "date";
+    private static const KEY_LAST_TIME   as String = "lastTime";
+    private static const KEY_GOAL        as String = "goal";
+    private static const KEY_GOAL_MANUAL as String = "goalManual";
+    private static const KEY_INTERVAL    as String = "interval";
+    private static const KEY_UNITS       as String = "units";
 
     // Значения по умолчанию
     private static const DEFAULT_GOAL     as Number = 2000; // мл
@@ -72,6 +73,8 @@ class DataStore {
     static function reset() as Void {
         Application.Storage.setValue(KEY_AMOUNT, 0);
         Application.Storage.deleteValue(KEY_LAST_TIME);
+        Application.Storage.deleteValue(KEY_GOAL);
+        Application.Storage.deleteValue(KEY_GOAL_MANUAL);
         Application.Storage.setValue(KEY_DATE, _todayString());
     }
 
@@ -80,15 +83,21 @@ class DataStore {
 
     (:background)
     static function getGoal() as Number {
-        var value = Application.Storage.getValue(KEY_GOAL);
-        return (value instanceof Number) ? (value as Number) : DEFAULT_GOAL;
+        var manual = Application.Storage.getValue(KEY_GOAL_MANUAL);
+        if (manual instanceof Boolean && (manual as Boolean)) {
+            var value = Application.Storage.getValue(KEY_GOAL);
+            return (value instanceof Number) ? (value as Number) : DEFAULT_GOAL;
+        }
+        return getBaseRecommendedGoal();
     }
 
-    static function setGoal(goal as Number) as Void {
-        // Ограничиваем допустимый диапазон согласно ТЗ
+    // manual=true  — пользователь сам выбрал значение (не сбрасывать до следующего дня)
+    // manual=false — автоматическая установка (сбрасывается вместе с днём)
+    static function setGoal(goal as Number, manual as Boolean) as Void {
         if (goal < 1000) { goal = 1000; }
         if (goal > 10000) { goal = 10000; }
         Application.Storage.setValue(KEY_GOAL, goal);
+        Application.Storage.setValue(KEY_GOAL_MANUAL, manual);
     }
 
     // -------------------------------------------------------------------------
@@ -225,6 +234,8 @@ class DataStore {
         if (isDifferentDay) {
             Application.Storage.setValue(KEY_AMOUNT, 0);
             Application.Storage.deleteValue(KEY_LAST_TIME);
+            Application.Storage.deleteValue(KEY_GOAL);
+            Application.Storage.deleteValue(KEY_GOAL_MANUAL);
             Application.Storage.setValue(KEY_DATE, today);
         }
     }
