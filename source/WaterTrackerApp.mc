@@ -15,12 +15,6 @@ class WaterTrackerApp extends Application.AppBase {
     // Вызывается при запуске виджета
     // При первом запуске авто-устанавливаем цель из профиля пользователя
     function onStart(state as Dictionary?) as Void {
-        var initialized = Application.Storage.getValue("goalInitialized");
-        if (!(initialized instanceof Boolean) || !(initialized as Boolean)) {
-            var rec = DataStore.getRecommendedGoal();
-            DataStore.setGoal(rec);
-            Application.Storage.setValue("goalInitialized", true);
-        }
     }
 
     // Вызывается при закрытии виджета

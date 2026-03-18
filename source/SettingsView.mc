@@ -52,7 +52,7 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
         var goals = SettingsData.GOALS;
         var idx   = _findIdx(goals, DataStore.getGoal());
         idx = (idx + 1) % goals.size();
-        DataStore.setGoal(goals[idx]);
+        DataStore.setGoal(goals[idx], true);
         item.setSubLabel(_fmtGoal(goals[idx], DataStore.getUnits()));
     }
 
