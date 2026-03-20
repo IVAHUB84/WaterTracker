@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings>
+  <!-- Main screen -->
+  <string id="LabelToday">СЕГОДНЯ</string>
+  <string id="LabelDone">ГОТОВО!</string>
+  <string id="LabelGoalPrefix">МИН</string>
+  <string id="LabelRecPrefix">ЦЕЛЬ</string>
+  <string id="LabelTargetsHeader">ЦЕЛИ:</string>
+  <string id="BtnReset">Сброс</string>
+  <!-- Units -->
+  <string id="UnitMl">мл</string>
+  <string id="UnitMin">мин</string>
+  <!-- Settings -->
+  <string id="SettingGoal">Дневная цель</string>
+  <string id="SettingInterval">Напоминание</string>
+  <string id="SettingUnits">Единицы</string>
+  <string id="IntervalOff">Выкл</string>
+  <!-- Reset confirm -->
+  <string id="ResetQuestion">СБРОСИТЬ?</string>
+  <string id="BtnNo">Нет</string>
+  <string id="BtnYes">Да</string>
+  <!-- Quick add / Goal picker -->
+  <string id="TitleCustomAmount">Свой объём</string>
+  <string id="BtnAdd">Добавить</string>
+  <string id="BtnSet">Установить</string>
+  <!-- Profile warning -->
+  <string id="WarningProfileMsg">Заполните профиль
+в Garmin Connect
+для точного
+расчёта нормы</string>
+  <!-- Formula screen -->
+  <string id="LabelFormula">Формула</string>
+  <string id="LabelBaseNorm">базовая норма</string>
+  <string id="LabelBaseActivity">база + активность</string>
+  <string id="LabelModVig">умеренная + высокая x2</string>
+  <string id="LabelActivityUpdated">Активность обновлена </string>
+  <string id="LabelActivityScore">Активность</string>
+  <string id="LabelMod">ум</string>
+  <string id="LabelVig">выс</string>
+  <!-- Formula screen labels -->
+  <string id="LabelWt">Вес</string>
+  <string id="LabelHt">Рост</string>
+  <string id="LabelAge">Лет</string>
+  <string id="LabelSex">Пол</string>
+  <string id="LabelMale">М</string>
+  <string id="LabelFemale">Ж</string>
+  <string id="LabelKg">кг</string>
+  <string id="LabelCm">см</string>
+  <string id="LabelYr">л</string>
+  <string id="LabelNa">н/д</string>
+</strings>

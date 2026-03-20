@@ -1,5 +1,6 @@
 // DebugProfileView.mc — отладочный экран: формула расчёта REC (с прокруткой)
 import Toybox.ActivityMonitor;
+import Toybox.Application;
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.Time;
@@ -16,7 +17,7 @@ class DebugProfileView extends WatchUi.View {
 
     private var _scrollY as Number = 0;
     private static const LINE as Number = 25;  // высота строки в px
-    private static const TOTAL as Number = 250; // общая высота контента
+    private static const TOTAL as Number = 280; // общая высота контента
 
     function initialize() {
         View.initialize();
@@ -130,7 +131,7 @@ class DebugProfileView extends WatchUi.View {
             dc.drawText(col2x, row2y, Graphics.FONT_XTINY, "Sex: " + genderLbl, jR);
         }
         _drawLine(dc, cx, sc * 110 / 260 - s, 0xE0E0E0,
-            "ActivityScore = " + mod.toString() + " mod + " + vig.toString() + " vig", h);
+            "Act = " + mod.toString() + " mod + " + vig.toString() + " vig", h);
         _drawLine(dc, cx, sc * 126 / 260 - s, 0x546E7A, "moderate + vigorous \u00D72", h);
 
         // ── Разделитель ──────────────────────────────────────
@@ -141,13 +142,13 @@ class DebugProfileView extends WatchUi.View {
         }
 
         // ── Формулы ──────────────────────────────────────────
-        var goalLine = "GOAL = " + weightKg.format("%.1f") + "x33+" +
-                       genderBonus.toString() + " = " + baseGoal.toString();
+        var goalLine = "GOAL=" + weightKg.format("%.1f") + "x33+" +
+                       genderBonus.toString() + "=" + baseGoal.toString();
         _drawLine(dc, cx, sc * 162 / 260 - s, 0xFFB300, goalLine, h);
         _drawLine(dc, cx, sc * 178 / 260 - s, 0x546E7A, "base daily norm", h);
 
-        var recLine = "REC = " + baseGoal.toString() + "+" +
-                      actBonus.toString() + " = " + recVal.toString();
+        var recLine = "REC=" + baseGoal.toString() + "+" +
+                      actBonus.toString() + "=" + recVal.toString();
         _drawLine(dc, cx, sc * 204 / 260 - s, 0x29B6F6, recLine, h);
         _drawLine(dc, cx, sc * 220 / 260 - s, 0x546E7A, "base + ActivityScore", h);
 
@@ -158,6 +159,11 @@ class DebugProfileView extends WatchUi.View {
             dc.drawLine(cx - 55, dv2, cx + 55, dv2);
         }
         _drawLine(dc, cx, sc * 248 / 260 - s, 0x3A3A3A, "Activity updated " + timeStr, h);
+
+        // ── Статус Complications ──────────────────────────────
+        var cmpStat = Application.Storage.getValue("_cmpStat");
+        var cmpStr  = "CMP: " + ((cmpStat != null) ? cmpStat.toString() : "—");
+        _drawLine(dc, cx, sc * 268 / 260 - s, 0x1565C0, cmpStr, h);
 
     }
 
@@ -180,6 +186,16 @@ class DebugProfileDelegate extends WatchUi.BehaviorDelegate {
     function initialize(view as DebugProfileView) {
         BehaviorDelegate.initialize();
         _view = view;
+    }
+
+    function onPreviousPage() as Boolean {
+        _view.scroll(-60);
+        return true;
+    }
+
+    function onNextPage() as Boolean {
+        _view.scroll(60);
+        return true;
     }
 
     function onDrag(evt as WatchUi.DragEvent) as Boolean {

@@ -1,6 +1,7 @@
 // WaterTrackerApp.mc — точка входа приложения
 import Toybox.Application;
 import Toybox.Background;
+import Toybox.Complications;
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.Time;
@@ -61,96 +62,6 @@ class WaterTrackerApp extends Application.AppBase {
     }
 }
 
-// -----------------------------------------------------------------------------
-// Делегат кнопок главного экрана
-
-class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
-
-    private var _view       as WaterTrackerView;
-    private var _lastDragY  as Number = -1;
-
-    function initialize(view as WaterTrackerView) {
-        BehaviorDelegate.initialize();
-        _view = view;
-    }
-
-    // Долгое нажатие на левую половину (GOAL) → установка цели
-    function onHold(evt as WatchUi.ClickEvent) as Boolean {
-        if (evt.getCoordinates()[0] < _view.getBtnX()) {
-            pushGoalPickerView();
-        }
-        return true;
-    }
-
-    // MENU (долгое нажатие UP) — debug-экран профиля пользователя
-    function onMenu() as Boolean {
-        pushDebugProfileView();
-        return true;
-    }
-
-    // Физ. кнопки UP/DOWN — прокрутка
-    function onPreviousPage() as Boolean {
-        _view.scrollUp();
-        return true;
-    }
-
-    function onNextPage() as Boolean {
-        _view.scrollDown();
-        return true;
-    }
-
-    // Drag пальцем — надёжная прокрутка правого столбца
-    function onDrag(evt as WatchUi.DragEvent) as Boolean {
-        var y = evt.getCoordinates()[1];
-        if (_lastDragY < 0) {
-            _lastDragY = y;
-            return true;
-        }
-        var diff = _lastDragY - y;
-        // Большой скачок = начало нового жеста, просто запомнить
-        if (diff > 70 || diff < -70) {
-            _lastDragY = y;
-            return true;
-        }
-        if (diff > 30) {
-            _view.scrollDown();
-            _lastDragY = y;
-        } else if (diff < -30) {
-            _view.scrollUp();
-            _lastDragY = y;
-        }
-        return true;
-    }
-
-    // TAP — определяем зону, подсвечиваем, выполняем действие
-    function onTap(evt as WatchUi.ClickEvent) as Boolean {
-        _lastDragY = -1;
-        var coords = evt.getCoordinates();
-        var zone   = _view.getZoneForTap(coords[0], coords[1]);
-        if (zone == ZONE_NONE) { return true; }
-
-        if (zone == ZONE_SCROLL_UP)   { _view.scrollUp();                    return true; }
-        if (zone == ZONE_SCROLL_DOWN) { _view.scrollDown();                   return true; }
-        if (zone == ZONE_WARNING)     { pushProfileWarningView();             return true; }
-
-
-        var itemIdx = (_view.getScrollTop() + zone) % RIGHT_ITEM_COUNT;
-        _view.flashZone(zone);
-
-        if      (itemIdx == 0) { DataStore.addAmount(-100); }
-        else if (itemIdx == 1) { DataStore.addAmount(100); }
-        else if (itemIdx == 2) { DataStore.addAmount(250); }
-        else if (itemIdx == 3) { DataStore.addAmount(500); }
-        else if (itemIdx == 4) { pushQuickAddView(); }
-        else if (itemIdx == 5) { pushResetConfirm(); }
-        return true;
-    }
-
-    function onBack() as Boolean {
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
-        return true;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Глобальный доступ к экземпляру приложения
@@ -158,4 +69,41 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
 function getApp() as WaterTrackerApp {
     return Application.getApp() as WaterTrackerApp;
 }
+
+// -----------------------------------------------------------------------------
+// Публикация данных в Complications (для watchface)
+
+(:complications_api)
+function updateComplications() as Void {
+    if (!(Toybox has :Complications)) { return; }
+    if (!(Complications has :updateComplication)) { return; }
+
+    var units   = DataStore.getUnits();
+    var amount  = DataStore.getAmount();
+    var goal    = DataStore.getGoal();
+    var rec     = DataStore.getBaseRecommendedGoal();
+
+    var isOz    = (units == 1);
+    var ml2oz   = 0.033814f;
+    var amtVal  = isOz ? (amount * ml2oz) : amount.toFloat();
+    var goalVal = isOz ? (goal   * ml2oz) : goal.toFloat();
+    var recVal  = isOz ? (rec    * ml2oz) : rec.toFloat();
+    var pctVal  = (goal > 0) ? (amount * 100.0f / goal) : 0.0f;
+    var unitStr = isOz ? "oz" : "ml";
+
+    try {
+        Complications.updateComplication(0, {:value => amtVal,  :unit => unitStr} as Complications.Data);
+        Complications.updateComplication(1, {:value => goalVal, :unit => unitStr} as Complications.Data);
+        Complications.updateComplication(2, {:value => recVal,  :unit => unitStr} as Complications.Data);
+        Complications.updateComplication(3, {:value => pctVal,  :unit => "%"} as Complications.Data);
+        Application.Storage.setValue("_cmpStat", "ok");
+    } catch (e instanceof Lang.OperationNotAllowedException) {
+        Application.Storage.setValue("_cmpStat", "OpNotAllowed");
+    } catch (e instanceof Lang.Exception) {
+        Application.Storage.setValue("_cmpStat", e.getErrorMessage());
+    }
+}
+
+(:no_complications_api)
+function updateComplications() as Void {}
 
