@@ -79,6 +79,6 @@ hydration goal</string>
   <!-- Complications -->
   <string id="CompToday">WT· Water Today</string>
   <string id="CompPctGoal">WT· % of Goal</string>
-  <string id="CompTodayShort">TODAY</string>
-  <string id="CompPctGoalShort">%GOAL</string>
+  <string id="CompTodayShort">WT·TODAY</string>
+  <string id="CompPctGoalShort">WT·%GOAL</string>
 </strings>
