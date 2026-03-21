@@ -3,12 +3,6 @@
     <complication id="0" access="public" longLabel="@Strings.CompToday" shortLabel="@Strings.CompTodayShort" icon="@Drawables.CompIcon">
         <faceIt defaultText="@Strings.CompToday" />
     </complication>
-    <complication id="1" access="public" longLabel="@Strings.CompGoal" shortLabel="@Strings.CompGoalShort" icon="@Drawables.CompIcon">
-        <faceIt defaultText="@Strings.CompGoal" />
-    </complication>
-    <complication id="2" access="public" longLabel="@Strings.CompRec" shortLabel="@Strings.CompRecShort" icon="@Drawables.CompIcon">
-        <faceIt defaultText="@Strings.CompRec" />
-    </complication>
     <complication id="3" access="public" longLabel="@Strings.CompPctGoal" shortLabel="@Strings.CompPctGoalShort" icon="@Drawables.CompIcon">
         <faceIt defaultText="@Strings.CompPctGoal" />
     </complication>

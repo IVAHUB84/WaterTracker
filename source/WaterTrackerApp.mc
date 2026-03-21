@@ -86,16 +86,12 @@ function updateComplications() as Void {
     var isOz    = (units == 1);
     var ml2oz   = 0.033814f;
     var amtVal  = isOz ? (amount * ml2oz).toNumber() : amount;
-    var goalVal = isOz ? (goal   * ml2oz).toNumber() : goal;
-    var recVal  = isOz ? (rec    * ml2oz).toNumber() : rec;
     var pctVal  = (goal > 0) ? (amount * 100 / goal) : 0;
     var unitStr = isOz ? "oz" : "ml";
 
     try {
-        Complications.updateComplication(0, {:value => amtVal,  :unit => unitStr} as Complications.Data);
-        Complications.updateComplication(1, {:value => goalVal, :unit => unitStr} as Complications.Data);
-        Complications.updateComplication(2, {:value => recVal,  :unit => unitStr} as Complications.Data);
-        Complications.updateComplication(3, {:value => pctVal,  :unit => "%"} as Complications.Data);
+        Complications.updateComplication(0, {:value => amtVal, :unit => unitStr} as Complications.Data);
+        Complications.updateComplication(3, {:value => pctVal, :unit => "%"}     as Complications.Data);
         Application.Storage.setValue("_cmpStat", "ok");
     } catch (e instanceof Lang.OperationNotAllowedException) {
         Application.Storage.setValue("_cmpStat", "OpNotAllowed");
