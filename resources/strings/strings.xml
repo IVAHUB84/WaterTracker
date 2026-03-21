@@ -77,8 +77,8 @@ hydration goal</string>
   <string id="ReminderBody">Time to drink water!</string>
 
   <!-- Complications -->
-  <string id="CompToday">WT· Water Today</string>
-  <string id="CompPctGoal">WT· % of Goal</string>
-  <string id="CompTodayShort">WT·TODAY</string>
-  <string id="CompPctGoalShort">WT·%GOAL</string>
+  <string id="CompToday">WT_ Water Today</string>
+  <string id="CompPctGoal">WT_ % of Goal</string>
+  <string id="CompTodayShort">WT_TODAY</string>
+  <string id="CompPctGoalShort">WT_%GOAL</string>
 </strings>
