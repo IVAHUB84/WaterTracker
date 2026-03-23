@@ -12,9 +12,9 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         _view = view;
     }
 
-    // MENU (долгое нажатие UP) → Formula
+    // MENU (долгое нажатие UP) → Settings
     function onMenu() as Boolean {
-        pushDebugProfileView();
+        pushSettingsMenu();
         return true;
     }
 

@@ -18,12 +18,24 @@ class DataStore {
     private static const KEY_GOAL        as String = "goal";
     private static const KEY_GOAL_MANUAL as String = "goalManual";
     private static const KEY_INTERVAL    as String = "interval";
+    private static const KEY_INTERVAL_PERIOD as String = "intervalPeriod";
     private static const KEY_UNITS       as String = "units";
+    private static const KEY_SMART       as String = "smart";
+    private static const KEY_FROM_HOUR   as String = "fromHour";
+    private static const KEY_TO_HOUR     as String = "toHour";
+    private static const KEY_VIBRATE     as String = "vibrate";
+    private static const KEY_TONE        as String = "tone";
 
     // Значения по умолчанию
     private static const DEFAULT_GOAL     as Number = 2000; // мл
-    private static const DEFAULT_INTERVAL as Number = 60;   // минут (0 = выкл)
+    private static const DEFAULT_INTERVAL as Number = 0;    // 0 = выкл
+    private static const DEFAULT_INTERVAL_PERIOD as Number = 60; // минут
     private static const DEFAULT_UNITS    as Number = 0;    // 0 = мл, 1 = oz
+    private static const DEFAULT_SMART    as Boolean = false;
+    private static const DEFAULT_FROM     as Number = 8;    // час начала
+    private static const DEFAULT_TO       as Number = 20;   // час окончания
+    private static const DEFAULT_VIBRATE  as Boolean = true;
+    private static const DEFAULT_TONE     as Boolean = false;
 
     // -------------------------------------------------------------------------
     // Основные методы работы с объёмом
@@ -114,6 +126,17 @@ class DataStore {
         Application.Storage.setValue(KEY_INTERVAL, minutes);
     }
 
+    // Период напоминаний (30/60/90/120 мин) — хранится отдельно от ON/OFF
+    (:background)
+    static function getIntervalPeriod() as Number {
+        var value = Application.Storage.getValue(KEY_INTERVAL_PERIOD);
+        return (value instanceof Number) ? (value as Number) : DEFAULT_INTERVAL_PERIOD;
+    }
+
+    static function setIntervalPeriod(minutes as Number) as Void {
+        Application.Storage.setValue(KEY_INTERVAL_PERIOD, minutes);
+    }
+
     // -------------------------------------------------------------------------
     // Единицы измерения
 
@@ -125,6 +148,78 @@ class DataStore {
 
     static function setUnits(units as Number) as Void {
         Application.Storage.setValue(KEY_UNITS, units);
+    }
+
+    // -------------------------------------------------------------------------
+    // Умные напоминания
+
+    (:background)
+    static function getSmart() as Boolean {
+        var value = Application.Storage.getValue(KEY_SMART);
+        return (value instanceof Boolean) ? (value as Boolean) : DEFAULT_SMART;
+    }
+
+    static function setSmart(smart as Boolean) as Void {
+        Application.Storage.setValue(KEY_SMART, smart);
+    }
+
+    // Час начала окна напоминаний (fallback: UserProfile.wakeTime → 8:00)
+    (:background)
+    static function getFromHour() as Number {
+        var value = Application.Storage.getValue(KEY_FROM_HOUR);
+        if (value instanceof Number) { return value as Number; }
+        if (Toybox has :UserProfile) {
+            var profile = UserProfile.getProfile();
+            if (profile != null && profile.wakeTime != null) {
+                return (profile.wakeTime as Number) / 3600;
+            }
+        }
+        return DEFAULT_FROM;
+    }
+
+    static function setFromHour(hour as Number) as Void {
+        Application.Storage.setValue(KEY_FROM_HOUR, hour);
+    }
+
+    // Час окончания окна напоминаний (fallback: UserProfile.sleepTime → 20:00)
+    (:background)
+    static function getToHour() as Number {
+        var value = Application.Storage.getValue(KEY_TO_HOUR);
+        if (value instanceof Number) { return value as Number; }
+        if (Toybox has :UserProfile) {
+            var profile = UserProfile.getProfile();
+            if (profile != null && profile.sleepTime != null) {
+                return (profile.sleepTime as Number) / 3600;
+            }
+        }
+        return DEFAULT_TO;
+    }
+
+    static function setToHour(hour as Number) as Void {
+        Application.Storage.setValue(KEY_TO_HOUR, hour);
+    }
+
+    // -------------------------------------------------------------------------
+    // Настройки уведомлений
+
+    (:background)
+    static function getVibrate() as Boolean {
+        var value = Application.Storage.getValue(KEY_VIBRATE);
+        return (value instanceof Boolean) ? (value as Boolean) : DEFAULT_VIBRATE;
+    }
+
+    static function setVibrate(enabled as Boolean) as Void {
+        Application.Storage.setValue(KEY_VIBRATE, enabled);
+    }
+
+    (:background)
+    static function getTone() as Boolean {
+        var value = Application.Storage.getValue(KEY_TONE);
+        return (value instanceof Boolean) ? (value as Boolean) : DEFAULT_TONE;
+    }
+
+    static function setTone(enabled as Boolean) as Void {
+        Application.Storage.setValue(KEY_TONE, enabled);
     }
 
     // -------------------------------------------------------------------------

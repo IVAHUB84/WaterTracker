@@ -74,7 +74,22 @@ class WaterTrackerView extends WatchUi.View {
     }
 
     function onShow() as Void {
+        _refreshLabels();
         WatchUi.requestUpdate();
+    }
+
+    private function _refreshLabels() as Void {
+        if (DataStore.getUnits() == 1) {
+            _itemLabels[0] = "-3 oz";
+            _itemLabels[1] = "+3 oz";
+            _itemLabels[2] = "+8 oz";
+            _itemLabels[3] = "+17 oz";
+        } else {
+            _itemLabels[0] = "-100";
+            _itemLabels[1] = "+100";
+            _itemLabels[2] = "+250";
+            _itemLabels[3] = "+500";
+        }
     }
 
     function getScrollTop() as Number { return _scrollTop; }
