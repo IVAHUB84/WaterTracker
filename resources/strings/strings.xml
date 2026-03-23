@@ -4,19 +4,32 @@
   <string id="AppName">Water Tracker</string>
 
   <!-- Main screen -->
+  <string id="LabelToday">TODAY</string>
+  <string id="LabelDone">DONE!</string>
+  <string id="LabelGoalPrefix">GOAL</string>
+  <string id="LabelRecPrefix">REC</string>
   <string id="LabelGoal">Goal</string>
   <string id="LabelDrank">Drank</string>
   <string id="LabelLastDrink">Last</string>
   <string id="LabelNever">Never</string>
   <string id="LabelGoalReached">Goal reached!</string>
   <string id="LabelGoalReachedMsg">Great job! Stay hydrated!</string>
+  <string id="BtnReset">Reset</string>
 
   <!-- Add water screen -->
   <string id="TitleAddWater">Add Water</string>
+  <string id="TitleCustomAmount">Custom Amount</string>
   <string id="Btn150">+150 ml</string>
   <string id="Btn250">+250 ml</string>
   <string id="Btn350">+350 ml</string>
+  <string id="BtnAdd">Add</string>
+  <string id="BtnSet">Set</string>
   <string id="LabelAdded">Added!</string>
+
+  <!-- Reset confirm -->
+  <string id="ResetQuestion">Reset today?</string>
+  <string id="BtnNo">No</string>
+  <string id="BtnYes">Yes</string>
 
   <!-- Settings -->
   <string id="TitleSettings">Settings</string>
@@ -26,13 +39,46 @@
   <string id="SettingLanguage">Language</string>
   <string id="UnitMl">ml</string>
   <string id="UnitOz">oz</string>
+  <string id="UnitMin">min</string>
   <string id="Interval30">30 min</string>
   <string id="Interval60">60 min</string>
   <string id="Interval90">90 min</string>
   <string id="Interval120">120 min</string>
   <string id="IntervalOff">Off</string>
 
+  <!-- Profile warning -->
+  <string id="WarningProfileMsg">Fill your profile
+in Garmin Connect
+for accurate
+hydration goal</string>
+
+  <!-- Formula / debug screen -->
+  <string id="LabelFormula">Formula</string>
+  <string id="LabelBaseNorm">base daily norm</string>
+  <string id="LabelBaseActivity">base + ActivityScore</string>
+  <string id="LabelModVig">moderate + vigorous x2</string>
+  <string id="LabelActivityUpdated">Activity updated </string>
+  <string id="LabelActivityScore">ActivityScore</string>
+  <string id="LabelMod">mod</string>
+  <string id="LabelVig">vig</string>
+  <string id="LabelWt">Wt</string>
+  <string id="LabelHt">Ht</string>
+  <string id="LabelAge">Age</string>
+  <string id="LabelSex">Sex</string>
+  <string id="LabelMale">M</string>
+  <string id="LabelFemale">F</string>
+  <string id="LabelKg">kg</string>
+  <string id="LabelCm">cm</string>
+  <string id="LabelYr">yr</string>
+  <string id="LabelNa">n/a</string>
+
   <!-- Reminder notification -->
   <string id="ReminderTitle">Water Tracker</string>
   <string id="ReminderBody">Time to drink water!</string>
+
+  <!-- Complications -->
+  <string id="CompToday">WT: Water Today</string>
+  <string id="CompPctGoal">WT: % of Goal</string>
+  <string id="CompTodayShort">WT_TODAY</string>
+  <string id="CompPctGoalShort">WT_%GOAL</string>
 </strings>

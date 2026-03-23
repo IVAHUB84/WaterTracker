@@ -14,6 +14,7 @@ const ZONE_SCROLL_UP   as Number = 5;
 const ZONE_SCROLL_DOWN as Number = 6;
 const ZONE_WARNING     as Number = 7;
 const ZONE_REC         as Number = 8;
+const ZONE_FORMULA     as Number = 9;
 
 const RIGHT_ITEM_COUNT as Number = 6;
 
@@ -27,9 +28,20 @@ class WaterTrackerView extends WatchUi.View {
     private var _scrollDownY as Number = 0;
     private var _slotY       as Array<Number>;
 
-    private var _scrollTop  as Number = 0;
-    private var _activeZone as Number = ZONE_NONE;
-    private var _timer      as Timer.Timer;
+    private var _scrollTop      as Number  = 0;
+    private var _activeZone     as Number  = ZONE_NONE;
+    private var _showSelection  as Boolean = false;
+    private var _boldWhite      as Boolean = false;
+    private var _showFormulaBtn as Boolean = false;
+    private var _formulaBtnY    as Number  = 0;
+    private var _formulaBtnH    as Number  = 0;
+    private var _shortLabels    as Boolean = false;
+    private var _timer          as Timer.Timer;
+
+    function setShowSelection(v as Boolean)  as Void { _showSelection = v; }
+    function setBoldWhite(v as Boolean)      as Void { _boldWhite = v; }
+    function setShowFormulaBtn(v as Boolean) as Void { _showFormulaBtn = v; }
+    function setShortLabels(v as Boolean)    as Void { _shortLabels = v; }
 
     // Позиция иконки предупреждения и REC строки (левая часть)
     private var _warnX as Number = 0;
@@ -39,6 +51,19 @@ class WaterTrackerView extends WatchUi.View {
 
     private var _itemLabels as Array<String>;
     private var _itemColors as Array<Number>;
+    private var _itemCount  as Number = RIGHT_ITEM_COUNT;
+
+    function addFormulaItem() as Void {
+        _itemLabels = ["-100", "+100", "+250", "+500", "+/-", "Reset", "GOAL+/-"] as Array<String>;
+        _itemColors = [0xB71C1C, 0x0D47A1, 0x1565C0, 0x1976D2, 0xF57F17, 0x37474F, 0x6A0DAD] as Array<Number>;
+        _itemCount = 7;
+    }
+
+    function addFormulaBtnItem() as Void {
+        _itemLabels = ["-100", "+100", "+250", "+500", "+/-", "Reset", "Formula"] as Array<String>;
+        _itemColors = [0xB71C1C, 0x0D47A1, 0x1565C0, 0x1976D2, 0xF57F17, 0x37474F, 0x6A0DAD] as Array<Number>;
+        _itemCount = 7;
+    }
 
     function initialize() {
         View.initialize();
@@ -56,12 +81,12 @@ class WaterTrackerView extends WatchUi.View {
     function getBtnX()     as Number { return _btnX; }
 
     function scrollUp() as Void {
-        _scrollTop = (_scrollTop + RIGHT_ITEM_COUNT - 1) % RIGHT_ITEM_COUNT;
+        _scrollTop = (_scrollTop + _itemCount - 1) % _itemCount;
         WatchUi.requestUpdate();
     }
 
     function scrollDown() as Void {
-        _scrollTop = (_scrollTop + 1) % RIGHT_ITEM_COUNT;
+        _scrollTop = (_scrollTop + 1) % _itemCount;
         WatchUi.requestUpdate();
     }
 
@@ -113,6 +138,12 @@ class WaterTrackerView extends WatchUi.View {
             amountColor = 0xE0E0E0;  // белый — 0–33%, начало дня
             goalColor   = 0x707070;
             recColor    = 0x3A3A3A;
+        }
+        // Instinct: серые/тёмные → белый; зелёный и синий остаются
+        if (_boldWhite) {
+            if (amountColor != 0x43A047 && amountColor != 0x1565C0) { amountColor = 0xFFFFFF; }
+            if (goalColor   != 0x43A047)                            { goalColor   = 0xFFFFFF; }
+            if (!recReached)                                         { recColor    = 0xFFFFFF; }
         }
 
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
@@ -171,8 +202,9 @@ class WaterTrackerView extends WatchUi.View {
         var rightX = divX - 6;
         var jRight = Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER;
 
-        dc.setColor(recReached ? 0xFFFFFF : 0x4A4A4A, Graphics.COLOR_TRANSPARENT);
+        var lblColor = (_boldWhite || recReached) ? 0xFFFFFF : 0x4A4A4A;
         var topLabel = recReached ? "DONE!" : "TODAY";
+        dc.setColor(lblColor, Graphics.COLOR_TRANSPARENT);
         dc.drawText(rightX, h * 18 / 100, Graphics.FONT_XTINY, topLabel, jRight);
 
         // Число + единица в одну строку (единица вплотную к бару, число левее)
@@ -186,7 +218,8 @@ class WaterTrackerView extends WatchUi.View {
 
         // GOAL
         dc.setColor(goalColor, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(rightX, h * 50 / 100, Graphics.FONT_TINY,
+        dc.drawText(rightX, h * 50 / 100,
+            _boldWhite ? Graphics.FONT_SMALL : (_shortLabels ? Graphics.FONT_XTINY : Graphics.FONT_TINY),
             "GOAL  " + _fmtNum(goal, units), jRight);
 
         // REC + предупреждение (если профиль неполный)
@@ -197,8 +230,9 @@ class WaterTrackerView extends WatchUi.View {
         if (profileIncomplete) {
             _warnR = 5;
             _warnX = 14;
-            dc.setColor(0x4A4A4A, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(rightX, recY, Graphics.FONT_TINY,
+            dc.setColor(recColor, Graphics.COLOR_TRANSPARENT);
+            dc.drawText(rightX, recY,
+                _boldWhite ? Graphics.FONT_SMALL : (_shortLabels ? Graphics.FONT_XTINY : Graphics.FONT_TINY),
                 "REC  " + _fmtNum(rec, units), jRight);
             dc.setColor(0xFFB300, Graphics.COLOR_TRANSPARENT);
             dc.fillCircle(_warnX, _warnY, _warnR);
@@ -207,7 +241,8 @@ class WaterTrackerView extends WatchUi.View {
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         } else {
             dc.setColor(recColor, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(rightX, recY, Graphics.FONT_TINY,
+            dc.drawText(rightX, recY,
+                _boldWhite ? Graphics.FONT_SMALL : (_shortLabels ? Graphics.FONT_XTINY : Graphics.FONT_TINY),
                 "REC  " + _fmtNum(rec, units), jRight);
         }
 
@@ -237,7 +272,7 @@ class WaterTrackerView extends WatchUi.View {
 
         // 4 видимых кнопки
         for (var slot = 0; slot < 4; slot++) {
-            var itemIdx = (_scrollTop + slot) % RIGHT_ITEM_COUNT;
+            var itemIdx = (_scrollTop + slot) % _itemCount;
             _drawBtn(dc, _btnX, _slotY[slot], _btnW, _btnH,
                 _itemLabels[itemIdx], slot, _itemColors[itemIdx]);
         }
@@ -249,6 +284,7 @@ class WaterTrackerView extends WatchUi.View {
         dc.drawLine(ax,     ayd + 3, ax + 7, ayd - 3);
         dc.drawLine(ax - 6, ayd - 3, ax,     ayd + 2);
         dc.drawLine(ax,     ayd + 2, ax + 6, ayd - 3);
+
     }
 
     function getZoneForTap(tapX as Number, tapY as Number) as Number {
@@ -301,10 +337,18 @@ class WaterTrackerView extends WatchUi.View {
             // Обычное: насыщенный цвет, чистая заливка
             dc.setColor(baseColor, Graphics.COLOR_TRANSPARENT);
             dc.fillRoundedRectangle(x, y, w, h, r);
-            dc.setColor(0xE0E0E0, Graphics.COLOR_TRANSPARENT);
+            // Белая рамка выделения для кнопочного управления
+            if (_showSelection && zone == ZONE_SLOT0) {
+                dc.setColor(0xFFFFFF, Graphics.COLOR_TRANSPARENT);
+                dc.fillRoundedRectangle(x - 3, y - 3, w + 6, h + 6, r + 2);
+                dc.setColor(baseColor, Graphics.COLOR_TRANSPARENT);
+                dc.fillRoundedRectangle(x, y, w, h, r);
+            }
+            dc.setColor(_boldWhite ? 0xFFFFFF : 0xE0E0E0, Graphics.COLOR_TRANSPARENT);
         }
 
-        dc.drawText(x + w / 2, y + h / 2, Graphics.FONT_TINY,
+        dc.drawText(x + w / 2, y + h / 2,
+            _boldWhite ? Graphics.FONT_SMALL : Graphics.FONT_TINY,
             label,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     }
