@@ -33,7 +33,7 @@ class BackgroundService extends System.ServiceDelegate {
         if (DataStore.getSmart()) {
             _smartNotify(amount, goal, rec);
         } else {
-            _notify(1);
+            _notify(1, "Time to drink water!");
         }
     }
 
@@ -57,27 +57,33 @@ class BackgroundService extends System.ServiceDelegate {
 
         // Достиг GOAL но не REC — была активность, нужно пить ещё
         if (amount >= goal) {
-            _notify(2);
+            _notify(2, "Active day! Drink more");
             return;
         }
 
-        // Сильно отстаёт от темпа (>20%) или давно не пил (>90 мин)
-        if (actualProgress < idealProgress - 0.2f || minsSinceLast > 90) {
-            _notify(1);
+        // Давно не пил (>90 мин)
+        if (minsSinceLast > 90) {
+            _notify(1, "Haven't drunk in 90+ min");
+            return;
+        }
+
+        // Сильно отстаёт от темпа (>20%)
+        if (actualProgress < idealProgress - 0.2f) {
+            _notify(1, "You're behind schedule");
             return;
         }
 
         // Отстаёт немного (>10%)
         if (actualProgress < idealProgress - 0.1f) {
-            _notify(1);
+            _notify(1, "Time to drink water!");
         }
     }
 
     // 1 = одна вибрация/тон, 2 = двойная (активность)
-    private function _notify(count as Number) as Void {
+    private function _notify(count as Number, message as String) as Void {
         // Текстовое уведомление — всегда
         if ((Toybox has :Attention) && (Attention has :showWeakNotification)) {
-            Attention.showWeakNotification("Water Tracker", "Time to drink water!", {});
+            Attention.showWeakNotification("Water Tracker", message, {});
         }
         // Вибрация
         if (DataStore.getVibrate() && (Toybox has :Attention) && (Attention has :vibrate)) {

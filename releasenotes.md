@@ -8,18 +8,21 @@
 ### Reminders
 - **Smart mode** — intelligent reminders based on daily hydration pace
   - Checks every 30 min in the From–To time window
-  - Silent when goal (REC) is reached
-  - Double vibration when daily goal exceeded but REC not yet reached (active day signal)
-  - Vibrates when behind pace by >10% or not drinking for >90 min
+  - Silent when REC is reached
+  - 4 contextual messages depending on situation:
+    - `Time to drink water!` — standard reminder
+    - `Active day! Drink more` — goal reached but REC not yet (active day)
+    - `Haven't drunk in 90+ min` — no intake for over 90 minutes
+    - `You're behind schedule` — behind pace by more than 20%
 - **Interval mode** — fixed reminders: Off / 30 / 60 / 90 / 120 min
-- **From / To** — active time window (defaults from Garmin profile sleep/wake times, fallback 8:00–20:00)
-- Smart ON automatically disables Interval; Interval ON automatically disables Smart
+- **From / To** — active time window for both Smart and Interval (defaults from Garmin profile sleep/wake times, fallback 8:00–20:00)
+- Smart ON automatically clears Interval; Interval ON automatically disables Smart
 
 ### Notification
 - Separate **Notification** submenu in Settings
 - **Vibrate** toggle (default ON)
 - **Tone** toggle (default OFF)
-- Text notification always fires when reminder triggers
+- Text notification always fires when reminder triggers (not configurable)
 
 ### Other
 - Button labels update to oz when units switched to oz (-3 oz / +3 oz / +8 oz / +17 oz)
