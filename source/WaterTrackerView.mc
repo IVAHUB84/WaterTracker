@@ -57,12 +57,14 @@ class WaterTrackerView extends WatchUi.View {
         _itemLabels = ["-100", "+100", "+250", "+500", "+/-", "Reset", "GOAL+/-"] as Array<String>;
         _itemColors = [0xB71C1C, 0x0D47A1, 0x1565C0, 0x1976D2, 0xF57F17, 0x37474F, 0x6A0DAD] as Array<Number>;
         _itemCount = 7;
+        _refreshLabels();
     }
 
     function addFormulaBtnItem() as Void {
         _itemLabels = ["-100", "+100", "+250", "+500", "+/-", "Reset", "Formula"] as Array<String>;
         _itemColors = [0xB71C1C, 0x0D47A1, 0x1565C0, 0x1976D2, 0xF57F17, 0x37474F, 0x6A0DAD] as Array<Number>;
         _itemCount = 7;
+        _refreshLabels();
     }
 
     function initialize() {

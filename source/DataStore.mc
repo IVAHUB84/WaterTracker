@@ -171,7 +171,9 @@ class DataStore {
         if (Toybox has :UserProfile) {
             var profile = UserProfile.getProfile();
             if (profile != null && profile.wakeTime != null) {
-                return (profile.wakeTime as Number) / 3600;
+                var wt = profile.wakeTime;
+                if (wt instanceof Long)   { return (wt as Long).toNumber()   / 3600; }
+                if (wt instanceof Number) { return (wt as Number) / 3600; }
             }
         }
         return DEFAULT_FROM;
@@ -189,7 +191,9 @@ class DataStore {
         if (Toybox has :UserProfile) {
             var profile = UserProfile.getProfile();
             if (profile != null && profile.sleepTime != null) {
-                return (profile.sleepTime as Number) / 3600;
+                var st = profile.sleepTime;
+                if (st instanceof Long)   { return (st as Long).toNumber()   / 3600; }
+                if (st instanceof Number) { return (st as Number) / 3600; }
             }
         }
         return DEFAULT_TO;

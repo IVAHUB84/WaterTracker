@@ -69,7 +69,7 @@ class BackgroundService extends System.ServiceDelegate {
 
         // Сильно отстаёт от темпа (>20%)
         if (actualProgress < idealProgress - 0.2f) {
-            _notify(1, "You're behind schedule");
+            _notify(1, "Drink water! You're behind schedule");
             return;
         }
 

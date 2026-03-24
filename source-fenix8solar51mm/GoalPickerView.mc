@@ -88,18 +88,21 @@ class GoalPickerView extends WatchUi.View {
         var leftX  = margin;
         var rightX = margin + btnW + gap;
 
+        var stepLbl = (units == 0)
+            ? "100"
+            : (GP_STEP_MINUS.toFloat() / 29.5735f).format("%.0f");
         dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
         dc.fillRoundedRectangle(leftX, btnSplitY, btnW, btnH, btnR);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(leftX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_SMALL,
-            "-100",
+            "-" + stepLbl,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         dc.setColor(0x1F618D, Graphics.COLOR_TRANSPARENT);
         dc.fillRoundedRectangle(rightX, btnSplitY, btnW, btnH, btnR);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(rightX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_SMALL,
-            "+100",
+            "+" + stepLbl,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // ── Кнопка Set (широкая таблетка) ────────────────────

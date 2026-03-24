@@ -94,15 +94,18 @@ class QuickAddView extends WatchUi.View {
         var leftX  = margin;
         var rightX = margin + btnW + gap;
 
+        var stepLbl = (units == 0)
+            ? "50"
+            : (QA_STEP.toFloat() / 29.5735f).format("%.0f");
         dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
         dc.fillRoundedRectangle(leftX, btnSplitY, btnW, btnH, btnR);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(leftX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_MEDIUM, "-50", jC);
+        dc.drawText(leftX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_MEDIUM, "-" + stepLbl, jC);
 
         dc.setColor(0x1F618D, Graphics.COLOR_TRANSPARENT);
         dc.fillRoundedRectangle(rightX, btnSplitY, btnW, btnH, btnR);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(rightX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_MEDIUM, "+50", jC);
+        dc.drawText(rightX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_MEDIUM, "+" + stepLbl, jC);
 
         // ── Кнопка Add (широкая таблетка) ────────────────────
         var addH = h * 20 / 100;
