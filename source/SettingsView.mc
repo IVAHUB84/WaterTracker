@@ -5,7 +5,7 @@ import Toybox.WatchUi;
 class SettingsData {
     static const GOALS          as Array<Number> =
         [1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
-    static const INTERVALS      as Array<Number> = [0, 30, 60, 90, 120];
+    static const INTERVALS      as Array<Number> = [0, 5, 30, 60, 90, 120];
     static const FROM_HOURS     as Array<Number> = [6, 7, 8, 9, 10, 11, 12];
     static const TO_HOURS       as Array<Number> = [16, 17, 18, 19, 20, 21, 22, 23];
 }
@@ -15,7 +15,7 @@ class SettingsData {
 
 function pushSettingsMenu() as Void {
     var menu = new WatchUi.Menu2({:title => "Settings"});
-    var remindersOn = DataStore.getSmart() || (DataStore.getInterval() > 0);
+    var remindersOn = DataStore.getInterval() > 0;
     var notifOn     = DataStore.getVibrate() || DataStore.getTone();
     var remItem  = new WatchUi.MenuItem("Reminders",    remindersOn ? "ON" : "OFF", :reminders,    {});
     var notifItem = new WatchUi.MenuItem("Notification", notifOn ? "ON" : "OFF",    :notification, {});
@@ -57,20 +57,15 @@ class MainSettingsDelegate extends WatchUi.Menu2InputDelegate {
 }
 
 // =============================================================================
-// Подменю Reminders: Smart / Interval / From / To
+// Подменю Reminders: Interval / From / To (Free — без Smart)
 
 function pushRemindersMenu(parentRemItem as WatchUi.MenuItem, parentNotifItem as WatchUi.MenuItem) as Void {
-    var smart    = DataStore.getSmart();
     var interval = DataStore.getInterval();
     var from     = DataStore.getFromHour();
     var to       = DataStore.getToHour();
 
     var menu = new WatchUi.Menu2({:title => "Reminders"});
-
-    menu.addItem(new WatchUi.ToggleMenuItem("Smart",    null, :smart,    smart, {}));
-    if (!smart) {
-        menu.addItem(new WatchUi.MenuItem("Interval", _fmtInterval(interval), :interval, {}));
-    }
+    menu.addItem(new WatchUi.MenuItem("Interval", _fmtInterval(interval), :interval, {}));
     menu.addItem(new WatchUi.MenuItem("From", _fmtHour(from), :from, {}));
     menu.addItem(new WatchUi.MenuItem("To",   _fmtHour(to),   :to,   {}));
 
@@ -89,33 +84,20 @@ class RemindersDelegate extends WatchUi.Menu2InputDelegate {
 
     function onSelect(item as WatchUi.MenuItem) as Void {
         var id = item.getId();
-        if      (id == :smart)    { _toggleSmart(item); }
-        else if (id == :interval) { _cycleInterval(item); }
+        if      (id == :interval) { _cycleInterval(item); }
         else if (id == :from)     { _cycleFrom(item); }
         else if (id == :to)       { _cycleTo(item); }
     }
 
     function onBack() as Void {
-        var remOn = DataStore.getSmart() || (DataStore.getInterval() > 0);
-        var label = remOn ? "ON" : "OFF";
-        _parentRemItem.setSubLabel(label);
-        _parentNotifItem.setSubLabel(label);
+        var remOn = DataStore.getInterval() > 0;
+        _parentRemItem.setSubLabel(remOn ? "ON" : "OFF");
+        _parentNotifItem.setSubLabel(remOn ? "ON" : "OFF");
         WatchUi.popView(WatchUi.SLIDE_DOWN);
-    }
-
-    private function _toggleSmart(item as WatchUi.MenuItem) as Void {
-        var smart = (item as WatchUi.ToggleMenuItem).isEnabled();
-        DataStore.setSmart(smart);
-        if (smart) {
-            DataStore.setInterval(0);
-            WaterTrackerApp.scheduleReminder();
-        }
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
-        pushRemindersMenu(_parentRemItem, _parentNotifItem);
     }
 
     private function _cycleInterval(item as WatchUi.MenuItem) as Void {
-        var values = SettingsData.INTERVALS; // [0, 30, 60, 90, 120]
+        var values = SettingsData.INTERVALS; // [0, 5, 30, 60, 90, 120]
         var idx    = _findIdx(values, DataStore.getInterval());
         idx = (idx + 1) % values.size();
         DataStore.setInterval(values[idx]);
