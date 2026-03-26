@@ -29,15 +29,29 @@ class GoalPickerView extends WatchUi.View {
 
     function initialize() {
         View.initialize();
-        _value = DataStore.getGoal();
+        var goalMl = DataStore.getGoal();
+        if (DataStore.getUnits() == 1) {
+            _value = (goalMl.toFloat() / 29.5735f).toNumber();
+        } else {
+            _value = goalMl;
+        }
     }
 
-    function getValue() as Number { return _value; }
+    // Возвращает всегда в мл для DataStore
+    function getValue() as Number {
+        if (DataStore.getUnits() == 1) {
+            return (_value.toFloat() * 29.5735f).toNumber();
+        }
+        return _value;
+    }
 
     function step(delta as Number) as Void {
+        var isOz = (DataStore.getUnits() == 1);
         _value += delta;
-        if (_value < GP_MIN) { _value = GP_MIN; }
-        if (_value > GP_MAX) { _value = GP_MAX; }
+        var minV = isOz ? 17 : GP_MIN;
+        var maxV = isOz ? 338 : GP_MAX;
+        if (_value < minV) { _value = minV; }
+        if (_value > maxV) { _value = maxV; }
         WatchUi.requestUpdate();
     }
 
@@ -70,9 +84,7 @@ class GoalPickerView extends WatchUi.View {
         var unitLbl = " " + ((units == 0)
             ? (WatchUi.loadResource(Rez.Strings.UnitMl) as String)
             : (WatchUi.loadResource(Rez.Strings.UnitOz) as String));
-        var valStr  = (units == 0)
-            ? _value.toString()
-            : (_value.toFloat() / 29.5735f).format("%.0f");
+        var valStr  = _value.toString();  // _value уже в нативных единицах
 
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(w / 2, h * 27 / 100, Graphics.FONT_MEDIUM,
@@ -88,9 +100,7 @@ class GoalPickerView extends WatchUi.View {
         var leftX  = margin;
         var rightX = margin + btnW + gap;
 
-        var stepLbl = (units == 0)
-            ? "100"
-            : (GP_STEP_MINUS.toFloat() / 29.5735f).format("%.0f");
+        var stepLbl = (units == 0) ? "100" : "8";
         dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
         dc.fillRoundedRectangle(leftX, btnSplitY, btnW, btnH, btnR);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
@@ -132,8 +142,9 @@ class GoalPickerDelegate extends WatchUi.BehaviorDelegate {
     function onTap(evt as WatchUi.ClickEvent) as Boolean {
         var coords = evt.getCoordinates();
         var zone   = _view.getZone(coords[0], coords[1]);
-        if      (zone == GP_ZONE_MINUS) { _view.step(-GP_STEP_MINUS); }
-        else if (zone == GP_ZONE_PLUS)  { _view.step(GP_STEP_PLUS); }
+        var gpStep = (DataStore.getUnits() == 0) ? GP_STEP_MINUS : 8;
+        if      (zone == GP_ZONE_MINUS) { _view.step(-gpStep); }
+        else if (zone == GP_ZONE_PLUS)  { _view.step(gpStep); }
         else if (zone == GP_ZONE_SET)   {
             DataStore.setGoal(_view.getValue(), true);
             WatchUi.popView(WatchUi.SLIDE_DOWN);

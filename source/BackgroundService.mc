@@ -1,4 +1,5 @@
 // BackgroundService.mc — фоновое расписание напоминаний (Free)
+import Toybox.Application;
 import Toybox.Attention;
 import Toybox.Background;
 import Toybox.Lang;
@@ -13,6 +14,12 @@ class BackgroundService extends System.ServiceDelegate {
     }
 
     function onTemporalEvent() as Void {
+        var t = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var ts = t.hour.toString() + ":" +
+                 (t.min < 10 ? "0" : "") + t.min.toString();
+        Application.Storage.setValue("_bgFired", ts);
+        Application.Storage.setValue("_bgDbg", ts + " start");
+
         _checkAndNotify();
         _scheduleNext();
     }
@@ -21,39 +28,34 @@ class BackgroundService extends System.ServiceDelegate {
     // Проверка и отправка напоминания
 
     private function _checkAndNotify() as Void {
-        if (!_isInTimeWindow()) { return; }
+        var t  = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var ts = t.hour.toString() + ":" + (t.min < 10 ? "0" : "") + t.min.toString();
 
+        Application.Storage.setValue("_bgDbg", ts + " A");
+        if (!_isInTimeWindow()) {
+            Application.Storage.setValue("_bgDbg", ts + " nowin");
+            return;
+        }
+
+        Application.Storage.setValue("_bgDbg", ts + " B");
         var amount = DataStore.getAmount();
-        var goal   = DataStore.getGoal();
-        var rec    = DataStore.getRecommendedGoalBg();
 
-        // Выпито >= REC — не беспокоить
-        if (amount >= rec) { return; }
+        Application.Storage.setValue("_bgDbg", ts + " C");
+        var rec = DataStore.getRecommendedGoalBg();
 
-        _notify(1, "Stay hydrated");
+        Application.Storage.setValue("_bgDbg", ts + " D");
+        if (amount >= rec) {
+            Application.Storage.setValue("_bgDbg", ts + " done");
+            return;
+        }
+
+        _notify("Stay hydrated");
+        Application.Storage.setValue("_bgDbg", ts + " sent");
     }
 
-    // 1 = одна вибрация/тон
-    private function _notify(count as Number, message as String) as Void {
-        // Текстовое уведомление — всегда
-        if ((Toybox has :Attention) && (Attention has :showWeakNotification)) {
-            Attention.showWeakNotification("Water Tracker", message, {});
-        }
-        // Вибрация
-        if (DataStore.getVibrate() && (Toybox has :Attention) && (Attention has :vibrate)) {
-            if (count == 2) {
-                Attention.vibrate([
-                    new Attention.VibeProfile(75, 250),
-                    new Attention.VibeProfile(0,  150),
-                    new Attention.VibeProfile(75, 250)
-                ]);
-            } else {
-                Attention.vibrate([new Attention.VibeProfile(75, 400)]);
-            }
-        }
-        // Звук
-        if (DataStore.getTone() && (Toybox has :Attention) && (Attention has :playTone)) {
-            Attention.playTone(Attention.TONE_ALERT_HI);
+    private function _notify(message as String) as Void {
+        if (Attention has :showWeakNotification) {
+            Attention.showWeakNotification("Water Tracker", message, null);
         }
     }
 
@@ -62,7 +64,9 @@ class BackgroundService extends System.ServiceDelegate {
         var now  = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
         var from = DataStore.getFromHour();
         var to   = DataStore.getToHour();
-        return (now.hour >= from && now.hour < to);
+        // to = 0 означает полночь (00:00) = конец дня, hour < 24 всегда true
+        var toEffective = (to == 0) ? 24 : to;
+        return (now.hour >= from && now.hour < toEffective);
     }
 
     // -------------------------------------------------------------------------
@@ -74,9 +78,13 @@ class BackgroundService extends System.ServiceDelegate {
             if (Background has :deleteTemporalEvent) {
                 Background.deleteTemporalEvent();
             }
+            Application.Storage.deleteValue("_nextReminderAt");
             return;
         }
         var next = Time.now().add(new Time.Duration(intervalMin * 60));
         Background.registerForTemporalEvent(next);
+        var v = next.value();
+        Application.Storage.setValue("_nextReminderAt",
+            (v instanceof Long) ? (v as Long).toNumber() : (v as Number));
     }
 }

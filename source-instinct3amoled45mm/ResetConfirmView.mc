@@ -32,37 +32,41 @@ class ResetConfirmView extends WatchUi.View {
         var w = dc.getWidth();
         var h = dc.getHeight();
         centerX = w / 2;
-        btnH    = h * 30 / 100;
-        btnY    = h * 50 / 100 - btnH / 2;
+        btnH    = h * 25 / 100;
+        btnY    = h / 2 - btnH / 2;
 
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
 
-        var jC = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
-        var radius = w / 2;
+        // ── Вопрос ───────────────────────────────────────────
+        dc.setColor(0x777777, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(w / 2, h * 32 / 100, Graphics.FONT_XTINY,
+            WatchUi.loadResource(Rez.Strings.ResetQuestion) as String,
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        // ── Заголовок по центру ───────────────────────────────
-        dc.setColor(0xAAAAAA, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(w / 2, h * 50 / 100, Graphics.FONT_SMALL,
-            WatchUi.loadResource(Rez.Strings.ResetQuestion) as String, jC);
+        // ── Кнопки No / Yes (pill-shape) ─────────────────────
+        var btnR   = btnH / 2;
+        var gap    = w * 4 / 100;
+        var margin = w * 6 / 100;
+        var btnW   = (w - 2 * margin - gap) / 2;
+        var leftX  = margin;
+        var rightX = margin + btnW + gap;
 
-        // ── ДА (SELECT/START) — правый край ~35% высоты ─────────
-        var yesY  = h * 35 / 100;
-        var yesDy = yesY - h / 2;
-        var yesSafeX = radius + Math.sqrt((radius * radius - yesDy * yesDy).toFloat()).toNumber() - 10;
-        dc.setColor(0x1E8449, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(yesSafeX, yesY, Graphics.FONT_LARGE,
-            WatchUi.loadResource(Rez.Strings.BtnYes) as String,
-            Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
-
-        // ── НЕТ (BACK/SET) — правый край ~72% высоты ────────────
-        var noY  = h * 72 / 100;
-        var noDy = noY - h / 2;
-        var noSafeX = radius + Math.sqrt((radius * radius - noDy * noDy).toFloat()).toNumber() - 10;
-        dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(noSafeX, noY, Graphics.FONT_LARGE,
+        // No — серо-красный
+        dc.setColor(0x7B241C, Graphics.COLOR_TRANSPARENT);
+        dc.fillRoundedRectangle(leftX, btnY, btnW, btnH, btnR);
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(leftX + btnW / 2, btnY + btnH / 2, Graphics.FONT_SMALL,
             WatchUi.loadResource(Rez.Strings.BtnNo) as String,
-            Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+        // Yes — зелёный
+        dc.setColor(0x1E8449, Graphics.COLOR_TRANSPARENT);
+        dc.fillRoundedRectangle(rightX, btnY, btnW, btnH, btnR);
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(rightX + btnW / 2, btnY + btnH / 2, Graphics.FONT_SMALL,
+            WatchUi.loadResource(Rez.Strings.BtnYes) as String,
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 }
 
@@ -86,14 +90,6 @@ class ResetConfirmDelegate extends WatchUi.BehaviorDelegate {
         return true;
     }
 
-    // SELECT = Да
-    function onSelect() as Boolean {
-        DataStore.reset();
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
-        return true;
-    }
-
-    // BACK = Нет
     function onBack() as Boolean {
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         return true;

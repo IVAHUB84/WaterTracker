@@ -1,11 +1,12 @@
-// GoalPickerView.mc — экран установки дневной цели (кнопочная навигация)
+// GoalPickerView.mc — экран быстрой установки дневной цели
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-const GP_STEP as Number = 100;
-const GP_MIN  as Number = 500;
-const GP_MAX  as Number = 10000;
+const GP_STEP_MINUS as Number = 100;
+const GP_STEP_PLUS  as Number = 100;
+const GP_MIN        as Number = 500;
+const GP_MAX        as Number = 10000;
 
 const GP_ZONE_NONE  as Number = -1;
 const GP_ZONE_MINUS as Number = 0;
@@ -22,90 +23,109 @@ class GoalPickerView extends WatchUi.View {
 
     private var _value as Number;
 
-    var topZoneH as Number = 0;
-    var centerX  as Number = 0;
-    private var h as Number = 0;
+    var btnSplitY as Number = 0;
+    var btnSetY   as Number = 0;
+    var centerX   as Number = 0;
 
     function initialize() {
         View.initialize();
-        _value = DataStore.getGoal();
+        var goalMl = DataStore.getGoal();
+        if (DataStore.getUnits() == 1) {
+            _value = (goalMl.toFloat() / 29.5735f).toNumber();
+        } else {
+            _value = goalMl;
+        }
     }
 
-    function getValue() as Number { return _value; }
+    // Возвращает всегда в мл для DataStore
+    function getValue() as Number {
+        if (DataStore.getUnits() == 1) {
+            return (_value.toFloat() * 29.5735f).toNumber();
+        }
+        return _value;
+    }
 
     function step(delta as Number) as Void {
+        var isOz = (DataStore.getUnits() == 1);
         _value += delta;
-        if (_value < GP_MIN) { _value = GP_MIN; }
-        if (_value > GP_MAX) { _value = GP_MAX; }
+        var minV = isOz ? 17 : GP_MIN;
+        var maxV = isOz ? 338 : GP_MAX;
+        if (_value < minV) { _value = minV; }
+        if (_value > maxV) { _value = maxV; }
         WatchUi.requestUpdate();
     }
 
     function getZone(tapX as Number, tapY as Number) as Number {
-        if (tapY < topZoneH)      { return GP_ZONE_PLUS; }
-        if (tapY >= h - topZoneH) { return GP_ZONE_MINUS; }
-        return GP_ZONE_SET;
+        if (tapY >= btnSetY)   { return GP_ZONE_SET; }
+        if (tapY >= btnSplitY) {
+            return (tapX < centerX) ? GP_ZONE_MINUS : GP_ZONE_PLUS;
+        }
+        return GP_ZONE_NONE;
     }
 
     function onUpdate(dc as Graphics.Dc) as Void {
         var w = dc.getWidth();
-        h        = dc.getHeight();
-        centerX  = w / 2;
-        topZoneH = h * 28 / 100;
+        var h = dc.getHeight();
+        centerX   = w / 2;
+        btnSplitY = h * 40 / 100;
+        btnSetY   = h * 72 / 100;
 
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
 
-        var jC = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
-        var jL = Graphics.TEXT_JUSTIFY_LEFT   | Graphics.TEXT_JUSTIFY_VCENTER;
+        // ── Заголовок ────────────────────────────────────────
+        dc.setColor(0x777777, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(w / 2, h * 10 / 100, Graphics.FONT_XTINY,
+            WatchUi.loadResource(Rez.Strings.SettingGoal) as String,
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        // ── Заголовок ─────────────────────────────────────────
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(w / 2, h * 9 / 100, Graphics.FONT_SMALL,
-            WatchUi.loadResource(Rez.Strings.SettingGoal) as String, jC);
-
-        // Безопасные X для круглого экрана
-        var upY    = h * 49 / 100;
-        var downY  = h * 75 / 100;
-        var addLY  = h * 28 / 100;
-        var radius = w / 2;
-        var upDy   = upY   - h / 2;
-        var dnDy   = downY - h / 2;
-        var adDy   = addLY - h / 2;
-        var upSafeX  = radius - Math.sqrt((radius*radius - upDy*upDy).toFloat()).toNumber() + 10;
-        var dnSafeX  = radius - Math.sqrt((radius*radius - dnDy*dnDy).toFloat()).toNumber() + 10;
-        var adSafeRX = radius + Math.sqrt((radius*radius - adDy*adDy).toFloat()).toNumber() - 10;
-
-        // ── +100 слева напротив кнопки UP ─────────────────────
-        dc.setColor(0x1F618D, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(upSafeX, upY, Graphics.FONT_LARGE, "+100", jL);
-
-        // ── -100 слева напротив кнопки DOWN ───────────────────
-        dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(dnSafeX, downY, Graphics.FONT_LARGE, "-100", jL);
-
-        // ── Установить — справа напротив кнопки SELECT ────────
-        dc.setColor(0x5A9E6F, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(adSafeRX, addLY, Graphics.FONT_LARGE,
-            WatchUi.loadResource(Rez.Strings.BtnSet) as String,
-            Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
-
-        // ── Значение правее центра ────────────────────────────
+        // ── Текущее значение ─────────────────────────────────
         var units   = DataStore.getUnits();
-        var unitLbl = (units == 0)
+        var unitLbl = " " + ((units == 0)
             ? (WatchUi.loadResource(Rez.Strings.UnitMl) as String)
-            : (WatchUi.loadResource(Rez.Strings.UnitOz) as String);
-        var valStr  = (units == 0)
-            ? _value.toString()
-            : (_value.toFloat() / 29.5735f).format("%.0f");
-        var valX     = w * 63 / 100;
-        var midY     = h * 50 / 100;
-        var valW     = dc.getTextWidthInPixels(valStr, Graphics.FONT_NUMBER_MEDIUM);
-        var unitW    = dc.getTextWidthInPixels(unitLbl, Graphics.FONT_MEDIUM);
-        var totalW   = valW + 6 + unitW;
-        var startX   = valX - totalW / 2;
+            : (WatchUi.loadResource(Rez.Strings.UnitOz) as String));
+        var valStr  = _value.toString();  // _value уже в нативных единицах
+
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(startX, midY, Graphics.FONT_NUMBER_MEDIUM, valStr, jL);
-        dc.drawText(startX + valW + 6, midY + 4, Graphics.FONT_MEDIUM, unitLbl, jL);
+        dc.drawText(w / 2, h * 27 / 100, Graphics.FONT_MEDIUM,
+            valStr + unitLbl,
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+        // ── Кнопки −100 / +100 (pill-shape) ──────────────────
+        var btnH  = h * 25 / 100;
+        var btnR  = btnH / 2;
+        var gap   = w * 4 / 100;
+        var margin = w * 6 / 100;
+        var btnW  = (w - 2 * margin - gap) / 2;
+        var leftX  = margin;
+        var rightX = margin + btnW + gap;
+
+        var stepLbl = (units == 0) ? "100" : "8";
+        dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
+        dc.fillRoundedRectangle(leftX, btnSplitY, btnW, btnH, btnR);
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(leftX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_SMALL,
+            "-" + stepLbl,
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+        dc.setColor(0x1F618D, Graphics.COLOR_TRANSPARENT);
+        dc.fillRoundedRectangle(rightX, btnSplitY, btnW, btnH, btnR);
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(rightX + btnW / 2, btnSplitY + btnH / 2, Graphics.FONT_SMALL,
+            "+" + stepLbl,
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+        // ── Кнопка Set (широкая таблетка) ────────────────────
+        var setH = h * 20 / 100;
+        var setR = setH / 2;
+        var setX = w * 18 / 100;
+        var setW = w * 64 / 100;
+        dc.setColor(0x1E8449, Graphics.COLOR_TRANSPARENT);
+        dc.fillRoundedRectangle(setX, btnSetY, setW, setH, setR);
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(w / 2, btnSetY + setH / 2, Graphics.FONT_SMALL,
+            WatchUi.loadResource(Rez.Strings.BtnSet) as String,
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 }
 
@@ -119,30 +139,12 @@ class GoalPickerDelegate extends WatchUi.BehaviorDelegate {
         _view = view;
     }
 
-    // UP = +100
-    function onPreviousPage() as Boolean {
-        _view.step(GP_STEP);
-        return true;
-    }
-
-    // DOWN = -100
-    function onNextPage() as Boolean {
-        _view.step(-GP_STEP);
-        return true;
-    }
-
-    // SELECT = установить
-    function onSelect() as Boolean {
-        DataStore.setGoal(_view.getValue(), true);
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
-        return true;
-    }
-
     function onTap(evt as WatchUi.ClickEvent) as Boolean {
         var coords = evt.getCoordinates();
         var zone   = _view.getZone(coords[0], coords[1]);
-        if      (zone == GP_ZONE_MINUS) { _view.step(-GP_STEP); }
-        else if (zone == GP_ZONE_PLUS)  { _view.step(GP_STEP); }
+        var gpStep = (DataStore.getUnits() == 0) ? GP_STEP_MINUS : 8;
+        if      (zone == GP_ZONE_MINUS) { _view.step(-gpStep); }
+        else if (zone == GP_ZONE_PLUS)  { _view.step(gpStep); }
         else if (zone == GP_ZONE_SET)   {
             DataStore.setGoal(_view.getValue(), true);
             WatchUi.popView(WatchUi.SLIDE_DOWN);

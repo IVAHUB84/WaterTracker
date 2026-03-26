@@ -31,12 +31,21 @@ class QuickAddView extends WatchUi.View {
         View.initialize();
     }
 
-    function getValue() as Number { return _value; }
+    // Возвращает всегда в мл для DataStore
+    function getValue() as Number {
+        if (DataStore.getUnits() == 1) {
+            return (_value.toFloat() * 29.5735f).toNumber();
+        }
+        return _value;
+    }
 
     function step(delta as Number) as Void {
+        var isOz = (DataStore.getUnits() == 1);
         _value += delta;
-        if (_value < QA_MIN) { _value = QA_MIN; }
-        if (_value > QA_MAX) { _value = QA_MAX; }
+        var minV = isOz ? -68 : QA_MIN;
+        var maxV = isOz ?  68 : QA_MAX;
+        if (_value < minV) { _value = minV; }
+        if (_value > maxV) { _value = maxV; }
         WatchUi.requestUpdate();
     }
 
@@ -70,9 +79,7 @@ class QuickAddView extends WatchUi.View {
         var unitLbl = (units == 0)
             ? (WatchUi.loadResource(Rez.Strings.UnitMl) as String)
             : (WatchUi.loadResource(Rez.Strings.UnitOz) as String);
-        var valStr  = (units == 0)
-            ? _value.toString()
-            : (_value.toFloat() / 29.5735f).format("%.0f");
+        var valStr  = _value.toString();  // _value уже в нативных единицах
         var valColor = _value < 0 ? 0xD50000 : Graphics.COLOR_WHITE;
         var numY  = h * 27 / 100;
         var numW  = dc.getTextWidthInPixels(valStr, Graphics.FONT_NUMBER_MEDIUM);
@@ -94,9 +101,7 @@ class QuickAddView extends WatchUi.View {
         var leftX  = margin;
         var rightX = margin + btnW + gap;
 
-        var stepLbl = (units == 0)
-            ? "50"
-            : (QA_STEP.toFloat() / 29.5735f).format("%.0f");
+        var stepLbl = (units == 0) ? "50" : "2";
         dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
         dc.fillRoundedRectangle(leftX, btnSplitY, btnW, btnH, btnR);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
@@ -133,8 +138,9 @@ class QuickAddDelegate extends WatchUi.BehaviorDelegate {
     function onTap(evt as WatchUi.ClickEvent) as Boolean {
         var coords = evt.getCoordinates();
         var zone   = _view.getZone(coords[0], coords[1]);
-        if      (zone == QA_ZONE_MINUS) { _view.step(-QA_STEP); }
-        else if (zone == QA_ZONE_PLUS)  { _view.step(QA_STEP); }
+        var qaStep = (DataStore.getUnits() == 0) ? QA_STEP : 2;
+        if      (zone == QA_ZONE_MINUS) { _view.step(-qaStep); }
+        else if (zone == QA_ZONE_PLUS)  { _view.step(qaStep); }
         else if (zone == QA_ZONE_ADD)   {
             DataStore.addAmount(_view.getValue());
             updateComplications();

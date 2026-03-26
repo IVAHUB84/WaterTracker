@@ -277,6 +277,7 @@ class DataStore {
     }
 
     // Базовая норма без учёта активности (вес × 33 + пол)
+    (:background)
     static function getBaseRecommendedGoal() as Number {
         if (!(Toybox has :UserProfile)) { return 2000; }
         var profile = UserProfile.getProfile();
@@ -294,6 +295,34 @@ class DataStore {
     // Возвращает флаг неполноты профиля (обновляется при вызове getRecommendedGoal)
     static function isProfileIncomplete() as Boolean {
         return _profileIncomplete;
+    }
+
+    // Background-safe версия без доступа к module-level _profileIncomplete
+    (:background)
+    static function getRecommendedGoalBg() as Number {
+        if (!(Toybox has :UserProfile)) { return 2000; }
+        var profile = UserProfile.getProfile();
+        if (profile == null) { return 2000; }
+        var weightG = profile.weight;
+        var gender  = profile.gender;
+        if (weightG == null || gender == null ||
+            gender != UserProfile.GENDER_MALE && gender != UserProfile.GENDER_FEMALE) { return 2000; }
+        var weightKg    = (weightG as Number).toFloat() / 1000.0;
+        var base        = (weightKg * 33.0).toNumber();
+        var genderBonus = (gender == UserProfile.GENDER_MALE) ? 200 : 0;
+        var actBonus = 0;
+        if (Toybox has :ActivityMonitor) {
+            var info = ActivityMonitor.getInfo();
+            if (info != null) {
+                var am = info.activeMinutesDay;
+                if (am != null) {
+                    var mod = (am.moderate != null) ? (am.moderate as Number) : 0;
+                    var vig = (am.vigorous != null) ? (am.vigorous as Number) : 0;
+                    actBonus = (mod + vig * 2) * 8;
+                }
+            }
+        }
+        return base + genderBonus + actBonus;
     }
 
     // -------------------------------------------------------------------------

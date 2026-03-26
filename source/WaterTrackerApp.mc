@@ -14,12 +14,31 @@ class WaterTrackerApp extends Application.AppBase {
     }
 
     // Вызывается при запуске виджета
-    // При первом запуске авто-устанавливаем цель из профиля пользователя
     function onStart(state as Dictionary?) as Void {
+        _ensureReminderScheduled();
     }
 
     // Вызывается при закрытии виджета
     function onStop(state as Dictionary?) as Void {
+    }
+
+    // Вызывается когда пользователь изменил настройки в Garmin Connect
+    function onSettingsChanged() as Void {
+        _syncPhoneSettings();
+        _scheduleReminder();
+    }
+
+    // Применяет настройки из Garmin Connect (Application.Properties) → Storage
+    private function _syncPhoneSettings() as Void {
+        if (!(Application has :Properties)) { return; }
+        var units = Application.Properties.getValue("Units");
+        if (units instanceof Number) { DataStore.setUnits(units as Number); }
+    }
+
+    // Глансовое превью при свайпе по циферблату
+    (:glance)
+    function getGlanceView() as [WatchUi.GlanceView] or [WatchUi.GlanceView, WatchUi.GlanceViewDelegate] or Null {
+        return [new GlanceView()];
     }
 
     // Начальный экран
@@ -46,19 +65,44 @@ class WaterTrackerApp extends Application.AppBase {
         _scheduleReminder();
     }
 
-    private static function _scheduleReminder() as Void {
-        if (!(Background has :registerForTemporalEvent)) {
-            return;
-        }
+    // Планирует напоминание только если уже нет будущего события.
+    // Вызывается из onStart() — не сбивает таймер при каждом открытии виджета.
+    private static function _ensureReminderScheduled() as Void {
+        if (!(Background has :registerForTemporalEvent)) { return; }
         var intervalMin = DataStore.getInterval();
         if (intervalMin <= 0) {
-            if (Background has :deleteTemporalEvent) {
-                Background.deleteTemporalEvent();
-            }
+            if (Background has :deleteTemporalEvent) { Background.deleteTemporalEvent(); }
+            Application.Storage.deleteValue("_nextReminderAt");
             return;
         }
-        var nextEvent = Time.now().add(new Time.Duration(intervalMin * 60));
-        Background.registerForTemporalEvent(nextEvent);
+        var nowSec     = _momentSec(Time.now());
+        var nextStored = Application.Storage.getValue("_nextReminderAt");
+        var storedSec  = (nextStored instanceof Number) ? (nextStored as Number) : -1;
+        // Планируем только если нет сохранённого будущего события
+        if (storedSec <= nowSec) {
+            var next = Time.now().add(new Time.Duration(intervalMin * 60));
+            Background.registerForTemporalEvent(next);
+            Application.Storage.setValue("_nextReminderAt", _momentSec(next));
+        }
+    }
+
+    private static function _scheduleReminder() as Void {
+        if (!(Background has :registerForTemporalEvent)) { return; }
+        var intervalMin = DataStore.getInterval();
+        if (intervalMin <= 0) {
+            if (Background has :deleteTemporalEvent) { Background.deleteTemporalEvent(); }
+            Application.Storage.deleteValue("_nextReminderAt");
+            return;
+        }
+        var next = Time.now().add(new Time.Duration(intervalMin * 60));
+        Background.registerForTemporalEvent(next);
+        Application.Storage.setValue("_nextReminderAt", _momentSec(next));
+    }
+
+    // Time.Moment.value() возвращает Long в API 6.0 — приводим к Number для Storage
+    private static function _momentSec(m as Time.Moment) as Number {
+        var v = m.value();
+        return (v instanceof Long) ? (v as Long).toNumber() : (v as Number);
     }
 }
 

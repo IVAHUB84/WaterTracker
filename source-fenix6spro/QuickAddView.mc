@@ -32,12 +32,20 @@ class QuickAddView extends WatchUi.View {
         View.initialize();
     }
 
-    function getValue() as Number { return _value; }
+    function getValue() as Number {
+        if (DataStore.getUnits() == 1) {
+            return (_value.toFloat() * 29.5735f).toNumber();
+        }
+        return _value;
+    }
 
     function step(delta as Number) as Void {
+        var isOz = (DataStore.getUnits() == 1);
         _value += delta;
-        if (_value < QA_MIN) { _value = QA_MIN; }
-        if (_value > QA_MAX) { _value = QA_MAX; }
+        var minV = isOz ? -68 : QA_MIN;
+        var maxV = isOz ?  68 : QA_MAX;
+        if (_value < minV) { _value = minV; }
+        if (_value > maxV) { _value = maxV; }
         WatchUi.requestUpdate();
     }
 
@@ -78,13 +86,15 @@ class QuickAddView extends WatchUi.View {
         var dnSafeX  = radius - Math.sqrt((radius*radius - dnDy*dnDy).toFloat()).toNumber() + 10;
         var adSafeRX = radius + Math.sqrt((radius*radius - adDy*adDy).toFloat()).toNumber() - 10;
 
-        // ── +50 слева напротив кнопки UP ─────────────────────
+        // ── +шаг слева напротив кнопки UP ────────────────────
+        var units2  = DataStore.getUnits();
+        var stepLbl = (units2 == 0) ? QA_STEP.toString() : "2";
         dc.setColor(0x1F618D, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(upSafeX, upY, Graphics.FONT_MEDIUM, "+50", jL);
+        dc.drawText(upSafeX, upY, Graphics.FONT_MEDIUM, "+" + stepLbl, jL);
 
-        // ── -50 слева напротив кнопки DOWN ───────────────────
+        // ── -шаг слева напротив кнопки DOWN ──────────────────
         dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(dnSafeX, downY, Graphics.FONT_MEDIUM, "-50", jL);
+        dc.drawText(dnSafeX, downY, Graphics.FONT_MEDIUM, "-" + stepLbl, jL);
 
         // ── Добавить — справа напротив кнопки SELECT ─────────
         dc.setColor(0x5A9E6F, Graphics.COLOR_TRANSPARENT);
@@ -97,9 +107,7 @@ class QuickAddView extends WatchUi.View {
         var unitLbl = (units == 0)
             ? (WatchUi.loadResource(Rez.Strings.UnitMl) as String)
             : (WatchUi.loadResource(Rez.Strings.UnitOz) as String);
-        var valStr  = (units == 0)
-            ? _value.toString()
-            : (_value.toFloat() / 29.5735f).format("%.0f");
+        var valStr  = _value.toString();
         var valColor = _value < 0 ? 0xD50000 : Graphics.COLOR_WHITE;
         var valX     = w * 63 / 100;
         var midY     = h * 50 / 100;
@@ -123,15 +131,15 @@ class QuickAddDelegate extends WatchUi.BehaviorDelegate {
         _view = view;
     }
 
-    // UP = +50
+    // UP = +шаг
     function onPreviousPage() as Boolean {
-        _view.step(QA_STEP);
+        _view.step((DataStore.getUnits() == 0) ? QA_STEP : 2);
         return true;
     }
 
-    // DOWN = -50
+    // DOWN = -шаг
     function onNextPage() as Boolean {
-        _view.step(-QA_STEP);
+        _view.step((DataStore.getUnits() == 0) ? -QA_STEP : -2);
         return true;
     }
 

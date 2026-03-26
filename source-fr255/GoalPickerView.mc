@@ -28,15 +28,28 @@ class GoalPickerView extends WatchUi.View {
 
     function initialize() {
         View.initialize();
-        _value = DataStore.getGoal();
+        var goalMl = DataStore.getGoal();
+        if (DataStore.getUnits() == 1) {
+            _value = (goalMl.toFloat() / 29.5735f).toNumber();
+        } else {
+            _value = goalMl;
+        }
     }
 
-    function getValue() as Number { return _value; }
+    function getValue() as Number {
+        if (DataStore.getUnits() == 1) {
+            return (_value.toFloat() * 29.5735f).toNumber();
+        }
+        return _value;
+    }
 
     function step(delta as Number) as Void {
+        var isOz = (DataStore.getUnits() == 1);
         _value += delta;
-        if (_value < GP_MIN) { _value = GP_MIN; }
-        if (_value > GP_MAX) { _value = GP_MAX; }
+        var minV = isOz ? 17 : GP_MIN;
+        var maxV = isOz ? 338 : GP_MAX;
+        if (_value < minV) { _value = minV; }
+        if (_value > maxV) { _value = maxV; }
         WatchUi.requestUpdate();
     }
 
@@ -75,13 +88,15 @@ class GoalPickerView extends WatchUi.View {
         var dnSafeX  = radius - Math.sqrt((radius*radius - dnDy*dnDy).toFloat()).toNumber() + 10;
         var adSafeRX = radius + Math.sqrt((radius*radius - adDy*adDy).toFloat()).toNumber() - 10;
 
-        // ── +100 слева напротив кнопки UP ─────────────────────
+        // ── +шаг слева напротив кнопки UP ────────────────────
+        var units2  = DataStore.getUnits();
+        var stepLbl = (units2 == 0) ? GP_STEP.toString() : "8";
         dc.setColor(0x1F618D, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(upSafeX, upY, Graphics.FONT_LARGE, "+100", jL);
+        dc.drawText(upSafeX, upY, Graphics.FONT_LARGE, "+" + stepLbl, jL);
 
-        // ── -100 слева напротив кнопки DOWN ───────────────────
+        // ── -шаг слева напротив кнопки DOWN ──────────────────
         dc.setColor(0xB71C1C, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(dnSafeX, downY, Graphics.FONT_LARGE, "-100", jL);
+        dc.drawText(dnSafeX, downY, Graphics.FONT_LARGE, "-" + stepLbl, jL);
 
         // ── Установить — справа напротив кнопки SELECT ────────
         dc.setColor(0x5A9E6F, Graphics.COLOR_TRANSPARENT);
@@ -94,9 +109,7 @@ class GoalPickerView extends WatchUi.View {
         var unitLbl = (units == 0)
             ? (WatchUi.loadResource(Rez.Strings.UnitMl) as String)
             : (WatchUi.loadResource(Rez.Strings.UnitOz) as String);
-        var valStr  = (units == 0)
-            ? _value.toString()
-            : (_value.toFloat() / 29.5735f).format("%.0f");
+        var valStr  = _value.toString();
         var valX     = w * 63 / 100;
         var midY     = h * 50 / 100;
         var valW     = dc.getTextWidthInPixels(valStr, Graphics.FONT_NUMBER_MEDIUM);
@@ -119,15 +132,15 @@ class GoalPickerDelegate extends WatchUi.BehaviorDelegate {
         _view = view;
     }
 
-    // UP = +100
+    // UP = +шаг
     function onPreviousPage() as Boolean {
-        _view.step(GP_STEP);
+        _view.step((DataStore.getUnits() == 0) ? GP_STEP : 8);
         return true;
     }
 
-    // DOWN = -100
+    // DOWN = -шаг
     function onNextPage() as Boolean {
-        _view.step(-GP_STEP);
+        _view.step((DataStore.getUnits() == 0) ? -GP_STEP : -8);
         return true;
     }
 

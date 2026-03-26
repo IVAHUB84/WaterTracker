@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<settings>
+
+  <!-- ── Units ──────────────────────────────────────────────────────── -->
+  <setting propertyKey="@Properties.Units" title="Units">
+    <settingConfig type="list">
+      <listEntry value="0">ml</listEntry>
+      <listEntry value="1">oz</listEntry>
+    </settingConfig>
+  </setting>
+
+</settings>

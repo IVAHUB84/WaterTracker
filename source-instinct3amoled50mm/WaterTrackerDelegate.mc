@@ -1,53 +1,45 @@
-// WaterTrackerDelegate.mc — делегат главного экрана (Instinct 3 AMOLED)
+// WaterTrackerDelegate.mc — делегат главного экрана (touch-устройства)
 import Toybox.Lang;
 import Toybox.WatchUi;
 
 class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
 
-    private var _view      as WaterTrackerView;
-    private var _lastDragY as Number = -1;
+    private var _view       as WaterTrackerView;
+    private var _lastDragY  as Number = -1;
 
     function initialize(view as WaterTrackerView) {
         BehaviorDelegate.initialize();
         _view = view;
         _view.setShowSelection(true);
-        _view.setBoldWhite(true);
         _view.addFormulaItem();
     }
 
-    // MENU (долгое нажатие UP) → раздел Formula
+    // MENU (долгое нажатие UP) → Settings
     function onMenu() as Boolean {
-        pushDebugProfileView();
+        pushSettingsMenu();
         return true;
     }
 
-    // UP — прокрутка вверх
+    // Долгое нажатие на левую половину (GOAL) → установка цели
+    function onHold(evt as WatchUi.ClickEvent) as Boolean {
+        if (evt.getCoordinates()[0] < _view.getBtnX()) {
+            pushGoalPickerView();
+        }
+        return true;
+    }
+
+    // Физ. кнопки UP/DOWN — прокрутка
     function onPreviousPage() as Boolean {
         _view.scrollUp();
         return true;
     }
 
-    // DOWN — прокрутка вниз
     function onNextPage() as Boolean {
         _view.scrollDown();
         return true;
     }
 
-    // SELECT — выполнить действие верхнего пункта
-    function onSelect() as Boolean {
-        var itemIdx = _view.getScrollTop() % 7;
-        _view.flashZone(ZONE_SLOT0);
-        if      (itemIdx == 0) { DataStore.addAmount(-100); updateComplications(); }
-        else if (itemIdx == 1) { DataStore.addAmount(100);  updateComplications(); }
-        else if (itemIdx == 2) { DataStore.addAmount(250);  updateComplications(); }
-        else if (itemIdx == 3) { DataStore.addAmount(500);  updateComplications(); }
-        else if (itemIdx == 4) { pushQuickAddView(); }
-        else if (itemIdx == 5) { pushResetConfirm(); }
-        else if (itemIdx == 6) { pushGoalPickerView(); }
-        return true;
-    }
-
-    // Drag и TAP — сенсорный экран Instinct 3 AMOLED тоже поддерживает touch
+    // Drag пальцем — надёжная прокрутка правого столбца
     function onDrag(evt as WatchUi.DragEvent) as Boolean {
         var y = evt.getCoordinates()[1];
         if (_lastDragY < 0) {
@@ -69,6 +61,22 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         return true;
     }
 
+    // START — выполнить действие верхней кнопки
+    function onSelect() as Boolean {
+        var itemIdx = _view.getScrollTop() % 7;
+        _view.flashZone(ZONE_SLOT0);
+        var isOz = (DataStore.getUnits() == 1);
+        if      (itemIdx == 0) { DataStore.addAmount(isOz ? -237 : -100); updateComplications(); }
+        else if (itemIdx == 1) { DataStore.addAmount(isOz ?  237 :  100); updateComplications(); }
+        else if (itemIdx == 2) { DataStore.addAmount(isOz ?  473 :  250); updateComplications(); }
+        else if (itemIdx == 3) { DataStore.addAmount(isOz ?  591 :  500); updateComplications(); }
+        else if (itemIdx == 4) { pushQuickAddView(); }
+        else if (itemIdx == 5) { pushResetConfirm(); }
+        else if (itemIdx == 6) { pushGoalPickerView(); }
+        return true;
+    }
+
+    // TAP — определяем зону, подсвечиваем, выполняем действие
     function onTap(evt as WatchUi.ClickEvent) as Boolean {
         _lastDragY = -1;
         var coords = evt.getCoordinates();
@@ -80,26 +88,17 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         if (zone == ZONE_WARNING)     { pushProfileWarningView();   return true; }
         if (zone == ZONE_REC)         { return true; }
 
-        var itemIdx = (_view.getScrollTop() + zone) % 7;
+        var itemIdx = (_view.getScrollTop() + zone) % RIGHT_ITEM_COUNT;
         _view.flashZone(zone);
 
-        if      (itemIdx == 0) { DataStore.addAmount(-100); updateComplications(); }
-        else if (itemIdx == 1) { DataStore.addAmount(100);  updateComplications(); }
-        else if (itemIdx == 2) { DataStore.addAmount(250);  updateComplications(); }
-        else if (itemIdx == 3) { DataStore.addAmount(500);  updateComplications(); }
+        var isOz = (DataStore.getUnits() == 1);
+        if      (itemIdx == 0) { DataStore.addAmount(isOz ? -237 : -100); updateComplications(); }
+        else if (itemIdx == 1) { DataStore.addAmount(isOz ?  237 :  100); updateComplications(); }
+        else if (itemIdx == 2) { DataStore.addAmount(isOz ?  473 :  250); updateComplications(); }
+        else if (itemIdx == 3) { DataStore.addAmount(isOz ?  591 :  500); updateComplications(); }
         else if (itemIdx == 4) { pushQuickAddView(); }
         else if (itemIdx == 5) { pushResetConfirm(); }
-        else if (itemIdx == 6) { pushGoalPickerView(); }
         return true;
-    }
-
-    // Удержание DOWN → раздел Formula
-    function onKeyHeld(keyEvent as WatchUi.KeyEvent) as Boolean {
-        if (keyEvent.getKey() == WatchUi.KEY_DOWN) {
-            pushDebugProfileView();
-            return true;
-        }
-        return false;
     }
 
     function onBack() as Boolean {
