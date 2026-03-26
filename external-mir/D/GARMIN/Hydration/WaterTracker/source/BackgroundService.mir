@@ -1,0 +1,110 @@
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 2; @symbol_importdef<0> = [Toybox,2,7,13]; @symbol_importdef<1> = [Background,2,14,24]; ]
+import Toybox.Background;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 3; @symbol_importdef<0> = [Toybox,3,7,13]; @symbol_importdef<1> = [Lang,3,14,18]; ]
+import Toybox.Lang;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 4; @symbol_importdef<0> = [Toybox,4,7,13]; @symbol_importdef<1> = [System,4,14,20]; ]
+import Toybox.System;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 5; @symbol_importdef<0> = [Toybox,5,7,13]; @symbol_importdef<1> = [Time,5,14,18]; ]
+import Toybox.Time;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 10; background = true; @symbol_classdef = [BackgroundService,10,6,23]; @symbol_extends<0> = [System,10,32,38]; @symbol_extends<1> = [ServiceDelegate,10,39,54]; ]
+class BackgroundService extends System.ServiceDelegate {
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 10; ]
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 10; ]
+    static
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 12; @symbol_functiondef = [initialize,12,13,23]; ]
+    function initialize() as Void {
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_12_26_14_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc" 13 8 ]
+        symbol [ ServiceDelegate %tmp.2 13 8 23 ];
+        %tmp.2 = getv ? :ServiceDelegate;
+        symbol [ initialize %tmp.3 13 24 34 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_12_26_14_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 17; @symbol_functiondef = [onTemporalEvent,17,13,28]; ]
+    function onTemporalEvent() as Void {
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_17_39_19_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc" 18 8 ]
+        %tmp.1 = self;
+        symbol [ _scheduleNext %tmp.2 18 8 21 ];
+        %tmp.2 = getv function %tmp.1 :_scheduleNext;
+        invoke %tmp.1 %tmp.2();
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_17_39_19_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 22; @symbol_functiondef = [_scheduleNext,22,21,34]; ]
+    private
+    function _scheduleNext() as Void {
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_22_45_30_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc" 23 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_22_45_30_4_start" "D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_22_45_30_4_stop" ]
+        %intervalMin.1 = local;
+        symbol [ intervalMin %intervalMin.1 23 12 23 ];
+        symbol [ DataStore %tmp.2 23 26 35 ];
+        %tmp.2 = getv ? :DataStore;
+        symbol [ getInterval %tmp.3 23 36 47 ];
+        %tmp.3 = getv function %tmp.2 :getInterval;
+        %tmp.4 = invoke %tmp.2 %tmp.3();
+        lputv %intervalMin.1 %tmp.4;
+        symbol [ intervalMin %intervalMin.1 23 12 23 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc" 24 8 ]
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_24_8_27_8_if_stmt:
+        %tmp.5 = lgetv %intervalMin.1;
+        symbol [ intervalMin %tmp.5 24 12 23 ];
+        %tmp.6 = 0;
+        %tmp.7 = lte %tmp.5 %tmp.6;
+        bf %tmp.7 @D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_24_8_27_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_24_8_27_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_24_30_27_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc" 25 12 ]
+        symbol [ Background %tmp.8 25 12 22 ];
+        %tmp.8 = getm $.Toybox.Background;
+        symbol [ deleteTemporalEvent %tmp.9 25 23 42 ];
+        %tmp.9 = getv function %tmp.8 :deleteTemporalEvent;
+        invoke %tmp.8 %tmp.9();
+[ "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc" 26 12 ]
+        ret ?;
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_24_30_27_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_24_8_27_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_24_8_27_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc" 28 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_22_45_30_4_start" "D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_22_45_30_4_stop" ]
+        %next.2 = local;
+        symbol [ next %next.2 28 12 16 ];
+        symbol [ Time %tmp.10 28 19 23 ];
+        %tmp.10 = getm $.Toybox.Time;
+        symbol [ now %tmp.11 28 24 27 ];
+        %tmp.11 = getv function %tmp.10 :now;
+        %tmp.12 = invoke %tmp.10 %tmp.11();
+        symbol [ add %tmp.13 28 30 33 ];
+        %tmp.13 = getv function %tmp.12 :add;
+        symbol [ Time %tmp.16 28 38 42 ];
+        %tmp.16 = getm $.Toybox.Time;
+        symbol [ Duration %tmp.17 28 43 51 ];
+        %tmp.17 = getv function ? %tmp.16 :Duration;
+        %tmp.18 = lgetv %intervalMin.1;
+        symbol [ intervalMin %tmp.18 28 52 63 ];
+        %tmp.19 = 60;
+        %tmp.20 = mul %tmp.18 %tmp.19;
+        %tmp.14 = newc %tmp.17 (%tmp.20);
+        %tmp.21 = invoke %tmp.12 %tmp.13(%tmp.14);
+        lputv %next.2 %tmp.21;
+        symbol [ next %next.2 28 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc" 29 8 ]
+        symbol [ Background %tmp.22 29 8 18 ];
+        %tmp.22 = getm $.Toybox.Background;
+        symbol [ registerForTemporalEvent %tmp.23 29 19 43 ];
+        %tmp.23 = getv function %tmp.22 :registerForTemporalEvent;
+        %tmp.24 = lgetv %next.2;
+        symbol [ next %tmp.24 29 44 48 ];
+        invoke %tmp.22 %tmp.23(%tmp.24);
+D__GARMIN_Hydration_WaterTracker_source_BackgroundService_mc_22_45_30_4_stop:
+    }
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\BackgroundService.mc"; @line = 2; ]
+<init> {
+}

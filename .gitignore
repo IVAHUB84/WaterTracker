@@ -3,6 +3,12 @@ bin/
 *.prg
 *.prg.debug
 
+# Compiler temp dirs
+gen/
+external-mir/
+internal-mir/
+_backup/
+
 # VS Code
 .vscode/settings.json
 

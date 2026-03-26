@@ -1,0 +1,698 @@
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 2; @symbol_importdef<0> = [Toybox,2,7,13]; @symbol_importdef<1> = [Lang,2,14,18]; ]
+import Toybox.Lang;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 3; @symbol_importdef<0> = [Toybox,3,7,13]; @symbol_importdef<1> = [WatchUi,3,14,21]; ]
+import Toybox.WatchUi;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 5; @symbol_classdef = [WaterTrackerDelegate,5,6,26]; @symbol_extends<0> = [WatchUi,5,35,42]; @symbol_extends<1> = [BehaviorDelegate,5,43,59]; ]
+class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 5; ]
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 5; ]
+    static
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 7; @position = 16; @symbol_vardef = [_view,7,16,21]; @symbol_type<0> = [WaterTrackerView,7,30,46]; ]
+    private
+    var _view as WaterTrackerView;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 8; @position = 16; @symbol_vardef = [_lastDragY,8,16,26]; @symbol_type<0> = [Number,8,30,36]; ]
+    private
+    var _lastDragY as Number = -1;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 10; @symbol_functiondef = [initialize,10,13,23]; @symbol_param<0> = [view,10,24,28]; @symbol_param<0>_type<0> = [WaterTrackerView,10,32,48]; ]
+    function initialize(view as WaterTrackerView) as Void {
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_10_50_14_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 11 8 ]
+        symbol [ BehaviorDelegate %tmp.2 11 8 24 ];
+        %tmp.2 = getv ? :BehaviorDelegate;
+        symbol [ initialize %tmp.3 11 25 35 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 12 8 ]
+        %tmp.4 = lgetv %view;
+        symbol [ view %tmp.4 12 16 20 ];
+        symbol [ _view ? 12 8 13 ];
+        putv self :_view %tmp.4;
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 13 8 ]
+        symbol [ _view %tmp.6 13 8 13 ];
+        %tmp.6 = getv ? :_view;
+        symbol [ setShowSelection %tmp.7 13 14 30 ];
+        %tmp.7 = getv function %tmp.6 :setShowSelection;
+        %tmp.8 = true;
+        invoke %tmp.6 %tmp.7(%tmp.8);
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_10_50_14_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 17; @symbol_functiondef = [onMenu,17,13,19]; @symbol_return<0> = [Boolean,17,25,32]; ]
+    function onMenu() as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_17_33_20_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 18 8 ]
+        %tmp.1 = self;
+        symbol [ pushGoalPickerView %tmp.2 18 8 26 ];
+        %tmp.2 = getv function %tmp.1 :pushGoalPickerView;
+        invoke %tmp.1 %tmp.2();
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 19 8 ]
+        %tmp.3 = true;
+        ret %tmp.3;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_17_33_20_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 23; @symbol_functiondef = [onPreviousPage,23,13,27]; @symbol_return<0> = [Boolean,23,33,40]; ]
+    function onPreviousPage() as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_23_41_26_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 24 8 ]
+        symbol [ _view %tmp.2 24 8 13 ];
+        %tmp.2 = getv ? :_view;
+        symbol [ scrollUp %tmp.3 24 14 22 ];
+        %tmp.3 = getv function %tmp.2 :scrollUp;
+        invoke %tmp.2 %tmp.3();
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 25 8 ]
+        %tmp.4 = true;
+        ret %tmp.4;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_23_41_26_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 29; @symbol_functiondef = [onNextPage,29,13,23]; @symbol_return<0> = [Boolean,29,29,36]; ]
+    function onNextPage() as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_29_37_32_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 30 8 ]
+        symbol [ _view %tmp.2 30 8 13 ];
+        %tmp.2 = getv ? :_view;
+        symbol [ scrollDown %tmp.3 30 14 24 ];
+        %tmp.3 = getv function %tmp.2 :scrollDown;
+        invoke %tmp.2 %tmp.3();
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 31 8 ]
+        %tmp.4 = true;
+        ret %tmp.4;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_29_37_32_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 35; @symbol_functiondef = [onSelect,35,13,21]; @symbol_return<0> = [Boolean,35,27,34]; ]
+    function onSelect() as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_35_35_45_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 36 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_35_35_45_4_start" "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_35_35_45_4_stop" ]
+        %itemIdx.1 = local;
+        symbol [ itemIdx %itemIdx.1 36 12 19 ];
+        symbol [ _view %tmp.2 36 22 27 ];
+        %tmp.2 = getv ? :_view;
+        symbol [ getScrollTop %tmp.3 36 28 40 ];
+        %tmp.3 = getv function %tmp.2 :getScrollTop;
+        %tmp.4 = invoke %tmp.2 %tmp.3();
+        symbol [ RIGHT_ITEM_COUNT %tmp.6 36 45 61 ];
+        %tmp.6 = getv ? :RIGHT_ITEM_COUNT;
+        %tmp.7 = mod %tmp.4 %tmp.6;
+        lputv %itemIdx.1 %tmp.7;
+        symbol [ itemIdx %itemIdx.1 36 12 19 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 37 8 ]
+        symbol [ _view %tmp.9 37 8 13 ];
+        %tmp.9 = getv ? :_view;
+        symbol [ flashZone %tmp.10 37 14 23 ];
+        %tmp.10 = getv function %tmp.9 :flashZone;
+        symbol [ ZONE_SLOT0 %tmp.12 37 24 34 ];
+        %tmp.12 = getv ? :ZONE_SLOT0;
+        invoke %tmp.9 %tmp.10(%tmp.12);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 38 8 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_38_8_43_53_if_stmt:
+        %tmp.13 = lgetv %itemIdx.1;
+        symbol [ itemIdx %tmp.13 38 17 24 ];
+        %tmp.14 = 0;
+        %tmp.15 = eq %tmp.13 %tmp.14;
+        bf %tmp.15 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_38_8_43_53_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_38_8_43_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_38_31_38_83_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 38 33 ]
+        symbol [ DataStore %tmp.17 38 33 42 ];
+        %tmp.17 = getv ? :DataStore;
+        symbol [ addAmount %tmp.18 38 43 52 ];
+        %tmp.18 = getv function %tmp.17 :addAmount;
+        %tmp.19 = -100;
+        invoke %tmp.17 %tmp.18(%tmp.19);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 38 60 ]
+        %tmp.20 = self;
+        symbol [ updateComplications %tmp.21 38 60 79 ];
+        %tmp.21 = getv function %tmp.20 :updateComplications;
+        invoke %tmp.20 %tmp.21();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_38_31_38_83_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_38_8_43_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_38_8_43_53_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 39 13 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_39_13_43_53_if_stmt:
+        %tmp.22 = lgetv %itemIdx.1;
+        symbol [ itemIdx %tmp.22 39 17 24 ];
+        %tmp.23 = 1;
+        %tmp.24 = eq %tmp.22 %tmp.23;
+        bf %tmp.24 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_39_13_43_53_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_39_13_43_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_39_31_39_83_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 39 33 ]
+        symbol [ DataStore %tmp.26 39 33 42 ];
+        %tmp.26 = getv ? :DataStore;
+        symbol [ addAmount %tmp.27 39 43 52 ];
+        %tmp.27 = getv function %tmp.26 :addAmount;
+        %tmp.28 = 100;
+        invoke %tmp.26 %tmp.27(%tmp.28);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 39 60 ]
+        %tmp.29 = self;
+        symbol [ updateComplications %tmp.30 39 60 79 ];
+        %tmp.30 = getv function %tmp.29 :updateComplications;
+        invoke %tmp.29 %tmp.30();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_39_31_39_83_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_39_13_43_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_39_13_43_53_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 40 13 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_40_13_43_53_if_stmt:
+        %tmp.31 = lgetv %itemIdx.1;
+        symbol [ itemIdx %tmp.31 40 17 24 ];
+        %tmp.32 = 2;
+        %tmp.33 = eq %tmp.31 %tmp.32;
+        bf %tmp.33 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_40_13_43_53_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_40_13_43_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_40_31_40_83_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 40 33 ]
+        symbol [ DataStore %tmp.35 40 33 42 ];
+        %tmp.35 = getv ? :DataStore;
+        symbol [ addAmount %tmp.36 40 43 52 ];
+        %tmp.36 = getv function %tmp.35 :addAmount;
+        %tmp.37 = 250;
+        invoke %tmp.35 %tmp.36(%tmp.37);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 40 60 ]
+        %tmp.38 = self;
+        symbol [ updateComplications %tmp.39 40 60 79 ];
+        %tmp.39 = getv function %tmp.38 :updateComplications;
+        invoke %tmp.38 %tmp.39();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_40_31_40_83_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_40_13_43_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_40_13_43_53_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 41 13 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_41_13_43_53_if_stmt:
+        %tmp.40 = lgetv %itemIdx.1;
+        symbol [ itemIdx %tmp.40 41 17 24 ];
+        %tmp.41 = 3;
+        %tmp.42 = eq %tmp.40 %tmp.41;
+        bf %tmp.42 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_41_13_43_53_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_41_13_43_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_41_31_41_83_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 41 33 ]
+        symbol [ DataStore %tmp.44 41 33 42 ];
+        %tmp.44 = getv ? :DataStore;
+        symbol [ addAmount %tmp.45 41 43 52 ];
+        %tmp.45 = getv function %tmp.44 :addAmount;
+        %tmp.46 = 500;
+        invoke %tmp.44 %tmp.45(%tmp.46);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 41 60 ]
+        %tmp.47 = self;
+        symbol [ updateComplications %tmp.48 41 60 79 ];
+        %tmp.48 = getv function %tmp.47 :updateComplications;
+        invoke %tmp.47 %tmp.48();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_41_31_41_83_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_41_13_43_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_41_13_43_53_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 42 13 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_42_13_43_53_if_stmt:
+        %tmp.49 = lgetv %itemIdx.1;
+        symbol [ itemIdx %tmp.49 42 17 24 ];
+        %tmp.50 = 4;
+        %tmp.51 = eq %tmp.49 %tmp.50;
+        bf %tmp.51 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_42_13_43_53_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_42_13_43_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_42_31_42_53_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 42 33 ]
+        %tmp.52 = self;
+        symbol [ pushQuickAddView %tmp.53 42 33 49 ];
+        %tmp.53 = getv function %tmp.52 :pushQuickAddView;
+        invoke %tmp.52 %tmp.53();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_42_31_42_53_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_42_13_43_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_42_13_43_53_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 43 13 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_43_13_43_53_if_stmt:
+        %tmp.54 = lgetv %itemIdx.1;
+        symbol [ itemIdx %tmp.54 43 17 24 ];
+        %tmp.55 = 5;
+        %tmp.56 = eq %tmp.54 %tmp.55;
+        bf %tmp.56 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_43_13_43_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_43_13_43_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_43_31_43_53_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 43 33 ]
+        %tmp.57 = self;
+        symbol [ pushResetConfirm %tmp.58 43 33 49 ];
+        %tmp.58 = getv function %tmp.57 :pushResetConfirm;
+        invoke %tmp.57 %tmp.58();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_43_31_43_53_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_43_13_43_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_43_13_43_53_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_42_13_43_53_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_41_13_43_53_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_40_13_43_53_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_39_13_43_53_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_38_8_43_53_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 44 8 ]
+        %tmp.59 = true;
+        ret %tmp.59;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_35_35_45_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 48; @symbol_functiondef = [onDrag,48,13,19]; @symbol_param<0> = [evt,48,20,23]; @symbol_param<0>_type<0> = [WatchUi,48,27,34]; @symbol_param<0>_type<1> = [DragEvent,48,35,44]; @symbol_return<0> = [Boolean,48,49,56]; ]
+    function onDrag(evt as WatchUi.DragEvent) as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_48_57_67_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 49 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_48_57_67_4_start" "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_48_57_67_4_stop" ]
+        %y.1 = local;
+        symbol [ y %y.1 49 12 13 ];
+        %tmp.1 = lgetv %evt;
+        symbol [ evt %tmp.1 49 16 19 ];
+        symbol [ getCoordinates %tmp.2 49 20 34 ];
+        %tmp.2 = getv function %tmp.1 :getCoordinates;
+        %tmp.3 = invoke %tmp.1 %tmp.2();
+        %tmp.4 = 1;
+        %tmp.5 = agetv %tmp.3 %tmp.4;
+        lputv %y.1 %tmp.5;
+        symbol [ y %y.1 49 12 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 50 8 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_50_8_53_8_if_stmt:
+        symbol [ _lastDragY %tmp.7 50 12 22 ];
+        %tmp.7 = getv ? :_lastDragY;
+        %tmp.8 = 0;
+        %tmp.9 = lt %tmp.7 %tmp.8;
+        bf %tmp.9 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_50_8_53_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_50_8_53_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_50_28_53_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 51 12 ]
+        %tmp.10 = lgetv %y.1;
+        symbol [ y %tmp.10 51 25 26 ];
+        symbol [ _lastDragY ? 51 12 22 ];
+        putv self :_lastDragY %tmp.10;
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 52 12 ]
+        %tmp.11 = true;
+        ret %tmp.11;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_50_28_53_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_50_8_53_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_50_8_53_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 54 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_48_57_67_4_start" "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_48_57_67_4_stop" ]
+        %diff.2 = local;
+        symbol [ diff %diff.2 54 12 16 ];
+        symbol [ _lastDragY %tmp.13 54 19 29 ];
+        %tmp.13 = getv ? :_lastDragY;
+        %tmp.14 = lgetv %y.1;
+        symbol [ y %tmp.14 54 32 33 ];
+        %tmp.15 = sub %tmp.13 %tmp.14;
+        lputv %diff.2 %tmp.15;
+        symbol [ diff %diff.2 54 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 55 8 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_8_58_8_if_stmt:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_12_55_33_begin:
+        %tmp.16 = lgetv %diff.2;
+        symbol [ diff %tmp.16 55 12 16 ];
+        %tmp.17 = 70;
+        %tmp.18 = gt %tmp.16 %tmp.17;
+        bt %tmp.18 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_8_58_8_if_true;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_25_55_33_false:
+        %tmp.19 = lgetv %diff.2;
+        symbol [ diff %tmp.19 55 25 29 ];
+        %tmp.20 = -70;
+        %tmp.21 = lt %tmp.19 %tmp.20;
+        push %tmp.21;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_25_55_33_end:
+        %tmp.22 = phi [%tmp.18 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_12_55_33_begin] [%tmp.21 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_25_55_33_false] [%tmp.22 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_25_55_33_end];
+        bf %tmp.22 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_8_58_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_8_58_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_37_58_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 56 12 ]
+        %tmp.23 = lgetv %y.1;
+        symbol [ y %tmp.23 56 25 26 ];
+        symbol [ _lastDragY ? 56 12 22 ];
+        putv self :_lastDragY %tmp.23;
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 57 12 ]
+        %tmp.24 = true;
+        ret %tmp.24;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_37_58_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_8_58_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_55_8_58_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 59 8 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_59_8_65_8_if_stmt:
+        %tmp.25 = lgetv %diff.2;
+        symbol [ diff %tmp.25 59 12 16 ];
+        %tmp.26 = 30;
+        %tmp.27 = gt %tmp.25 %tmp.26;
+        bf %tmp.27 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_59_8_65_8_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_59_8_65_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_59_23_62_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 60 12 ]
+        symbol [ _view %tmp.29 60 12 17 ];
+        %tmp.29 = getv ? :_view;
+        symbol [ scrollDown %tmp.30 60 18 28 ];
+        %tmp.30 = getv function %tmp.29 :scrollDown;
+        invoke %tmp.29 %tmp.30();
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 61 12 ]
+        %tmp.31 = lgetv %y.1;
+        symbol [ y %tmp.31 61 25 26 ];
+        symbol [ _lastDragY ? 61 12 22 ];
+        putv self :_lastDragY %tmp.31;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_59_23_62_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_59_8_65_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_59_8_65_8_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 62 15 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_62_15_65_8_if_stmt:
+        %tmp.32 = lgetv %diff.2;
+        symbol [ diff %tmp.32 62 19 23 ];
+        %tmp.33 = -30;
+        %tmp.34 = lt %tmp.32 %tmp.33;
+        bf %tmp.34 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_62_15_65_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_62_15_65_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_62_31_65_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 63 12 ]
+        symbol [ _view %tmp.36 63 12 17 ];
+        %tmp.36 = getv ? :_view;
+        symbol [ scrollUp %tmp.37 63 18 26 ];
+        %tmp.37 = getv function %tmp.36 :scrollUp;
+        invoke %tmp.36 %tmp.37();
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 64 12 ]
+        %tmp.38 = lgetv %y.1;
+        symbol [ y %tmp.38 64 25 26 ];
+        symbol [ _lastDragY ? 64 12 22 ];
+        putv self :_lastDragY %tmp.38;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_62_31_65_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_62_15_65_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_62_15_65_8_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_59_8_65_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 66 8 ]
+        %tmp.39 = true;
+        ret %tmp.39;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_48_57_67_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 69; @symbol_functiondef = [onTap,69,13,18]; @symbol_param<0> = [evt,69,19,22]; @symbol_param<0>_type<0> = [WatchUi,69,26,33]; @symbol_param<0>_type<1> = [ClickEvent,69,34,44]; @symbol_return<0> = [Boolean,69,49,56]; ]
+    function onTap(evt as WatchUi.ClickEvent) as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_69_57_90_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 70 8 ]
+        %tmp.1 = -1;
+        symbol [ _lastDragY ? 70 8 18 ];
+        putv self :_lastDragY %tmp.1;
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 71 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_69_57_90_4_start" "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_69_57_90_4_stop" ]
+        %coords.1 = local;
+        symbol [ coords %coords.1 71 12 18 ];
+        %tmp.2 = lgetv %evt;
+        symbol [ evt %tmp.2 71 21 24 ];
+        symbol [ getCoordinates %tmp.3 71 25 39 ];
+        %tmp.3 = getv function %tmp.2 :getCoordinates;
+        %tmp.4 = invoke %tmp.2 %tmp.3();
+        lputv %coords.1 %tmp.4;
+        symbol [ coords %coords.1 71 12 18 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 72 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_69_57_90_4_start" "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_69_57_90_4_stop" ]
+        %zone.2 = local;
+        symbol [ zone %zone.2 72 12 16 ];
+        symbol [ _view %tmp.6 72 21 26 ];
+        %tmp.6 = getv ? :_view;
+        symbol [ getZoneForTap %tmp.7 72 27 40 ];
+        %tmp.7 = getv function %tmp.6 :getZoneForTap;
+        %tmp.8 = lgetv %coords.1;
+        symbol [ coords %tmp.8 72 41 47 ];
+        %tmp.9 = 0;
+        %tmp.10 = agetv %tmp.8 %tmp.9;
+        %tmp.11 = lgetv %coords.1;
+        symbol [ coords %tmp.11 72 52 58 ];
+        %tmp.12 = 1;
+        %tmp.13 = agetv %tmp.11 %tmp.12;
+        %tmp.14 = invoke %tmp.6 %tmp.7(%tmp.10, %tmp.13);
+        lputv %zone.2 %tmp.14;
+        symbol [ zone %zone.2 72 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 73 8 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_73_8_73_46_if_stmt:
+        %tmp.15 = lgetv %zone.2;
+        symbol [ zone %tmp.15 73 12 16 ];
+        symbol [ ZONE_NONE %tmp.17 73 20 29 ];
+        %tmp.17 = getv ? :ZONE_NONE;
+        %tmp.18 = eq %tmp.15 %tmp.17;
+        bf %tmp.18 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_73_8_73_46_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_73_8_73_46_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_73_31_73_46_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 73 33 ]
+        %tmp.19 = true;
+        ret %tmp.19;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_73_31_73_46_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_73_8_73_46_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_73_8_73_46_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 75 8 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_75_8_75_80_if_stmt:
+        %tmp.20 = lgetv %zone.2;
+        symbol [ zone %tmp.20 75 12 16 ];
+        symbol [ ZONE_SCROLL_UP %tmp.22 75 20 34 ];
+        %tmp.22 = getv ? :ZONE_SCROLL_UP;
+        %tmp.23 = eq %tmp.20 %tmp.22;
+        bf %tmp.23 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_75_8_75_80_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_75_8_75_80_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_75_38_75_80_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 75 40 ]
+        symbol [ _view %tmp.25 75 40 45 ];
+        %tmp.25 = getv ? :_view;
+        symbol [ scrollUp %tmp.26 75 46 54 ];
+        %tmp.26 = getv function %tmp.25 :scrollUp;
+        invoke %tmp.25 %tmp.26();
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 75 67 ]
+        %tmp.27 = true;
+        ret %tmp.27;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_75_38_75_80_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_75_8_75_80_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_75_8_75_80_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 76 8 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_76_8_76_81_if_stmt:
+        %tmp.28 = lgetv %zone.2;
+        symbol [ zone %tmp.28 76 12 16 ];
+        symbol [ ZONE_SCROLL_DOWN %tmp.30 76 20 36 ];
+        %tmp.30 = getv ? :ZONE_SCROLL_DOWN;
+        %tmp.31 = eq %tmp.28 %tmp.30;
+        bf %tmp.31 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_76_8_76_81_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_76_8_76_81_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_76_38_76_81_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 76 40 ]
+        symbol [ _view %tmp.33 76 40 45 ];
+        %tmp.33 = getv ? :_view;
+        symbol [ scrollDown %tmp.34 76 46 56 ];
+        %tmp.34 = getv function %tmp.33 :scrollDown;
+        invoke %tmp.33 %tmp.34();
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 76 68 ]
+        %tmp.35 = true;
+        ret %tmp.35;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_76_38_76_81_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_76_8_76_81_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_76_8_76_81_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 77 8 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_77_8_77_81_if_stmt:
+        %tmp.36 = lgetv %zone.2;
+        symbol [ zone %tmp.36 77 12 16 ];
+        symbol [ ZONE_WARNING %tmp.38 77 20 32 ];
+        %tmp.38 = getv ? :ZONE_WARNING;
+        %tmp.39 = eq %tmp.36 %tmp.38;
+        bf %tmp.39 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_77_8_77_81_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_77_8_77_81_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_77_38_77_81_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 77 40 ]
+        %tmp.40 = self;
+        symbol [ pushProfileWarningView %tmp.41 77 40 62 ];
+        %tmp.41 = getv function %tmp.40 :pushProfileWarningView;
+        invoke %tmp.40 %tmp.41();
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 77 68 ]
+        %tmp.42 = true;
+        ret %tmp.42;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_77_38_77_81_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_77_8_77_81_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_77_8_77_81_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 78 8 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_78_8_78_53_if_stmt:
+        %tmp.43 = lgetv %zone.2;
+        symbol [ zone %tmp.43 78 12 16 ];
+        symbol [ ZONE_REC %tmp.45 78 20 28 ];
+        %tmp.45 = getv ? :ZONE_REC;
+        %tmp.46 = eq %tmp.43 %tmp.45;
+        bf %tmp.46 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_78_8_78_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_78_8_78_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_78_38_78_53_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 78 40 ]
+        %tmp.47 = true;
+        ret %tmp.47;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_78_38_78_53_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_78_8_78_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_78_8_78_53_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 80 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_69_57_90_4_start" "D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_69_57_90_4_stop" ]
+        %itemIdx.3 = local;
+        symbol [ itemIdx %itemIdx.3 80 12 19 ];
+        symbol [ _view %tmp.49 80 23 28 ];
+        %tmp.49 = getv ? :_view;
+        symbol [ getScrollTop %tmp.50 80 29 41 ];
+        %tmp.50 = getv function %tmp.49 :getScrollTop;
+        %tmp.51 = invoke %tmp.49 %tmp.50();
+        %tmp.52 = lgetv %zone.2;
+        symbol [ zone %tmp.52 80 46 50 ];
+        %tmp.53 = add %tmp.51 %tmp.52;
+        symbol [ RIGHT_ITEM_COUNT %tmp.55 80 54 70 ];
+        %tmp.55 = getv ? :RIGHT_ITEM_COUNT;
+        %tmp.56 = mod %tmp.53 %tmp.55;
+        lputv %itemIdx.3 %tmp.56;
+        symbol [ itemIdx %itemIdx.3 80 12 19 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 81 8 ]
+        symbol [ _view %tmp.58 81 8 13 ];
+        %tmp.58 = getv ? :_view;
+        symbol [ flashZone %tmp.59 81 14 23 ];
+        %tmp.59 = getv function %tmp.58 :flashZone;
+        %tmp.60 = lgetv %zone.2;
+        symbol [ zone %tmp.60 81 24 28 ];
+        invoke %tmp.58 %tmp.59(%tmp.60);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 83 8 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_83_8_88_53_if_stmt:
+        %tmp.61 = lgetv %itemIdx.3;
+        symbol [ itemIdx %tmp.61 83 17 24 ];
+        %tmp.62 = 0;
+        %tmp.63 = eq %tmp.61 %tmp.62;
+        bf %tmp.63 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_83_8_88_53_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_83_8_88_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_83_31_83_83_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 83 33 ]
+        symbol [ DataStore %tmp.65 83 33 42 ];
+        %tmp.65 = getv ? :DataStore;
+        symbol [ addAmount %tmp.66 83 43 52 ];
+        %tmp.66 = getv function %tmp.65 :addAmount;
+        %tmp.67 = -100;
+        invoke %tmp.65 %tmp.66(%tmp.67);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 83 60 ]
+        %tmp.68 = self;
+        symbol [ updateComplications %tmp.69 83 60 79 ];
+        %tmp.69 = getv function %tmp.68 :updateComplications;
+        invoke %tmp.68 %tmp.69();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_83_31_83_83_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_83_8_88_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_83_8_88_53_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 84 13 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_84_13_88_53_if_stmt:
+        %tmp.70 = lgetv %itemIdx.3;
+        symbol [ itemIdx %tmp.70 84 17 24 ];
+        %tmp.71 = 1;
+        %tmp.72 = eq %tmp.70 %tmp.71;
+        bf %tmp.72 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_84_13_88_53_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_84_13_88_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_84_31_84_83_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 84 33 ]
+        symbol [ DataStore %tmp.74 84 33 42 ];
+        %tmp.74 = getv ? :DataStore;
+        symbol [ addAmount %tmp.75 84 43 52 ];
+        %tmp.75 = getv function %tmp.74 :addAmount;
+        %tmp.76 = 100;
+        invoke %tmp.74 %tmp.75(%tmp.76);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 84 60 ]
+        %tmp.77 = self;
+        symbol [ updateComplications %tmp.78 84 60 79 ];
+        %tmp.78 = getv function %tmp.77 :updateComplications;
+        invoke %tmp.77 %tmp.78();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_84_31_84_83_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_84_13_88_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_84_13_88_53_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 85 13 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_85_13_88_53_if_stmt:
+        %tmp.79 = lgetv %itemIdx.3;
+        symbol [ itemIdx %tmp.79 85 17 24 ];
+        %tmp.80 = 2;
+        %tmp.81 = eq %tmp.79 %tmp.80;
+        bf %tmp.81 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_85_13_88_53_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_85_13_88_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_85_31_85_83_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 85 33 ]
+        symbol [ DataStore %tmp.83 85 33 42 ];
+        %tmp.83 = getv ? :DataStore;
+        symbol [ addAmount %tmp.84 85 43 52 ];
+        %tmp.84 = getv function %tmp.83 :addAmount;
+        %tmp.85 = 250;
+        invoke %tmp.83 %tmp.84(%tmp.85);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 85 60 ]
+        %tmp.86 = self;
+        symbol [ updateComplications %tmp.87 85 60 79 ];
+        %tmp.87 = getv function %tmp.86 :updateComplications;
+        invoke %tmp.86 %tmp.87();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_85_31_85_83_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_85_13_88_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_85_13_88_53_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 86 13 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_86_13_88_53_if_stmt:
+        %tmp.88 = lgetv %itemIdx.3;
+        symbol [ itemIdx %tmp.88 86 17 24 ];
+        %tmp.89 = 3;
+        %tmp.90 = eq %tmp.88 %tmp.89;
+        bf %tmp.90 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_86_13_88_53_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_86_13_88_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_86_31_86_83_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 86 33 ]
+        symbol [ DataStore %tmp.92 86 33 42 ];
+        %tmp.92 = getv ? :DataStore;
+        symbol [ addAmount %tmp.93 86 43 52 ];
+        %tmp.93 = getv function %tmp.92 :addAmount;
+        %tmp.94 = 500;
+        invoke %tmp.92 %tmp.93(%tmp.94);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 86 60 ]
+        %tmp.95 = self;
+        symbol [ updateComplications %tmp.96 86 60 79 ];
+        %tmp.96 = getv function %tmp.95 :updateComplications;
+        invoke %tmp.95 %tmp.96();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_86_31_86_83_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_86_13_88_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_86_13_88_53_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 87 13 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_87_13_88_53_if_stmt:
+        %tmp.97 = lgetv %itemIdx.3;
+        symbol [ itemIdx %tmp.97 87 17 24 ];
+        %tmp.98 = 4;
+        %tmp.99 = eq %tmp.97 %tmp.98;
+        bf %tmp.99 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_87_13_88_53_if_false;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_87_13_88_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_87_31_87_53_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 87 33 ]
+        %tmp.100 = self;
+        symbol [ pushQuickAddView %tmp.101 87 33 49 ];
+        %tmp.101 = getv function %tmp.100 :pushQuickAddView;
+        invoke %tmp.100 %tmp.101();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_87_31_87_53_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_87_13_88_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_87_13_88_53_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 88 13 ]
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_88_13_88_53_if_stmt:
+        %tmp.102 = lgetv %itemIdx.3;
+        symbol [ itemIdx %tmp.102 88 17 24 ];
+        %tmp.103 = 5;
+        %tmp.104 = eq %tmp.102 %tmp.103;
+        bf %tmp.104 @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_88_13_88_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_88_13_88_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_88_31_88_53_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 88 33 ]
+        %tmp.105 = self;
+        symbol [ pushResetConfirm %tmp.106 88 33 49 ];
+        %tmp.106 = getv function %tmp.105 :pushResetConfirm;
+        invoke %tmp.105 %tmp.106();
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_88_31_88_53_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_88_13_88_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_88_13_88_53_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_87_13_88_53_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_86_13_88_53_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_85_13_88_53_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_84_13_88_53_if_end:
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_83_8_88_53_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 89 8 ]
+        %tmp.107 = true;
+        ret %tmp.107;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_69_57_90_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 92; @symbol_functiondef = [onBack,92,13,19]; @symbol_return<0> = [Boolean,92,25,32]; ]
+    function onBack() as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_92_33_95_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 93 8 ]
+        symbol [ WatchUi %tmp.1 93 8 15 ];
+        %tmp.1 = getm $.Toybox.WatchUi;
+        symbol [ popView %tmp.2 93 16 23 ];
+        %tmp.2 = getv function %tmp.1 :popView;
+        symbol [ WatchUi %tmp.3 93 24 31 ];
+        %tmp.3 = getm $.Toybox.WatchUi;
+        symbol [ SLIDE_DOWN %tmp.4 93 32 42 ];
+        %tmp.4 = getv %tmp.3 :SLIDE_DOWN;
+        invoke %tmp.1 %tmp.2(%tmp.4);
+[ "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc" 94 8 ]
+        %tmp.5 = true;
+        ret %tmp.5;
+D__GARMIN_Hydration_WaterTracker_source_instinct_WaterTrackerDelegate_mc_92_33_95_4_stop:
+    }
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-instinct\WaterTrackerDelegate.mc"; @line = 2; ]
+<init> {
+}

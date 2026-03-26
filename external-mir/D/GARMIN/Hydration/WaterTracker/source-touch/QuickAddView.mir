@@ -1,0 +1,1088 @@
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 2; @symbol_importdef<0> = [Toybox,2,7,13]; @symbol_importdef<1> = [Graphics,2,14,22]; ]
+import Toybox.Graphics;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 3; @symbol_importdef<0> = [Toybox,3,7,13]; @symbol_importdef<1> = [Lang,3,14,18]; ]
+import Toybox.Lang;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 4; @symbol_importdef<0> = [Toybox,4,7,13]; @symbol_importdef<1> = [WatchUi,4,14,21]; ]
+import Toybox.WatchUi;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 6; @position = 6; @symbol_constdef = [QA_STEP,6,6,13]; @symbol_type<0> = [Number,6,20,26]; ]
+const QA_STEP as Number = 50;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 7; @position = 6; @symbol_constdef = [QA_MIN,7,6,12]; @symbol_type<0> = [Number,7,20,26]; ]
+const QA_MIN as Number = -2000;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 8; @position = 6; @symbol_constdef = [QA_MAX,8,6,12]; @symbol_type<0> = [Number,8,20,26]; ]
+const QA_MAX as Number = 2000;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 9; @position = 6; @symbol_constdef = [QA_DEFAULT,9,6,16]; @symbol_type<0> = [Number,9,20,26]; ]
+const QA_DEFAULT as Number = 0;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 11; @position = 6; @symbol_constdef = [QA_ZONE_NONE,11,6,18]; @symbol_type<0> = [Number,11,23,29]; ]
+const QA_ZONE_NONE as Number = -1;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 12; @position = 6; @symbol_constdef = [QA_ZONE_MINUS,12,6,19]; @symbol_type<0> = [Number,12,23,29]; ]
+const QA_ZONE_MINUS as Number = 0;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 13; @position = 6; @symbol_constdef = [QA_ZONE_PLUS,13,6,18]; @symbol_type<0> = [Number,13,23,29]; ]
+const QA_ZONE_PLUS as Number = 1;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 14; @position = 6; @symbol_constdef = [QA_ZONE_ADD,14,6,17]; @symbol_type<0> = [Number,14,23,29]; ]
+const QA_ZONE_ADD as Number = 2;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 16; @symbol_functiondef = [pushQuickAddView,16,9,25]; ]
+function pushQuickAddView() as Void {
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_16_36_19_0_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 17 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_16_36_19_0_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_16_36_19_0_stop" ]
+    %view.1 = local;
+    symbol [ view %view.1 17 8 12 ];
+    symbol [ QuickAddView %tmp.4 17 19 31 ];
+    %tmp.4 = getv ? :QuickAddView;
+    %tmp.1 = newc %tmp.4 ();
+    lputv %view.1 %tmp.1;
+    symbol [ view %view.1 17 8 12 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 18 4 ]
+    symbol [ WatchUi %tmp.5 18 4 11 ];
+    %tmp.5 = getm $.Toybox.WatchUi;
+    symbol [ pushView %tmp.6 18 12 20 ];
+    %tmp.6 = getv function %tmp.5 :pushView;
+    %tmp.7 = lgetv %view.1;
+    symbol [ view %tmp.7 18 21 25 ];
+    symbol [ QuickAddDelegate %tmp.11 18 31 47 ];
+    %tmp.11 = getv ? :QuickAddDelegate;
+    %tmp.12 = lgetv %view.1;
+    symbol [ view %tmp.12 18 48 52 ];
+    %tmp.8 = newc %tmp.11 (%tmp.12);
+    symbol [ WatchUi %tmp.13 18 55 62 ];
+    %tmp.13 = getm $.Toybox.WatchUi;
+    symbol [ SLIDE_UP %tmp.14 18 63 71 ];
+    %tmp.14 = getv %tmp.13 :SLIDE_UP;
+    invoke %tmp.5 %tmp.6(%tmp.7, %tmp.8, %tmp.14);
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_16_36_19_0_stop:
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 22; @symbol_classdef = [QuickAddView,22,6,18]; @symbol_extends<0> = [WatchUi,22,27,34]; @symbol_extends<1> = [View,22,35,39]; ]
+class QuickAddView extends WatchUi.View {
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 22; ]
+    <init> {
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 24 16 ]
+        symbol [ QA_DEFAULT %tmp.16 24 35 45 ];
+        %tmp.16 = getv ? :QA_DEFAULT;
+        putv self :_value %tmp.16;
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 22; ]
+    static
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 24; @position = 16; @symbol_vardef = [_value,24,16,22]; @symbol_type<0> = [Number,24,26,32]; ]
+    private
+    var _value as Number;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 26; @position = 8; @symbol_vardef = [btnSplitY,26,8,17]; @symbol_type<0> = [Number,26,21,27]; ]
+    var btnSplitY as Number = 0;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 27; @position = 8; @symbol_vardef = [btnAddY,27,8,15]; @symbol_type<0> = [Number,27,21,27]; ]
+    var btnAddY as Number = 0;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 28; @position = 8; @symbol_vardef = [centerX,28,8,15]; @symbol_type<0> = [Number,28,21,27]; ]
+    var centerX as Number = 0;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 30; @symbol_functiondef = [initialize,30,13,23]; ]
+    function initialize() as Void {
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_30_26_32_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 31 8 ]
+        symbol [ View %tmp.2 31 8 12 ];
+        %tmp.2 = getv ? :View;
+        symbol [ initialize %tmp.3 31 13 23 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_30_26_32_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 34; @symbol_functiondef = [getValue,34,13,21]; @symbol_return<0> = [Number,34,27,33]; ]
+    function getValue() as Number {
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_34_34_34_51_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 34 36 ]
+        symbol [ _value %tmp.2 34 43 49 ];
+        %tmp.2 = getv ? :_value;
+        ret %tmp.2;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_34_34_34_51_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 36; @symbol_functiondef = [step,36,13,17]; @symbol_param<0> = [delta,36,18,23]; @symbol_param<0>_type<0> = [Number,36,27,33]; ]
+    function step(delta as Number) as Void {
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_36_43_41_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 37 8 ]
+        symbol [ _value %tmp.1 37 8 14 ];
+        %tmp.1 = getv self :_value;
+        %tmp.2 = lgetv %delta;
+        symbol [ delta %tmp.2 37 18 23 ];
+        %tmp.3 = add %tmp.1 %tmp.2;
+        symbol [ _value ? 37 8 14 ];
+        putv self :_value dup %tmp.3;
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 38 8 ]
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_38_8_38_48_if_stmt:
+        symbol [ _value %tmp.5 38 12 18 ];
+        %tmp.5 = getv ? :_value;
+        symbol [ QA_MIN %tmp.7 38 21 27 ];
+        %tmp.7 = getv ? :QA_MIN;
+        %tmp.8 = lt %tmp.5 %tmp.7;
+        bf %tmp.8 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_38_8_38_48_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_38_8_38_48_if_true:
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_38_29_38_48_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 38 31 ]
+        symbol [ QA_MIN %tmp.10 38 40 46 ];
+        %tmp.10 = getv ? :QA_MIN;
+        symbol [ _value ? 38 31 37 ];
+        putv self :_value %tmp.10;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_38_29_38_48_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_38_8_38_48_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_38_8_38_48_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 39 8 ]
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_39_8_39_48_if_stmt:
+        symbol [ _value %tmp.12 39 12 18 ];
+        %tmp.12 = getv ? :_value;
+        symbol [ QA_MAX %tmp.14 39 21 27 ];
+        %tmp.14 = getv ? :QA_MAX;
+        %tmp.15 = gt %tmp.12 %tmp.14;
+        bf %tmp.15 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_39_8_39_48_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_39_8_39_48_if_true:
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_39_29_39_48_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 39 31 ]
+        symbol [ QA_MAX %tmp.17 39 40 46 ];
+        %tmp.17 = getv ? :QA_MAX;
+        symbol [ _value ? 39 31 37 ];
+        putv self :_value %tmp.17;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_39_29_39_48_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_39_8_39_48_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_39_8_39_48_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 40 8 ]
+        symbol [ WatchUi %tmp.18 40 8 15 ];
+        %tmp.18 = getm $.Toybox.WatchUi;
+        symbol [ requestUpdate %tmp.19 40 16 29 ];
+        %tmp.19 = getv function %tmp.18 :requestUpdate;
+        invoke %tmp.18 %tmp.19();
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_36_43_41_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 43; @symbol_functiondef = [getZone,43,13,20]; @symbol_param<0> = [tapX,43,21,25]; @symbol_param<0>_type<0> = [Number,43,29,35]; @symbol_param<1> = [tapY,43,37,41]; @symbol_param<1>_type<0> = [Number,43,45,51]; @symbol_return<0> = [Number,43,56,62]; ]
+    function getZone(tapX as Number, tapY as Number) as Number {
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_43_63_49_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 44 8 ]
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_44_8_44_53_if_stmt:
+        %tmp.1 = lgetv %tapY;
+        symbol [ tapY %tmp.1 44 12 16 ];
+        symbol [ btnAddY %tmp.3 44 20 27 ];
+        %tmp.3 = getv ? :btnAddY;
+        %tmp.4 = gte %tmp.1 %tmp.3;
+        bf %tmp.4 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_44_8_44_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_44_8_44_53_if_true:
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_44_31_44_53_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 44 33 ]
+        symbol [ QA_ZONE_ADD %tmp.6 44 40 51 ];
+        %tmp.6 = getv ? :QA_ZONE_ADD;
+        ret %tmp.6;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_44_31_44_53_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_44_8_44_53_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_44_8_44_53_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 45 8 ]
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_45_8_47_8_if_stmt:
+        %tmp.7 = lgetv %tapY;
+        symbol [ tapY %tmp.7 45 12 16 ];
+        symbol [ btnSplitY %tmp.9 45 20 29 ];
+        %tmp.9 = getv ? :btnSplitY;
+        %tmp.10 = gte %tmp.7 %tmp.9;
+        bf %tmp.10 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_45_8_47_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_45_8_47_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_45_31_47_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 46 12 ]
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_46_19_46_54_begin:
+        %tmp.11 = lgetv %tapX;
+        symbol [ tapX %tmp.11 46 20 24 ];
+        symbol [ centerX %tmp.13 46 27 34 ];
+        %tmp.13 = getv ? :centerX;
+        %tmp.14 = lt %tmp.11 %tmp.13;
+        bf %tmp.14 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_46_19_46_54_else_false;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_46_19_46_54_true:
+        symbol [ QA_ZONE_MINUS %tmp.16 46 38 51 ];
+        %tmp.16 = getv ? :QA_ZONE_MINUS;
+        push %tmp.16;
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_46_19_46_54_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_46_19_46_54_else_false:
+        symbol [ QA_ZONE_PLUS %tmp.18 46 54 66 ];
+        %tmp.18 = getv ? :QA_ZONE_PLUS;
+        push %tmp.18;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_46_19_46_54_end:
+        %tmp.19 = phi [%tmp.14 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_46_19_46_54_begin] [%tmp.16 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_46_19_46_54_true] [%tmp.18 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_46_19_46_54_else_false] [%tmp.19 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_46_19_46_54_end];
+        ret %tmp.19;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_45_31_47_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_45_8_47_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_45_8_47_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 48 8 ]
+        symbol [ QA_ZONE_NONE %tmp.21 48 15 27 ];
+        %tmp.21 = getv ? :QA_ZONE_NONE;
+        ret %tmp.21;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_43_63_49_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 51; @symbol_functiondef = [onUpdate,51,13,21]; @symbol_param<0> = [dc,51,22,24]; @symbol_param<0>_type<0> = [Graphics,51,28,36]; @symbol_param<0>_type<1> = [Dc,51,37,39]; ]
+    function onUpdate(dc as Graphics.Dc) as Void {
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 52 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %w.1 = local;
+        symbol [ w %w.1 52 12 13 ];
+        %tmp.1 = lgetv %dc;
+        symbol [ dc %tmp.1 52 16 18 ];
+        symbol [ getWidth %tmp.2 52 19 27 ];
+        %tmp.2 = getv function %tmp.1 :getWidth;
+        %tmp.3 = invoke %tmp.1 %tmp.2();
+        lputv %w.1 %tmp.3;
+        symbol [ w %w.1 52 12 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 53 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %h.2 = local;
+        symbol [ h %h.2 53 12 13 ];
+        %tmp.4 = lgetv %dc;
+        symbol [ dc %tmp.4 53 16 18 ];
+        symbol [ getHeight %tmp.5 53 19 28 ];
+        %tmp.5 = getv function %tmp.4 :getHeight;
+        %tmp.6 = invoke %tmp.4 %tmp.5();
+        lputv %h.2 %tmp.6;
+        symbol [ h %h.2 53 12 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 54 8 ]
+        %tmp.7 = lgetv %w.1;
+        symbol [ w %tmp.7 54 20 21 ];
+        %tmp.8 = 2;
+        %tmp.9 = div %tmp.7 %tmp.8;
+        symbol [ centerX ? 54 8 15 ];
+        putv self :centerX %tmp.9;
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 55 8 ]
+        %tmp.10 = lgetv %h.2;
+        symbol [ h %tmp.10 55 20 21 ];
+        %tmp.11 = 42;
+        %tmp.12 = mul %tmp.10 %tmp.11;
+        %tmp.13 = 100;
+        %tmp.14 = div %tmp.12 %tmp.13;
+        symbol [ btnSplitY ? 55 8 17 ];
+        putv self :btnSplitY %tmp.14;
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 56 8 ]
+        %tmp.15 = lgetv %h.2;
+        symbol [ h %tmp.15 56 20 21 ];
+        %tmp.16 = 70;
+        %tmp.17 = mul %tmp.15 %tmp.16;
+        %tmp.18 = 100;
+        %tmp.19 = div %tmp.17 %tmp.18;
+        symbol [ btnAddY ? 56 8 15 ];
+        putv self :btnAddY %tmp.19;
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 58 8 ]
+        %tmp.20 = lgetv %dc;
+        symbol [ dc %tmp.20 58 8 10 ];
+        symbol [ setColor %tmp.21 58 11 19 ];
+        %tmp.21 = getv function %tmp.20 :setColor;
+        symbol [ Graphics %tmp.22 58 20 28 ];
+        %tmp.22 = getm $.Toybox.Graphics;
+        symbol [ COLOR_BLACK %tmp.23 58 29 40 ];
+        %tmp.23 = getv %tmp.22 :COLOR_BLACK;
+        symbol [ Graphics %tmp.24 58 42 50 ];
+        %tmp.24 = getm $.Toybox.Graphics;
+        symbol [ COLOR_BLACK %tmp.25 58 51 62 ];
+        %tmp.25 = getv %tmp.24 :COLOR_BLACK;
+        invoke %tmp.20 %tmp.21(%tmp.23, %tmp.25);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 59 8 ]
+        %tmp.26 = lgetv %dc;
+        symbol [ dc %tmp.26 59 8 10 ];
+        symbol [ clear %tmp.27 59 11 16 ];
+        %tmp.27 = getv function %tmp.26 :clear;
+        invoke %tmp.26 %tmp.27();
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 61 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %jC.3 = local;
+        symbol [ jC %jC.3 61 12 14 ];
+        symbol [ Graphics %tmp.28 61 17 25 ];
+        %tmp.28 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_CENTER %tmp.29 61 26 45 ];
+        %tmp.29 = getv %tmp.28 :TEXT_JUSTIFY_CENTER;
+        symbol [ Graphics %tmp.30 61 48 56 ];
+        %tmp.30 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.31 61 57 77 ];
+        %tmp.31 = getv %tmp.30 :TEXT_JUSTIFY_VCENTER;
+        %tmp.32 = bitor %tmp.29 %tmp.31;
+        lputv %jC.3 %tmp.32;
+        symbol [ jC %jC.3 61 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 64 8 ]
+        %tmp.33 = lgetv %dc;
+        symbol [ dc %tmp.33 64 8 10 ];
+        symbol [ setColor %tmp.34 64 11 19 ];
+        %tmp.34 = getv function %tmp.33 :setColor;
+        symbol [ Graphics %tmp.35 64 20 28 ];
+        %tmp.35 = getm $.Toybox.Graphics;
+        symbol [ COLOR_WHITE %tmp.36 64 29 40 ];
+        %tmp.36 = getv %tmp.35 :COLOR_WHITE;
+        symbol [ Graphics %tmp.37 64 42 50 ];
+        %tmp.37 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.38 64 51 68 ];
+        %tmp.38 = getv %tmp.37 :COLOR_TRANSPARENT;
+        invoke %tmp.33 %tmp.34(%tmp.36, %tmp.38);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 65 8 ]
+        %tmp.39 = lgetv %dc;
+        symbol [ dc %tmp.39 65 8 10 ];
+        symbol [ drawText %tmp.40 65 11 19 ];
+        %tmp.40 = getv function %tmp.39 :drawText;
+        %tmp.41 = lgetv %w.1;
+        symbol [ w %tmp.41 65 20 21 ];
+        %tmp.42 = 2;
+        %tmp.43 = div %tmp.41 %tmp.42;
+        %tmp.44 = lgetv %h.2;
+        symbol [ h %tmp.44 65 27 28 ];
+        %tmp.45 = 10;
+        %tmp.46 = mul %tmp.44 %tmp.45;
+        %tmp.47 = 100;
+        %tmp.48 = div %tmp.46 %tmp.47;
+        symbol [ Graphics %tmp.49 65 41 49 ];
+        %tmp.49 = getm $.Toybox.Graphics;
+        symbol [ FONT_XTINY %tmp.50 65 50 60 ];
+        %tmp.50 = getv %tmp.49 :FONT_XTINY;
+        symbol [ WatchUi %tmp.51 66 12 19 ];
+        %tmp.51 = getm $.Toybox.WatchUi;
+        symbol [ loadResource %tmp.52 66 20 32 ];
+        %tmp.52 = getv function %tmp.51 :loadResource;
+        symbol [ Rez %tmp.54 66 33 36 ];
+        %tmp.54 = getv ? :Rez;
+        symbol [ Strings %tmp.55 66 37 44 ];
+        %tmp.55 = getv %tmp.54 :Strings;
+        symbol [ TitleCustomAmount %tmp.56 66 45 62 ];
+        %tmp.56 = getv %tmp.55 :TitleCustomAmount;
+        %tmp.57 = invoke %tmp.51 %tmp.52(%tmp.56);
+        %tmp.58 = as %tmp.57 String;
+        symbol [ String %tmp.58 66 67 73 ];
+        %tmp.59 = lgetv %jC.3;
+        symbol [ jC %tmp.59 66 75 77 ];
+        invoke %tmp.39 %tmp.40(%tmp.43, %tmp.48, %tmp.50, %tmp.58, %tmp.59);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 69 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %units.4 = local;
+        symbol [ units %units.4 69 12 17 ];
+        symbol [ DataStore %tmp.61 69 22 31 ];
+        %tmp.61 = getv ? :DataStore;
+        symbol [ getUnits %tmp.62 69 32 40 ];
+        %tmp.62 = getv function %tmp.61 :getUnits;
+        %tmp.63 = invoke %tmp.61 %tmp.62();
+        lputv %units.4 %tmp.63;
+        symbol [ units %units.4 69 12 17 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 70 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %unitLbl.5 = local;
+        symbol [ unitLbl %unitLbl.5 70 12 19 ];
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_70_22_72_65_begin:
+        %tmp.64 = lgetv %units.4;
+        symbol [ units %tmp.64 70 23 28 ];
+        %tmp.65 = 0;
+        %tmp.66 = eq %tmp.64 %tmp.65;
+        bf %tmp.66 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_70_22_72_65_else_false;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_70_22_72_65_true:
+        symbol [ WatchUi %tmp.67 71 15 22 ];
+        %tmp.67 = getm $.Toybox.WatchUi;
+        symbol [ loadResource %tmp.68 71 23 35 ];
+        %tmp.68 = getv function %tmp.67 :loadResource;
+        symbol [ Rez %tmp.70 71 36 39 ];
+        %tmp.70 = getv ? :Rez;
+        symbol [ Strings %tmp.71 71 40 47 ];
+        %tmp.71 = getv %tmp.70 :Strings;
+        symbol [ UnitMl %tmp.72 71 48 54 ];
+        %tmp.72 = getv %tmp.71 :UnitMl;
+        %tmp.73 = invoke %tmp.67 %tmp.68(%tmp.72);
+        %tmp.74 = as %tmp.73 String;
+        symbol [ String %tmp.74 71 59 65 ];
+        push %tmp.74;
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_70_22_72_65_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_70_22_72_65_else_false:
+        symbol [ WatchUi %tmp.75 72 15 22 ];
+        %tmp.75 = getm $.Toybox.WatchUi;
+        symbol [ loadResource %tmp.76 72 23 35 ];
+        %tmp.76 = getv function %tmp.75 :loadResource;
+        symbol [ Rez %tmp.78 72 36 39 ];
+        %tmp.78 = getv ? :Rez;
+        symbol [ Strings %tmp.79 72 40 47 ];
+        %tmp.79 = getv %tmp.78 :Strings;
+        symbol [ UnitOz %tmp.80 72 48 54 ];
+        %tmp.80 = getv %tmp.79 :UnitOz;
+        %tmp.81 = invoke %tmp.75 %tmp.76(%tmp.80);
+        %tmp.82 = as %tmp.81 String;
+        symbol [ String %tmp.82 72 59 65 ];
+        push %tmp.82;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_70_22_72_65_end:
+        %tmp.83 = phi [%tmp.66 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_70_22_72_65_begin] [%tmp.74 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_70_22_72_65_true] [%tmp.82 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_70_22_72_65_else_false] [%tmp.83 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_70_22_72_65_end];
+        lputv %unitLbl.5 %tmp.83;
+        symbol [ unitLbl %unitLbl.5 70 12 19 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 73 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %valStr.6 = local;
+        symbol [ valStr %valStr.6 73 12 18 ];
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_73_22_75_57_begin:
+        %tmp.84 = lgetv %units.4;
+        symbol [ units %tmp.84 73 23 28 ];
+        %tmp.85 = 0;
+        %tmp.86 = eq %tmp.84 %tmp.85;
+        bf %tmp.86 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_73_22_75_57_else_false;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_73_22_75_57_true:
+        symbol [ _value %tmp.88 74 14 20 ];
+        %tmp.88 = getv ? :_value;
+        symbol [ toString %tmp.89 74 21 29 ];
+        %tmp.89 = getv function %tmp.88 :toString;
+        %tmp.90 = invoke %tmp.88 %tmp.89();
+        push %tmp.90;
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_73_22_75_57_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_73_22_75_57_else_false:
+        symbol [ _value %tmp.92 75 15 21 ];
+        %tmp.92 = getv ? :_value;
+        symbol [ toFloat %tmp.93 75 22 29 ];
+        %tmp.93 = getv function %tmp.92 :toFloat;
+        %tmp.94 = invoke %tmp.92 %tmp.93();
+        %tmp.95 = 29.5735f;
+        %tmp.96 = div %tmp.94 %tmp.95;
+        symbol [ format %tmp.97 75 44 50 ];
+        %tmp.97 = getv function %tmp.96 :format;
+        %tmp.98 = "%.0f";
+        %tmp.99 = invoke %tmp.96 %tmp.97(%tmp.98);
+        push %tmp.99;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_73_22_75_57_end:
+        %tmp.100 = phi [%tmp.86 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_73_22_75_57_begin] [%tmp.90 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_73_22_75_57_true] [%tmp.99 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_73_22_75_57_else_false] [%tmp.100 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_73_22_75_57_end];
+        lputv %valStr.6 %tmp.100;
+        symbol [ valStr %valStr.6 73 12 18 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 76 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %valColor.7 = local;
+        symbol [ valColor %valColor.7 76 12 20 ];
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_76_23_76_56_begin:
+        symbol [ _value %tmp.102 76 23 29 ];
+        %tmp.102 = getv ? :_value;
+        %tmp.103 = 0;
+        %tmp.104 = lt %tmp.102 %tmp.103;
+        bf %tmp.104 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_76_23_76_56_else_false;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_76_23_76_56_true:
+        %tmp.105 = 0xD50000;
+        push %tmp.105;
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_76_23_76_56_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_76_23_76_56_else_false:
+        symbol [ Graphics %tmp.106 76 47 55 ];
+        %tmp.106 = getm $.Toybox.Graphics;
+        symbol [ COLOR_WHITE %tmp.107 76 56 67 ];
+        %tmp.107 = getv %tmp.106 :COLOR_WHITE;
+        push %tmp.107;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_76_23_76_56_end:
+        %tmp.108 = phi [%tmp.104 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_76_23_76_56_begin] [%tmp.105 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_76_23_76_56_true] [%tmp.107 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_76_23_76_56_else_false] [%tmp.108 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_76_23_76_56_end];
+        lputv %valColor.7 %tmp.108;
+        symbol [ valColor %valColor.7 76 12 20 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 77 8 ]
+        %tmp.109 = lgetv %dc;
+        symbol [ dc %tmp.109 77 8 10 ];
+        symbol [ setColor %tmp.110 77 11 19 ];
+        %tmp.110 = getv function %tmp.109 :setColor;
+        %tmp.111 = lgetv %valColor.7;
+        symbol [ valColor %tmp.111 77 20 28 ];
+        symbol [ Graphics %tmp.112 77 30 38 ];
+        %tmp.112 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.113 77 39 56 ];
+        %tmp.113 = getv %tmp.112 :COLOR_TRANSPARENT;
+        invoke %tmp.109 %tmp.110(%tmp.111, %tmp.113);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 78 8 ]
+        %tmp.114 = lgetv %dc;
+        symbol [ dc %tmp.114 78 8 10 ];
+        symbol [ drawText %tmp.115 78 11 19 ];
+        %tmp.115 = getv function %tmp.114 :drawText;
+        %tmp.116 = lgetv %w.1;
+        symbol [ w %tmp.116 78 20 21 ];
+        %tmp.117 = 2;
+        %tmp.118 = div %tmp.116 %tmp.117;
+        %tmp.119 = lgetv %h.2;
+        symbol [ h %tmp.119 78 27 28 ];
+        %tmp.120 = 27;
+        %tmp.121 = mul %tmp.119 %tmp.120;
+        %tmp.122 = 100;
+        %tmp.123 = div %tmp.121 %tmp.122;
+        symbol [ Graphics %tmp.124 78 41 49 ];
+        %tmp.124 = getm $.Toybox.Graphics;
+        symbol [ FONT_NUMBER_MEDIUM %tmp.125 78 50 68 ];
+        %tmp.125 = getv %tmp.124 :FONT_NUMBER_MEDIUM;
+        %tmp.126 = lgetv %valStr.6;
+        symbol [ valStr %tmp.126 79 12 18 ];
+        %tmp.127 = " ";
+        %tmp.128 = add %tmp.126 %tmp.127;
+        %tmp.129 = lgetv %unitLbl.5;
+        symbol [ unitLbl %tmp.129 79 27 34 ];
+        %tmp.130 = add %tmp.128 %tmp.129;
+        %tmp.131 = lgetv %jC.3;
+        symbol [ jC %tmp.131 79 36 38 ];
+        invoke %tmp.114 %tmp.115(%tmp.118, %tmp.123, %tmp.125, %tmp.130, %tmp.131);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 82 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %btnH.8 = local;
+        symbol [ btnH %btnH.8 82 12 16 ];
+        %tmp.132 = lgetv %h.2;
+        symbol [ h %tmp.132 82 20 21 ];
+        %tmp.133 = 22;
+        %tmp.134 = mul %tmp.132 %tmp.133;
+        %tmp.135 = 100;
+        %tmp.136 = div %tmp.134 %tmp.135;
+        lputv %btnH.8 %tmp.136;
+        symbol [ btnH %btnH.8 82 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 83 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %btnR.9 = local;
+        symbol [ btnR %btnR.9 83 12 16 ];
+        %tmp.137 = lgetv %btnH.8;
+        symbol [ btnH %tmp.137 83 20 24 ];
+        %tmp.138 = 2;
+        %tmp.139 = div %tmp.137 %tmp.138;
+        lputv %btnR.9 %tmp.139;
+        symbol [ btnR %btnR.9 83 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 84 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %gap.10 = local;
+        symbol [ gap %gap.10 84 12 15 ];
+        %tmp.140 = lgetv %w.1;
+        symbol [ w %tmp.140 84 20 21 ];
+        %tmp.141 = 4;
+        %tmp.142 = mul %tmp.140 %tmp.141;
+        %tmp.143 = 100;
+        %tmp.144 = div %tmp.142 %tmp.143;
+        lputv %gap.10 %tmp.144;
+        symbol [ gap %gap.10 84 12 15 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 85 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %margin.11 = local;
+        symbol [ margin %margin.11 85 12 18 ];
+        %tmp.145 = lgetv %w.1;
+        symbol [ w %tmp.145 85 21 22 ];
+        %tmp.146 = 6;
+        %tmp.147 = mul %tmp.145 %tmp.146;
+        %tmp.148 = 100;
+        %tmp.149 = div %tmp.147 %tmp.148;
+        lputv %margin.11 %tmp.149;
+        symbol [ margin %margin.11 85 12 18 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 86 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %btnW.12 = local;
+        symbol [ btnW %btnW.12 86 12 16 ];
+        %tmp.150 = lgetv %w.1;
+        symbol [ w %tmp.150 86 21 22 ];
+        %tmp.151 = 2;
+        %tmp.152 = lgetv %margin.11;
+        symbol [ margin %tmp.152 86 29 35 ];
+        %tmp.153 = mul %tmp.151 %tmp.152;
+        %tmp.154 = sub %tmp.150 %tmp.153;
+        %tmp.155 = lgetv %gap.10;
+        symbol [ gap %tmp.155 86 38 41 ];
+        %tmp.156 = sub %tmp.154 %tmp.155;
+        %tmp.157 = 2;
+        %tmp.158 = div %tmp.156 %tmp.157;
+        lputv %btnW.12 %tmp.158;
+        symbol [ btnW %btnW.12 86 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 87 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %leftX.13 = local;
+        symbol [ leftX %leftX.13 87 12 17 ];
+        %tmp.159 = lgetv %margin.11;
+        symbol [ margin %tmp.159 87 21 27 ];
+        lputv %leftX.13 %tmp.159;
+        symbol [ leftX %leftX.13 87 12 17 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 88 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %rightX.14 = local;
+        symbol [ rightX %rightX.14 88 12 18 ];
+        %tmp.160 = lgetv %margin.11;
+        symbol [ margin %tmp.160 88 21 27 ];
+        %tmp.161 = lgetv %btnW.12;
+        symbol [ btnW %tmp.161 88 30 34 ];
+        %tmp.162 = add %tmp.160 %tmp.161;
+        %tmp.163 = lgetv %gap.10;
+        symbol [ gap %tmp.163 88 37 40 ];
+        %tmp.164 = add %tmp.162 %tmp.163;
+        lputv %rightX.14 %tmp.164;
+        symbol [ rightX %rightX.14 88 12 18 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 90 8 ]
+        %tmp.165 = lgetv %dc;
+        symbol [ dc %tmp.165 90 8 10 ];
+        symbol [ setColor %tmp.166 90 11 19 ];
+        %tmp.166 = getv function %tmp.165 :setColor;
+        %tmp.167 = 0xB71C1C;
+        symbol [ Graphics %tmp.168 90 30 38 ];
+        %tmp.168 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.169 90 39 56 ];
+        %tmp.169 = getv %tmp.168 :COLOR_TRANSPARENT;
+        invoke %tmp.165 %tmp.166(%tmp.167, %tmp.169);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 91 8 ]
+        %tmp.170 = lgetv %dc;
+        symbol [ dc %tmp.170 91 8 10 ];
+        symbol [ fillRoundedRectangle %tmp.171 91 11 31 ];
+        %tmp.171 = getv function %tmp.170 :fillRoundedRectangle;
+        %tmp.172 = lgetv %leftX.13;
+        symbol [ leftX %tmp.172 91 32 37 ];
+        symbol [ btnSplitY %tmp.174 91 39 48 ];
+        %tmp.174 = getv ? :btnSplitY;
+        %tmp.175 = lgetv %btnW.12;
+        symbol [ btnW %tmp.175 91 50 54 ];
+        %tmp.176 = lgetv %btnH.8;
+        symbol [ btnH %tmp.176 91 56 60 ];
+        %tmp.177 = lgetv %btnR.9;
+        symbol [ btnR %tmp.177 91 62 66 ];
+        invoke %tmp.170 %tmp.171(%tmp.172, %tmp.174, %tmp.175, %tmp.176, %tmp.177);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 92 8 ]
+        %tmp.178 = lgetv %dc;
+        symbol [ dc %tmp.178 92 8 10 ];
+        symbol [ setColor %tmp.179 92 11 19 ];
+        %tmp.179 = getv function %tmp.178 :setColor;
+        symbol [ Graphics %tmp.180 92 20 28 ];
+        %tmp.180 = getm $.Toybox.Graphics;
+        symbol [ COLOR_WHITE %tmp.181 92 29 40 ];
+        %tmp.181 = getv %tmp.180 :COLOR_WHITE;
+        symbol [ Graphics %tmp.182 92 42 50 ];
+        %tmp.182 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.183 92 51 68 ];
+        %tmp.183 = getv %tmp.182 :COLOR_TRANSPARENT;
+        invoke %tmp.178 %tmp.179(%tmp.181, %tmp.183);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 93 8 ]
+        %tmp.184 = lgetv %dc;
+        symbol [ dc %tmp.184 93 8 10 ];
+        symbol [ drawText %tmp.185 93 11 19 ];
+        %tmp.185 = getv function %tmp.184 :drawText;
+        %tmp.186 = lgetv %leftX.13;
+        symbol [ leftX %tmp.186 93 20 25 ];
+        %tmp.187 = lgetv %btnW.12;
+        symbol [ btnW %tmp.187 93 28 32 ];
+        %tmp.188 = 2;
+        %tmp.189 = div %tmp.187 %tmp.188;
+        %tmp.190 = add %tmp.186 %tmp.189;
+        symbol [ btnSplitY %tmp.192 93 38 47 ];
+        %tmp.192 = getv ? :btnSplitY;
+        %tmp.193 = lgetv %btnH.8;
+        symbol [ btnH %tmp.193 93 50 54 ];
+        %tmp.194 = 2;
+        %tmp.195 = div %tmp.193 %tmp.194;
+        %tmp.196 = add %tmp.192 %tmp.195;
+        symbol [ Graphics %tmp.197 93 60 68 ];
+        %tmp.197 = getm $.Toybox.Graphics;
+        symbol [ FONT_MEDIUM %tmp.198 93 69 80 ];
+        %tmp.198 = getv %tmp.197 :FONT_MEDIUM;
+        %tmp.199 = "-50";
+        %tmp.200 = lgetv %jC.3;
+        symbol [ jC %tmp.200 93 89 91 ];
+        invoke %tmp.184 %tmp.185(%tmp.190, %tmp.196, %tmp.198, %tmp.199, %tmp.200);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 95 8 ]
+        %tmp.201 = lgetv %dc;
+        symbol [ dc %tmp.201 95 8 10 ];
+        symbol [ setColor %tmp.202 95 11 19 ];
+        %tmp.202 = getv function %tmp.201 :setColor;
+        %tmp.203 = 0x1F618D;
+        symbol [ Graphics %tmp.204 95 30 38 ];
+        %tmp.204 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.205 95 39 56 ];
+        %tmp.205 = getv %tmp.204 :COLOR_TRANSPARENT;
+        invoke %tmp.201 %tmp.202(%tmp.203, %tmp.205);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 96 8 ]
+        %tmp.206 = lgetv %dc;
+        symbol [ dc %tmp.206 96 8 10 ];
+        symbol [ fillRoundedRectangle %tmp.207 96 11 31 ];
+        %tmp.207 = getv function %tmp.206 :fillRoundedRectangle;
+        %tmp.208 = lgetv %rightX.14;
+        symbol [ rightX %tmp.208 96 32 38 ];
+        symbol [ btnSplitY %tmp.210 96 40 49 ];
+        %tmp.210 = getv ? :btnSplitY;
+        %tmp.211 = lgetv %btnW.12;
+        symbol [ btnW %tmp.211 96 51 55 ];
+        %tmp.212 = lgetv %btnH.8;
+        symbol [ btnH %tmp.212 96 57 61 ];
+        %tmp.213 = lgetv %btnR.9;
+        symbol [ btnR %tmp.213 96 63 67 ];
+        invoke %tmp.206 %tmp.207(%tmp.208, %tmp.210, %tmp.211, %tmp.212, %tmp.213);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 97 8 ]
+        %tmp.214 = lgetv %dc;
+        symbol [ dc %tmp.214 97 8 10 ];
+        symbol [ setColor %tmp.215 97 11 19 ];
+        %tmp.215 = getv function %tmp.214 :setColor;
+        symbol [ Graphics %tmp.216 97 20 28 ];
+        %tmp.216 = getm $.Toybox.Graphics;
+        symbol [ COLOR_WHITE %tmp.217 97 29 40 ];
+        %tmp.217 = getv %tmp.216 :COLOR_WHITE;
+        symbol [ Graphics %tmp.218 97 42 50 ];
+        %tmp.218 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.219 97 51 68 ];
+        %tmp.219 = getv %tmp.218 :COLOR_TRANSPARENT;
+        invoke %tmp.214 %tmp.215(%tmp.217, %tmp.219);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 98 8 ]
+        %tmp.220 = lgetv %dc;
+        symbol [ dc %tmp.220 98 8 10 ];
+        symbol [ drawText %tmp.221 98 11 19 ];
+        %tmp.221 = getv function %tmp.220 :drawText;
+        %tmp.222 = lgetv %rightX.14;
+        symbol [ rightX %tmp.222 98 20 26 ];
+        %tmp.223 = lgetv %btnW.12;
+        symbol [ btnW %tmp.223 98 29 33 ];
+        %tmp.224 = 2;
+        %tmp.225 = div %tmp.223 %tmp.224;
+        %tmp.226 = add %tmp.222 %tmp.225;
+        symbol [ btnSplitY %tmp.228 98 39 48 ];
+        %tmp.228 = getv ? :btnSplitY;
+        %tmp.229 = lgetv %btnH.8;
+        symbol [ btnH %tmp.229 98 51 55 ];
+        %tmp.230 = 2;
+        %tmp.231 = div %tmp.229 %tmp.230;
+        %tmp.232 = add %tmp.228 %tmp.231;
+        symbol [ Graphics %tmp.233 98 61 69 ];
+        %tmp.233 = getm $.Toybox.Graphics;
+        symbol [ FONT_MEDIUM %tmp.234 98 70 81 ];
+        %tmp.234 = getv %tmp.233 :FONT_MEDIUM;
+        %tmp.235 = "+50";
+        %tmp.236 = lgetv %jC.3;
+        symbol [ jC %tmp.236 98 90 92 ];
+        invoke %tmp.220 %tmp.221(%tmp.226, %tmp.232, %tmp.234, %tmp.235, %tmp.236);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 101 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %addH.15 = local;
+        symbol [ addH %addH.15 101 12 16 ];
+        %tmp.237 = lgetv %h.2;
+        symbol [ h %tmp.237 101 19 20 ];
+        %tmp.238 = 20;
+        %tmp.239 = mul %tmp.237 %tmp.238;
+        %tmp.240 = 100;
+        %tmp.241 = div %tmp.239 %tmp.240;
+        lputv %addH.15 %tmp.241;
+        symbol [ addH %addH.15 101 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 102 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %addR.16 = local;
+        symbol [ addR %addR.16 102 12 16 ];
+        %tmp.242 = lgetv %addH.15;
+        symbol [ addH %tmp.242 102 19 23 ];
+        %tmp.243 = 2;
+        %tmp.244 = div %tmp.242 %tmp.243;
+        lputv %addR.16 %tmp.244;
+        symbol [ addR %addR.16 102 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 103 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %addX.17 = local;
+        symbol [ addX %addX.17 103 12 16 ];
+        %tmp.245 = lgetv %w.1;
+        symbol [ w %tmp.245 103 19 20 ];
+        %tmp.246 = 18;
+        %tmp.247 = mul %tmp.245 %tmp.246;
+        %tmp.248 = 100;
+        %tmp.249 = div %tmp.247 %tmp.248;
+        lputv %addX.17 %tmp.249;
+        symbol [ addX %addX.17 103 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 104 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop" ]
+        %addW.18 = local;
+        symbol [ addW %addW.18 104 12 16 ];
+        %tmp.250 = lgetv %w.1;
+        symbol [ w %tmp.250 104 19 20 ];
+        %tmp.251 = 64;
+        %tmp.252 = mul %tmp.250 %tmp.251;
+        %tmp.253 = 100;
+        %tmp.254 = div %tmp.252 %tmp.253;
+        lputv %addW.18 %tmp.254;
+        symbol [ addW %addW.18 104 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 105 8 ]
+        %tmp.255 = lgetv %dc;
+        symbol [ dc %tmp.255 105 8 10 ];
+        symbol [ setColor %tmp.256 105 11 19 ];
+        %tmp.256 = getv function %tmp.255 :setColor;
+        %tmp.257 = 0x1E8449;
+        symbol [ Graphics %tmp.258 105 30 38 ];
+        %tmp.258 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.259 105 39 56 ];
+        %tmp.259 = getv %tmp.258 :COLOR_TRANSPARENT;
+        invoke %tmp.255 %tmp.256(%tmp.257, %tmp.259);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 106 8 ]
+        %tmp.260 = lgetv %dc;
+        symbol [ dc %tmp.260 106 8 10 ];
+        symbol [ fillRoundedRectangle %tmp.261 106 11 31 ];
+        %tmp.261 = getv function %tmp.260 :fillRoundedRectangle;
+        %tmp.262 = lgetv %addX.17;
+        symbol [ addX %tmp.262 106 32 36 ];
+        symbol [ btnAddY %tmp.264 106 38 45 ];
+        %tmp.264 = getv ? :btnAddY;
+        %tmp.265 = lgetv %addW.18;
+        symbol [ addW %tmp.265 106 47 51 ];
+        %tmp.266 = lgetv %addH.15;
+        symbol [ addH %tmp.266 106 53 57 ];
+        %tmp.267 = lgetv %addR.16;
+        symbol [ addR %tmp.267 106 59 63 ];
+        invoke %tmp.260 %tmp.261(%tmp.262, %tmp.264, %tmp.265, %tmp.266, %tmp.267);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 107 8 ]
+        %tmp.268 = lgetv %dc;
+        symbol [ dc %tmp.268 107 8 10 ];
+        symbol [ setColor %tmp.269 107 11 19 ];
+        %tmp.269 = getv function %tmp.268 :setColor;
+        symbol [ Graphics %tmp.270 107 20 28 ];
+        %tmp.270 = getm $.Toybox.Graphics;
+        symbol [ COLOR_WHITE %tmp.271 107 29 40 ];
+        %tmp.271 = getv %tmp.270 :COLOR_WHITE;
+        symbol [ Graphics %tmp.272 107 42 50 ];
+        %tmp.272 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.273 107 51 68 ];
+        %tmp.273 = getv %tmp.272 :COLOR_TRANSPARENT;
+        invoke %tmp.268 %tmp.269(%tmp.271, %tmp.273);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 108 8 ]
+        %tmp.274 = lgetv %dc;
+        symbol [ dc %tmp.274 108 8 10 ];
+        symbol [ drawText %tmp.275 108 11 19 ];
+        %tmp.275 = getv function %tmp.274 :drawText;
+        %tmp.276 = lgetv %w.1;
+        symbol [ w %tmp.276 108 20 21 ];
+        %tmp.277 = 2;
+        %tmp.278 = div %tmp.276 %tmp.277;
+        symbol [ btnAddY %tmp.280 108 27 34 ];
+        %tmp.280 = getv ? :btnAddY;
+        %tmp.281 = lgetv %addH.15;
+        symbol [ addH %tmp.281 108 37 41 ];
+        %tmp.282 = 2;
+        %tmp.283 = div %tmp.281 %tmp.282;
+        %tmp.284 = add %tmp.280 %tmp.283;
+        symbol [ Graphics %tmp.285 108 47 55 ];
+        %tmp.285 = getm $.Toybox.Graphics;
+        symbol [ FONT_SMALL %tmp.286 108 56 66 ];
+        %tmp.286 = getv %tmp.285 :FONT_SMALL;
+        symbol [ WatchUi %tmp.287 109 12 19 ];
+        %tmp.287 = getm $.Toybox.WatchUi;
+        symbol [ loadResource %tmp.288 109 20 32 ];
+        %tmp.288 = getv function %tmp.287 :loadResource;
+        symbol [ Rez %tmp.290 109 33 36 ];
+        %tmp.290 = getv ? :Rez;
+        symbol [ Strings %tmp.291 109 37 44 ];
+        %tmp.291 = getv %tmp.290 :Strings;
+        symbol [ BtnAdd %tmp.292 109 45 51 ];
+        %tmp.292 = getv %tmp.291 :BtnAdd;
+        %tmp.293 = invoke %tmp.287 %tmp.288(%tmp.292);
+        %tmp.294 = as %tmp.293 String;
+        symbol [ String %tmp.294 109 56 62 ];
+        %tmp.295 = lgetv %jC.3;
+        symbol [ jC %tmp.295 109 64 66 ];
+        invoke %tmp.274 %tmp.275(%tmp.278, %tmp.284, %tmp.286, %tmp.294, %tmp.295);
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_51_49_110_4_stop:
+    }
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 114; @symbol_classdef = [QuickAddDelegate,114,6,22]; @symbol_extends<0> = [WatchUi,114,31,38]; @symbol_extends<1> = [BehaviorDelegate,114,39,55]; ]
+class QuickAddDelegate extends WatchUi.BehaviorDelegate {
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 114; ]
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 114; ]
+    static
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 116; @position = 16; @symbol_vardef = [_view,116,16,21]; @symbol_type<0> = [QuickAddView,116,25,37]; ]
+    private
+    var _view as QuickAddView;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 118; @symbol_functiondef = [initialize,118,13,23]; @symbol_param<0> = [view,118,24,28]; @symbol_param<0>_type<0> = [QuickAddView,118,32,44]; ]
+    function initialize(view as QuickAddView) as Void {
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_118_46_121_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 119 8 ]
+        symbol [ BehaviorDelegate %tmp.2 119 8 24 ];
+        %tmp.2 = getv ? :BehaviorDelegate;
+        symbol [ initialize %tmp.3 119 25 35 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 120 8 ]
+        %tmp.4 = lgetv %view;
+        symbol [ view %tmp.4 120 16 20 ];
+        symbol [ _view ? 120 8 13 ];
+        putv self :_view %tmp.4;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_118_46_121_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 123; @symbol_functiondef = [onTap,123,13,18]; @symbol_param<0> = [evt,123,19,22]; @symbol_param<0>_type<0> = [WatchUi,123,26,33]; @symbol_param<0>_type<1> = [ClickEvent,123,34,44]; @symbol_return<0> = [Boolean,123,49,56]; ]
+    function onTap(evt as WatchUi.ClickEvent) as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_123_57_134_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 124 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_123_57_134_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_123_57_134_4_stop" ]
+        %coords.1 = local;
+        symbol [ coords %coords.1 124 12 18 ];
+        %tmp.1 = lgetv %evt;
+        symbol [ evt %tmp.1 124 21 24 ];
+        symbol [ getCoordinates %tmp.2 124 25 39 ];
+        %tmp.2 = getv function %tmp.1 :getCoordinates;
+        %tmp.3 = invoke %tmp.1 %tmp.2();
+        lputv %coords.1 %tmp.3;
+        symbol [ coords %coords.1 124 12 18 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 125 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_123_57_134_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_123_57_134_4_stop" ]
+        %zone.2 = local;
+        symbol [ zone %zone.2 125 12 16 ];
+        symbol [ _view %tmp.5 125 21 26 ];
+        %tmp.5 = getv ? :_view;
+        symbol [ getZone %tmp.6 125 27 34 ];
+        %tmp.6 = getv function %tmp.5 :getZone;
+        %tmp.7 = lgetv %coords.1;
+        symbol [ coords %tmp.7 125 35 41 ];
+        %tmp.8 = 0;
+        %tmp.9 = agetv %tmp.7 %tmp.8;
+        %tmp.10 = lgetv %coords.1;
+        symbol [ coords %tmp.10 125 46 52 ];
+        %tmp.11 = 1;
+        %tmp.12 = agetv %tmp.10 %tmp.11;
+        %tmp.13 = invoke %tmp.5 %tmp.6(%tmp.9, %tmp.12);
+        lputv %zone.2 %tmp.13;
+        symbol [ zone %zone.2 125 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 126 8 ]
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_126_8_132_8_if_stmt:
+        %tmp.14 = lgetv %zone.2;
+        symbol [ zone %tmp.14 126 17 21 ];
+        symbol [ QA_ZONE_MINUS %tmp.16 126 25 38 ];
+        %tmp.16 = getv ? :QA_ZONE_MINUS;
+        %tmp.17 = eq %tmp.14 %tmp.16;
+        bf %tmp.17 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_126_8_132_8_if_false;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_126_8_132_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_126_40_126_64_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 126 42 ]
+        symbol [ _view %tmp.19 126 42 47 ];
+        %tmp.19 = getv ? :_view;
+        symbol [ step %tmp.20 126 48 52 ];
+        %tmp.20 = getv function %tmp.19 :step;
+        symbol [ QA_STEP %tmp.22 126 54 61 ];
+        %tmp.22 = getv ? :QA_STEP;
+        %tmp.23 = sub 0 %tmp.22;
+        invoke %tmp.19 %tmp.20(%tmp.23);
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_126_40_126_64_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_126_8_132_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_126_8_132_8_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 127 13 ]
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_127_13_132_8_if_stmt:
+        %tmp.24 = lgetv %zone.2;
+        symbol [ zone %tmp.24 127 17 21 ];
+        symbol [ QA_ZONE_PLUS %tmp.26 127 25 37 ];
+        %tmp.26 = getv ? :QA_ZONE_PLUS;
+        %tmp.27 = eq %tmp.24 %tmp.26;
+        bf %tmp.27 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_127_13_132_8_if_false;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_127_13_132_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_127_40_127_63_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 127 42 ]
+        symbol [ _view %tmp.29 127 42 47 ];
+        %tmp.29 = getv ? :_view;
+        symbol [ step %tmp.30 127 48 52 ];
+        %tmp.30 = getv function %tmp.29 :step;
+        symbol [ QA_STEP %tmp.32 127 53 60 ];
+        %tmp.32 = getv ? :QA_STEP;
+        invoke %tmp.29 %tmp.30(%tmp.32);
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_127_40_127_63_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_127_13_132_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_127_13_132_8_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 128 13 ]
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_128_13_132_8_if_stmt:
+        %tmp.33 = lgetv %zone.2;
+        symbol [ zone %tmp.33 128 17 21 ];
+        symbol [ QA_ZONE_ADD %tmp.35 128 25 36 ];
+        %tmp.35 = getv ? :QA_ZONE_ADD;
+        %tmp.36 = eq %tmp.33 %tmp.35;
+        bf %tmp.36 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_128_13_132_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_128_13_132_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_128_40_132_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 129 12 ]
+        symbol [ DataStore %tmp.38 129 12 21 ];
+        %tmp.38 = getv ? :DataStore;
+        symbol [ addAmount %tmp.39 129 22 31 ];
+        %tmp.39 = getv function %tmp.38 :addAmount;
+        symbol [ _view %tmp.41 129 32 37 ];
+        %tmp.41 = getv ? :_view;
+        symbol [ getValue %tmp.42 129 38 46 ];
+        %tmp.42 = getv function %tmp.41 :getValue;
+        %tmp.43 = invoke %tmp.41 %tmp.42();
+        invoke %tmp.38 %tmp.39(%tmp.43);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 130 12 ]
+        %tmp.44 = self;
+        symbol [ updateComplications %tmp.45 130 12 31 ];
+        %tmp.45 = getv function %tmp.44 :updateComplications;
+        invoke %tmp.44 %tmp.45();
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 131 12 ]
+        symbol [ WatchUi %tmp.46 131 12 19 ];
+        %tmp.46 = getm $.Toybox.WatchUi;
+        symbol [ popView %tmp.47 131 20 27 ];
+        %tmp.47 = getv function %tmp.46 :popView;
+        symbol [ WatchUi %tmp.48 131 28 35 ];
+        %tmp.48 = getm $.Toybox.WatchUi;
+        symbol [ SLIDE_DOWN %tmp.49 131 36 46 ];
+        %tmp.49 = getv %tmp.48 :SLIDE_DOWN;
+        invoke %tmp.46 %tmp.47(%tmp.49);
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_128_40_132_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_128_13_132_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_128_13_132_8_if_end:
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_127_13_132_8_if_end:
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_126_8_132_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 133 8 ]
+        %tmp.50 = true;
+        ret %tmp.50;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_123_57_134_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 136; @symbol_functiondef = [onHold,136,13,19]; @symbol_param<0> = [evt,136,20,23]; @symbol_param<0>_type<0> = [WatchUi,136,27,34]; @symbol_param<0>_type<1> = [ClickEvent,136,35,45]; @symbol_return<0> = [Boolean,136,50,57]; ]
+    function onHold(evt as WatchUi.ClickEvent) as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_136_58_144_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 137 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_136_58_144_4_start" "D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_136_58_144_4_stop" ]
+        %coords.1 = local;
+        symbol [ coords %coords.1 137 12 18 ];
+        %tmp.1 = lgetv %evt;
+        symbol [ evt %tmp.1 137 21 24 ];
+        symbol [ getCoordinates %tmp.2 137 25 39 ];
+        %tmp.2 = getv function %tmp.1 :getCoordinates;
+        %tmp.3 = invoke %tmp.1 %tmp.2();
+        lputv %coords.1 %tmp.3;
+        symbol [ coords %coords.1 137 12 18 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 138 8 ]
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_138_8_142_8_if_stmt:
+        symbol [ _view %tmp.5 138 12 17 ];
+        %tmp.5 = getv ? :_view;
+        symbol [ getZone %tmp.6 138 18 25 ];
+        %tmp.6 = getv function %tmp.5 :getZone;
+        %tmp.7 = lgetv %coords.1;
+        symbol [ coords %tmp.7 138 26 32 ];
+        %tmp.8 = 0;
+        %tmp.9 = agetv %tmp.7 %tmp.8;
+        %tmp.10 = lgetv %coords.1;
+        symbol [ coords %tmp.10 138 37 43 ];
+        %tmp.11 = 1;
+        %tmp.12 = agetv %tmp.10 %tmp.11;
+        %tmp.13 = invoke %tmp.5 %tmp.6(%tmp.9, %tmp.12);
+        symbol [ QA_ZONE_ADD %tmp.15 138 51 62 ];
+        %tmp.15 = getv ? :QA_ZONE_ADD;
+        %tmp.16 = eq %tmp.13 %tmp.15;
+        bf %tmp.16 @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_138_8_142_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_138_8_142_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_138_64_142_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 139 12 ]
+        symbol [ DataStore %tmp.18 139 12 21 ];
+        %tmp.18 = getv ? :DataStore;
+        symbol [ addAmount %tmp.19 139 22 31 ];
+        %tmp.19 = getv function %tmp.18 :addAmount;
+        symbol [ _view %tmp.21 139 32 37 ];
+        %tmp.21 = getv ? :_view;
+        symbol [ getValue %tmp.22 139 38 46 ];
+        %tmp.22 = getv function %tmp.21 :getValue;
+        %tmp.23 = invoke %tmp.21 %tmp.22();
+        invoke %tmp.18 %tmp.19(%tmp.23);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 140 12 ]
+        %tmp.24 = self;
+        symbol [ updateComplications %tmp.25 140 12 31 ];
+        %tmp.25 = getv function %tmp.24 :updateComplications;
+        invoke %tmp.24 %tmp.25();
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 141 12 ]
+        symbol [ WatchUi %tmp.26 141 12 19 ];
+        %tmp.26 = getm $.Toybox.WatchUi;
+        symbol [ popView %tmp.27 141 20 27 ];
+        %tmp.27 = getv function %tmp.26 :popView;
+        symbol [ WatchUi %tmp.28 141 28 35 ];
+        %tmp.28 = getm $.Toybox.WatchUi;
+        symbol [ SLIDE_DOWN %tmp.29 141 36 46 ];
+        %tmp.29 = getv %tmp.28 :SLIDE_DOWN;
+        invoke %tmp.26 %tmp.27(%tmp.29);
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_138_64_142_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_138_8_142_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_138_8_142_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 143 8 ]
+        %tmp.30 = true;
+        ret %tmp.30;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_136_58_144_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 146; @symbol_functiondef = [onBack,146,13,19]; @symbol_return<0> = [Boolean,146,25,32]; ]
+    function onBack() as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_146_33_149_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 147 8 ]
+        symbol [ WatchUi %tmp.1 147 8 15 ];
+        %tmp.1 = getm $.Toybox.WatchUi;
+        symbol [ popView %tmp.2 147 16 23 ];
+        %tmp.2 = getv function %tmp.1 :popView;
+        symbol [ WatchUi %tmp.3 147 24 31 ];
+        %tmp.3 = getm $.Toybox.WatchUi;
+        symbol [ SLIDE_DOWN %tmp.4 147 32 42 ];
+        %tmp.4 = getv %tmp.3 :SLIDE_DOWN;
+        invoke %tmp.1 %tmp.2(%tmp.4);
+[ "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc" 148 8 ]
+        %tmp.5 = true;
+        ret %tmp.5;
+D__GARMIN_Hydration_WaterTracker_source_touch_QuickAddView_mc_146_33_149_4_stop:
+    }
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source-touch\QuickAddView.mc"; @line = 2; ]
+<init> {
+}

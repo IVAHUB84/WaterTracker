@@ -1,0 +1,586 @@
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 2; @symbol_importdef<0> = [Toybox,2,7,13]; @symbol_importdef<1> = [Application,2,14,25]; ]
+import Toybox.Application;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 3; @symbol_importdef<0> = [Toybox,3,7,13]; @symbol_importdef<1> = [Background,3,14,24]; ]
+import Toybox.Background;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 4; @symbol_importdef<0> = [Toybox,4,7,13]; @symbol_importdef<1> = [Complications,4,14,27]; ]
+import Toybox.Complications;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 5; @symbol_importdef<0> = [Toybox,5,7,13]; @symbol_importdef<1> = [Lang,5,14,18]; ]
+import Toybox.Lang;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 6; @symbol_importdef<0> = [Toybox,6,7,13]; @symbol_importdef<1> = [System,6,14,20]; ]
+import Toybox.System;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 7; @symbol_importdef<0> = [Toybox,7,7,13]; @symbol_importdef<1> = [Time,7,14,18]; ]
+import Toybox.Time;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 8; @symbol_importdef<0> = [Toybox,8,7,13]; @symbol_importdef<1> = [WatchUi,8,14,21]; ]
+import Toybox.WatchUi;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 10; @symbol_classdef = [WaterTrackerApp,10,6,21]; @symbol_extends<0> = [Application,10,30,41]; @symbol_extends<1> = [AppBase,10,42,49]; ]
+class WaterTrackerApp extends Application.AppBase {
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 10; ]
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 10; ]
+    static
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 12; @symbol_functiondef = [initialize,12,13,23]; ]
+    function initialize() as Void {
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_12_26_14_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 13 8 ]
+        symbol [ AppBase %tmp.2 13 8 15 ];
+        %tmp.2 = getv ? :AppBase;
+        symbol [ initialize %tmp.3 13 16 26 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_12_26_14_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 18; @symbol_functiondef = [onStart,18,13,20]; @symbol_param<0> = [state,18,21,26]; @symbol_param<0>_type<0> = [Dictionary,18,30,40]; ]
+    function onStart(state as Dictionary or Null) as Void {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 22; @symbol_functiondef = [onStop,22,13,19]; @symbol_param<0> = [state,22,20,25]; @symbol_param<0>_type<0> = [Dictionary,22,29,39]; ]
+    function onStop(state as Dictionary or Null) as Void {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 26; @symbol_functiondef = [getInitialView,26,13,27]; @symbol_return<0> = [WatchUi,26,34,41]; @symbol_return<1> = [Views,26,42,47]; @symbol_return<2> = [WatchUi,26,53,60]; @symbol_return<3> = [Views,26,61,66]; @symbol_return<4> = [WatchUi,26,68,75]; @symbol_return<5> = [InputDelegates,26,76,90]; ]
+    function getInitialView() as [WatchUi.Views] or [WatchUi.Views, WatchUi.InputDelegates] {
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_26_92_29_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 27 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_26_92_29_4_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_26_92_29_4_stop" ]
+        %view.1 = local;
+        symbol [ view %view.1 27 12 16 ];
+        symbol [ WaterTrackerView %tmp.4 27 23 39 ];
+        %tmp.4 = getv ? :WaterTrackerView;
+        %tmp.1 = newc %tmp.4 ();
+        lputv %view.1 %tmp.1;
+        symbol [ view %view.1 27 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 28 8 ]
+        %tmp.5 = newa 2;
+        %tmp.6 = lgetv %view.1;
+        symbol [ view %tmp.6 28 16 20 ];
+        %tmp.7 = dup %tmp.5;
+        %tmp.8 = aputv %tmp.7 0 %tmp.6;
+        symbol [ WaterTrackerDelegate %tmp.12 28 26 46 ];
+        %tmp.12 = getv ? :WaterTrackerDelegate;
+        %tmp.13 = lgetv %view.1;
+        symbol [ view %tmp.13 28 47 51 ];
+        %tmp.9 = newc %tmp.12 (%tmp.13);
+        %tmp.14 = dup %tmp.8;
+        %tmp.15 = aputv %tmp.14 1 %tmp.9;
+        ret %tmp.15;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_26_92_29_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 33; background = true; @symbol_functiondef = [getServiceDelegate,33,13,31]; @symbol_return<0> = [System,33,38,44]; @symbol_return<1> = [ServiceDelegate,33,45,60]; ]
+    function getServiceDelegate() as [System.ServiceDelegate] {
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_33_62_35_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 34 8 ]
+        %tmp.1 = newa 1;
+        symbol [ BackgroundService %tmp.5 34 20 37 ];
+        %tmp.5 = getv ? :BackgroundService;
+        %tmp.2 = newc %tmp.5 ();
+        %tmp.6 = dup %tmp.1;
+        %tmp.7 = aputv %tmp.6 0 %tmp.2;
+        ret %tmp.7;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_33_62_35_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 38; @symbol_functiondef = [onBackgroundData,38,13,29]; @symbol_param<0> = [data,38,30,34]; @symbol_param<0>_type<0> = [Application,38,38,49]; @symbol_param<0>_type<1> = [PersistableType,38,50,65]; ]
+    function onBackgroundData(data as Application.PersistableType) as Void {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 45; @symbol_functiondef = [scheduleReminder,45,20,36]; ]
+    static
+    function scheduleReminder() as Void {
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_45_47_47_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 46 8 ]
+        %tmp.1 = self;
+        symbol [ _scheduleReminder %tmp.2 46 8 25 ];
+        %tmp.2 = getv function %tmp.1 :_scheduleReminder;
+        invoke %tmp.1 %tmp.2();
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_45_47_47_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 49; @symbol_functiondef = [_scheduleReminder,49,28,45]; ]
+    private static
+    function _scheduleReminder() as Void {
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_49_56_62_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 50 8 ]
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_50_8_52_8_if_stmt:
+        symbol [ Background %tmp.1 50 14 24 ];
+        %tmp.1 = getm $.Toybox.Background;
+        %tmp.3 = const :registerForTemporalEvent;
+        symbol [ registerForTemporalEvent %tmp.3 50 30 54 const ];
+        %tmp.4 = canhazplz %tmp.1 %tmp.3;
+        %tmp.5 = not %tmp.4;
+        bf %tmp.5 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_50_8_52_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_50_8_52_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_50_57_52_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 51 12 ]
+        ret ?;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_50_57_52_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_50_8_52_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_50_8_52_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 53 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_49_56_62_4_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_49_56_62_4_stop" ]
+        %intervalMin.1 = local;
+        symbol [ intervalMin %intervalMin.1 53 12 23 ];
+        symbol [ DataStore %tmp.7 53 26 35 ];
+        %tmp.7 = getv ? :DataStore;
+        symbol [ getInterval %tmp.8 53 36 47 ];
+        %tmp.8 = getv function %tmp.7 :getInterval;
+        %tmp.9 = invoke %tmp.7 %tmp.8();
+        lputv %intervalMin.1 %tmp.9;
+        symbol [ intervalMin %intervalMin.1 53 12 23 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 54 8 ]
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_54_8_59_8_if_stmt:
+        %tmp.10 = lgetv %intervalMin.1;
+        symbol [ intervalMin %tmp.10 54 12 23 ];
+        %tmp.11 = 0;
+        %tmp.12 = lte %tmp.10 %tmp.11;
+        bf %tmp.12 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_54_8_59_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_54_8_59_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_54_30_59_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 55 12 ]
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_55_12_57_12_if_stmt:
+        symbol [ Background %tmp.13 55 16 26 ];
+        %tmp.13 = getm $.Toybox.Background;
+        %tmp.15 = const :deleteTemporalEvent;
+        symbol [ deleteTemporalEvent %tmp.15 55 32 51 const ];
+        %tmp.16 = canhazplz %tmp.13 %tmp.15;
+        bf %tmp.16 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_55_12_57_12_if_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_55_12_57_12_if_true:
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_55_53_57_12_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 56 16 ]
+        symbol [ Background %tmp.17 56 16 26 ];
+        %tmp.17 = getm $.Toybox.Background;
+        symbol [ deleteTemporalEvent %tmp.18 56 27 46 ];
+        %tmp.18 = getv function %tmp.17 :deleteTemporalEvent;
+        invoke %tmp.17 %tmp.18();
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_55_53_57_12_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_55_12_57_12_if_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_55_12_57_12_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 58 12 ]
+        ret ?;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_54_30_59_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_54_8_59_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_54_8_59_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 60 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_49_56_62_4_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_49_56_62_4_stop" ]
+        %nextEvent.2 = local;
+        symbol [ nextEvent %nextEvent.2 60 12 21 ];
+        symbol [ Time %tmp.19 60 24 28 ];
+        %tmp.19 = getm $.Toybox.Time;
+        symbol [ now %tmp.20 60 29 32 ];
+        %tmp.20 = getv function %tmp.19 :now;
+        %tmp.21 = invoke %tmp.19 %tmp.20();
+        symbol [ add %tmp.22 60 35 38 ];
+        %tmp.22 = getv function %tmp.21 :add;
+        symbol [ Time %tmp.25 60 43 47 ];
+        %tmp.25 = getm $.Toybox.Time;
+        symbol [ Duration %tmp.26 60 48 56 ];
+        %tmp.26 = getv function ? %tmp.25 :Duration;
+        %tmp.27 = lgetv %intervalMin.1;
+        symbol [ intervalMin %tmp.27 60 57 68 ];
+        %tmp.28 = 60;
+        %tmp.29 = mul %tmp.27 %tmp.28;
+        %tmp.23 = newc %tmp.26 (%tmp.29);
+        %tmp.30 = invoke %tmp.21 %tmp.22(%tmp.23);
+        lputv %nextEvent.2 %tmp.30;
+        symbol [ nextEvent %nextEvent.2 60 12 21 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 61 8 ]
+        symbol [ Background %tmp.31 61 8 18 ];
+        %tmp.31 = getm $.Toybox.Background;
+        symbol [ registerForTemporalEvent %tmp.32 61 19 43 ];
+        %tmp.32 = getv function %tmp.31 :registerForTemporalEvent;
+        %tmp.33 = lgetv %nextEvent.2;
+        symbol [ nextEvent %tmp.33 61 44 53 ];
+        invoke %tmp.31 %tmp.32(%tmp.33);
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_49_56_62_4_stop:
+    }
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 69; @symbol_functiondef = [getApp,69,9,15]; @symbol_return<0> = [WaterTrackerApp,69,21,36]; ]
+function getApp() as WaterTrackerApp {
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_69_37_71_0_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 70 4 ]
+    symbol [ Application %tmp.1 70 11 22 ];
+    %tmp.1 = getm $.Toybox.Application;
+    symbol [ getApp %tmp.2 70 23 29 ];
+    %tmp.2 = getv function %tmp.1 :getApp;
+    %tmp.3 = invoke %tmp.1 %tmp.2();
+    %tmp.4 = as %tmp.3 WaterTrackerApp;
+    symbol [ WaterTrackerApp %tmp.4 70 35 50 ];
+    ret %tmp.4;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_69_37_71_0_stop:
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 77; complications_api = true; @symbol_functiondef = [updateComplications,77,9,28]; ]
+function updateComplications() as Void {
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 78 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %units.1 = local;
+    symbol [ units %units.1 78 8 13 ];
+    symbol [ DataStore %tmp.2 78 18 27 ];
+    %tmp.2 = getv ? :DataStore;
+    symbol [ getUnits %tmp.3 78 28 36 ];
+    %tmp.3 = getv function %tmp.2 :getUnits;
+    %tmp.4 = invoke %tmp.2 %tmp.3();
+    lputv %units.1 %tmp.4;
+    symbol [ units %units.1 78 8 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 79 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %amount.2 = local;
+    symbol [ amount %amount.2 79 8 14 ];
+    symbol [ DataStore %tmp.6 79 18 27 ];
+    %tmp.6 = getv ? :DataStore;
+    symbol [ getAmount %tmp.7 79 28 37 ];
+    %tmp.7 = getv function %tmp.6 :getAmount;
+    %tmp.8 = invoke %tmp.6 %tmp.7();
+    lputv %amount.2 %tmp.8;
+    symbol [ amount %amount.2 79 8 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 80 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %goal.3 = local;
+    symbol [ goal %goal.3 80 8 12 ];
+    symbol [ DataStore %tmp.10 80 18 27 ];
+    %tmp.10 = getv ? :DataStore;
+    symbol [ getGoal %tmp.11 80 28 35 ];
+    %tmp.11 = getv function %tmp.10 :getGoal;
+    %tmp.12 = invoke %tmp.10 %tmp.11();
+    lputv %goal.3 %tmp.12;
+    symbol [ goal %goal.3 80 8 12 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 81 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %rec.4 = local;
+    symbol [ rec %rec.4 81 8 11 ];
+    symbol [ DataStore %tmp.14 81 18 27 ];
+    %tmp.14 = getv ? :DataStore;
+    symbol [ getBaseRecommendedGoal %tmp.15 81 28 50 ];
+    %tmp.15 = getv function %tmp.14 :getBaseRecommendedGoal;
+    %tmp.16 = invoke %tmp.14 %tmp.15();
+    lputv %rec.4 %tmp.16;
+    symbol [ rec %rec.4 81 8 11 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 83 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %isOz.5 = local;
+    symbol [ isOz %isOz.5 83 8 12 ];
+    %tmp.17 = lgetv %units.1;
+    symbol [ units %tmp.17 83 19 24 ];
+    %tmp.18 = 1;
+    %tmp.19 = eq %tmp.17 %tmp.18;
+    lputv %isOz.5 %tmp.19;
+    symbol [ isOz %isOz.5 83 8 12 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 84 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %ml2oz.6 = local;
+    symbol [ ml2oz %ml2oz.6 84 8 13 ];
+    %tmp.20 = 0.033814f;
+    lputv %ml2oz.6 %tmp.20;
+    symbol [ ml2oz %ml2oz.6 84 8 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 85 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %amtVal.7 = local;
+    symbol [ amtVal %amtVal.7 85 8 14 ];
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_85_18_85_59_begin:
+    %tmp.21 = lgetv %isOz.5;
+    symbol [ isOz %tmp.21 85 18 22 ];
+    bf %tmp.21 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_85_18_85_59_else_false;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_85_18_85_59_true:
+    %tmp.22 = lgetv %amount.2;
+    symbol [ amount %tmp.22 85 26 32 ];
+    %tmp.23 = lgetv %ml2oz.6;
+    symbol [ ml2oz %tmp.23 85 35 40 ];
+    %tmp.24 = mul %tmp.22 %tmp.23;
+    push %tmp.24;
+    goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_85_18_85_59_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_85_18_85_59_else_false:
+    %tmp.25 = lgetv %amount.2;
+    symbol [ amount %tmp.25 85 44 50 ];
+    symbol [ toFloat %tmp.26 85 51 58 ];
+    %tmp.26 = getv function %tmp.25 :toFloat;
+    %tmp.27 = invoke %tmp.25 %tmp.26();
+    push %tmp.27;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_85_18_85_59_end:
+    %tmp.28 = phi [%tmp.21 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_85_18_85_59_begin] [%tmp.24 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_85_18_85_59_true] [%tmp.27 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_85_18_85_59_else_false] [%tmp.28 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_85_18_85_59_end];
+    lputv %amtVal.7 %tmp.28;
+    symbol [ amtVal %amtVal.7 85 8 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 86 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %goalVal.8 = local;
+    symbol [ goalVal %goalVal.8 86 8 15 ];
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_86_18_86_57_begin:
+    %tmp.29 = lgetv %isOz.5;
+    symbol [ isOz %tmp.29 86 18 22 ];
+    bf %tmp.29 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_86_18_86_57_else_false;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_86_18_86_57_true:
+    %tmp.30 = lgetv %goal.3;
+    symbol [ goal %tmp.30 86 26 30 ];
+    %tmp.31 = lgetv %ml2oz.6;
+    symbol [ ml2oz %tmp.31 86 35 40 ];
+    %tmp.32 = mul %tmp.30 %tmp.31;
+    push %tmp.32;
+    goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_86_18_86_57_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_86_18_86_57_else_false:
+    %tmp.33 = lgetv %goal.3;
+    symbol [ goal %tmp.33 86 44 48 ];
+    symbol [ toFloat %tmp.34 86 49 56 ];
+    %tmp.34 = getv function %tmp.33 :toFloat;
+    %tmp.35 = invoke %tmp.33 %tmp.34();
+    push %tmp.35;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_86_18_86_57_end:
+    %tmp.36 = phi [%tmp.29 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_86_18_86_57_begin] [%tmp.32 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_86_18_86_57_true] [%tmp.35 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_86_18_86_57_else_false] [%tmp.36 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_86_18_86_57_end];
+    lputv %goalVal.8 %tmp.36;
+    symbol [ goalVal %goalVal.8 86 8 15 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 87 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %recVal.9 = local;
+    symbol [ recVal %recVal.9 87 8 14 ];
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_87_18_87_56_begin:
+    %tmp.37 = lgetv %isOz.5;
+    symbol [ isOz %tmp.37 87 18 22 ];
+    bf %tmp.37 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_87_18_87_56_else_false;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_87_18_87_56_true:
+    %tmp.38 = lgetv %rec.4;
+    symbol [ rec %tmp.38 87 26 29 ];
+    %tmp.39 = lgetv %ml2oz.6;
+    symbol [ ml2oz %tmp.39 87 35 40 ];
+    %tmp.40 = mul %tmp.38 %tmp.39;
+    push %tmp.40;
+    goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_87_18_87_56_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_87_18_87_56_else_false:
+    %tmp.41 = lgetv %rec.4;
+    symbol [ rec %tmp.41 87 44 47 ];
+    symbol [ toFloat %tmp.42 87 48 55 ];
+    %tmp.42 = getv function %tmp.41 :toFloat;
+    %tmp.43 = invoke %tmp.41 %tmp.42();
+    push %tmp.43;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_87_18_87_56_end:
+    %tmp.44 = phi [%tmp.37 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_87_18_87_56_begin] [%tmp.40 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_87_18_87_56_true] [%tmp.43 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_87_18_87_56_else_false] [%tmp.44 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_87_18_87_56_end];
+    lputv %recVal.9 %tmp.44;
+    symbol [ recVal %recVal.9 87 8 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 88 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %pctVal.10 = local;
+    symbol [ pctVal %pctVal.10 88 8 14 ];
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_88_18_88_58_begin:
+    %tmp.45 = lgetv %goal.3;
+    symbol [ goal %tmp.45 88 19 23 ];
+    %tmp.46 = 0;
+    %tmp.47 = gt %tmp.45 %tmp.46;
+    bf %tmp.47 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_88_18_88_58_else_false;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_88_18_88_58_true:
+    %tmp.48 = lgetv %amount.2;
+    symbol [ amount %tmp.48 88 32 38 ];
+    %tmp.49 = 100.0f;
+    %tmp.50 = mul %tmp.48 %tmp.49;
+    %tmp.51 = lgetv %goal.3;
+    symbol [ goal %tmp.51 88 50 54 ];
+    %tmp.52 = div %tmp.50 %tmp.51;
+    push %tmp.52;
+    goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_88_18_88_58_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_88_18_88_58_else_false:
+    %tmp.53 = 0.0f;
+    push %tmp.53;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_88_18_88_58_end:
+    %tmp.54 = phi [%tmp.47 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_88_18_88_58_begin] [%tmp.52 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_88_18_88_58_true] [%tmp.53 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_88_18_88_58_else_false] [%tmp.54 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_88_18_88_58_end];
+    lputv %pctVal.10 %tmp.54;
+    symbol [ pctVal %pctVal.10 88 8 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 89 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_start" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop" ]
+    %unitStr.11 = local;
+    symbol [ unitStr %unitStr.11 89 8 15 ];
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_89_18_89_32_begin:
+    %tmp.55 = lgetv %isOz.5;
+    symbol [ isOz %tmp.55 89 18 22 ];
+    bf %tmp.55 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_89_18_89_32_else_false;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_89_18_89_32_true:
+    %tmp.56 = "oz";
+    push %tmp.56;
+    goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_89_18_89_32_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_89_18_89_32_else_false:
+    %tmp.57 = "ml";
+    push %tmp.57;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_89_18_89_32_end:
+    %tmp.58 = phi [%tmp.55 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_89_18_89_32_begin] [%tmp.56 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_89_18_89_32_true] [%tmp.57 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_89_18_89_32_else_false] [%tmp.58 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_89_18_89_32_end];
+    lputv %unitStr.11 %tmp.58;
+    symbol [ unitStr %unitStr.11 89 8 15 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 91 4 ]
+    try @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_beginTry @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_endTry @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_catch @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_finally;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_beginTry:
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_8_97_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 92 8 ]
+    symbol [ Complications %tmp.59 92 8 21 ];
+    %tmp.59 = getm $.Toybox.Complications;
+    symbol [ updateComplication %tmp.60 92 22 40 ];
+    %tmp.60 = getv function %tmp.59 :updateComplication;
+    %tmp.61 = 0;
+    %tmp.62 = newd Complications.Data 2;
+    symbol [ Complications %tmp.62 92 85 98 ];
+    symbol [ Data %tmp.62 92 99 103 ];
+    %tmp.64 = const :value;
+    symbol [ value %tmp.64 92 46 51 const ];
+    %tmp.65 = lgetv %amtVal.7;
+    symbol [ amtVal %tmp.65 92 55 61 ];
+    %tmp.66 = dup %tmp.62;
+    %tmp.67 = aputv %tmp.66 %tmp.64 %tmp.65;
+    %tmp.69 = const :unit;
+    symbol [ unit %tmp.69 92 65 69 const ];
+    %tmp.70 = lgetv %unitStr.11;
+    symbol [ unitStr %tmp.70 92 73 80 ];
+    %tmp.71 = dup %tmp.67;
+    %tmp.72 = aputv %tmp.71 %tmp.69 %tmp.70;
+    invoke %tmp.59 %tmp.60(%tmp.61, %tmp.72);
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 93 8 ]
+    symbol [ Complications %tmp.73 93 8 21 ];
+    %tmp.73 = getm $.Toybox.Complications;
+    symbol [ updateComplication %tmp.74 93 22 40 ];
+    %tmp.74 = getv function %tmp.73 :updateComplication;
+    %tmp.75 = 1;
+    %tmp.76 = newd Complications.Data 2;
+    symbol [ Complications %tmp.76 93 85 98 ];
+    symbol [ Data %tmp.76 93 99 103 ];
+    %tmp.78 = const :value;
+    symbol [ value %tmp.78 93 46 51 const ];
+    %tmp.79 = lgetv %goalVal.8;
+    symbol [ goalVal %tmp.79 93 55 62 ];
+    %tmp.80 = dup %tmp.76;
+    %tmp.81 = aputv %tmp.80 %tmp.78 %tmp.79;
+    %tmp.83 = const :unit;
+    symbol [ unit %tmp.83 93 65 69 const ];
+    %tmp.84 = lgetv %unitStr.11;
+    symbol [ unitStr %tmp.84 93 73 80 ];
+    %tmp.85 = dup %tmp.81;
+    %tmp.86 = aputv %tmp.85 %tmp.83 %tmp.84;
+    invoke %tmp.73 %tmp.74(%tmp.75, %tmp.86);
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 94 8 ]
+    symbol [ Complications %tmp.87 94 8 21 ];
+    %tmp.87 = getm $.Toybox.Complications;
+    symbol [ updateComplication %tmp.88 94 22 40 ];
+    %tmp.88 = getv function %tmp.87 :updateComplication;
+    %tmp.89 = 2;
+    %tmp.90 = newd Complications.Data 2;
+    symbol [ Complications %tmp.90 94 85 98 ];
+    symbol [ Data %tmp.90 94 99 103 ];
+    %tmp.92 = const :value;
+    symbol [ value %tmp.92 94 46 51 const ];
+    %tmp.93 = lgetv %recVal.9;
+    symbol [ recVal %tmp.93 94 55 61 ];
+    %tmp.94 = dup %tmp.90;
+    %tmp.95 = aputv %tmp.94 %tmp.92 %tmp.93;
+    %tmp.97 = const :unit;
+    symbol [ unit %tmp.97 94 65 69 const ];
+    %tmp.98 = lgetv %unitStr.11;
+    symbol [ unitStr %tmp.98 94 73 80 ];
+    %tmp.99 = dup %tmp.95;
+    %tmp.100 = aputv %tmp.99 %tmp.97 %tmp.98;
+    invoke %tmp.87 %tmp.88(%tmp.89, %tmp.100);
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 95 8 ]
+    symbol [ Complications %tmp.101 95 8 21 ];
+    %tmp.101 = getm $.Toybox.Complications;
+    symbol [ updateComplication %tmp.102 95 22 40 ];
+    %tmp.102 = getv function %tmp.101 :updateComplication;
+    %tmp.103 = 3;
+    %tmp.104 = newd Complications.Data 2;
+    symbol [ Complications %tmp.104 95 81 94 ];
+    symbol [ Data %tmp.104 95 95 99 ];
+    %tmp.106 = const :value;
+    symbol [ value %tmp.106 95 46 51 const ];
+    %tmp.107 = lgetv %pctVal.10;
+    symbol [ pctVal %tmp.107 95 55 61 ];
+    %tmp.108 = dup %tmp.104;
+    %tmp.109 = aputv %tmp.108 %tmp.106 %tmp.107;
+    %tmp.111 = const :unit;
+    symbol [ unit %tmp.111 95 65 69 const ];
+    %tmp.112 = "%";
+    %tmp.113 = dup %tmp.109;
+    %tmp.114 = aputv %tmp.113 %tmp.111 %tmp.112;
+    invoke %tmp.101 %tmp.102(%tmp.103, %tmp.114);
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 96 8 ]
+    symbol [ Application %tmp.115 96 8 19 ];
+    %tmp.115 = getm $.Toybox.Application;
+    symbol [ Storage %tmp.116 96 20 27 ];
+    %tmp.116 = getv %tmp.115 :Storage;
+    symbol [ setValue %tmp.117 96 28 36 ];
+    %tmp.117 = getv function %tmp.116 :setValue;
+    %tmp.118 = "_cmpStat";
+    %tmp.119 = "ok";
+    invoke %tmp.116 %tmp.117(%tmp.118, %tmp.119);
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_8_97_4_stop:
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_endTry:
+    jsr @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_finally;
+    goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_catch:
+    %tmp.120 = exception;
+    push %tmp.120;
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 97 6 ]
+    %tmp.121 = dup %tmp.120;
+    symbol [ Lang %tmp.122 97 26 30 ];
+    %tmp.122 = getm $.Toybox.Lang;
+    symbol [ OperationNotAllowedException %tmp.123 97 31 59 ];
+    %tmp.123 = getv %tmp.122 :OperationNotAllowedException;
+    %tmp.124 = isa %tmp.121 %tmp.123;
+    bf %tmp.124 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_97_6_99_4_next;
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_catch" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_97_6_99_4_next" ]
+    %e.12 = local;
+    symbol [ e %e.12 97 13 14 ];
+    %tmp.125 = dup %tmp.120;
+    %tmp.126 = as %tmp.125 Lang.OperationNotAllowedException;
+    lputv %e.12 %tmp.126;
+    symbol [ e %e.12 97 13 14 ];
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_97_61_99_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 98 8 ]
+    symbol [ Application %tmp.127 98 8 19 ];
+    %tmp.127 = getm $.Toybox.Application;
+    symbol [ Storage %tmp.128 98 20 27 ];
+    %tmp.128 = getv %tmp.127 :Storage;
+    symbol [ setValue %tmp.129 98 28 36 ];
+    %tmp.129 = getv function %tmp.128 :setValue;
+    %tmp.130 = "_cmpStat";
+    %tmp.131 = "OpNotAllowed";
+    invoke %tmp.128 %tmp.129(%tmp.130, %tmp.131);
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_97_61_99_4_stop:
+    jsr @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_finally;
+    pop;
+    goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_97_6_99_4_next:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 99 6 ]
+    %tmp.132 = dup %tmp.120;
+    symbol [ Lang %tmp.133 99 26 30 ];
+    %tmp.133 = getm $.Toybox.Lang;
+    symbol [ Exception %tmp.134 99 31 40 ];
+    %tmp.134 = getv %tmp.133 :Exception;
+    %tmp.135 = isa %tmp.132 %tmp.134;
+    bf %tmp.135 @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_99_6_101_4_next;
+    [ "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_97_6_99_4_next" "D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_99_6_101_4_next" ]
+    %e.13 = local;
+    symbol [ e %e.13 99 13 14 ];
+    %tmp.136 = dup %tmp.120;
+    %tmp.137 = as %tmp.136 Lang.Exception;
+    lputv %e.13 %tmp.137;
+    symbol [ e %e.13 99 13 14 ];
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_99_42_101_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc" 100 8 ]
+    symbol [ Application %tmp.138 100 8 19 ];
+    %tmp.138 = getm $.Toybox.Application;
+    symbol [ Storage %tmp.139 100 20 27 ];
+    %tmp.139 = getv %tmp.138 :Storage;
+    symbol [ setValue %tmp.140 100 28 36 ];
+    %tmp.140 = getv function %tmp.139 :setValue;
+    %tmp.141 = "_cmpStat";
+    %tmp.142 = lgetv %e.13;
+    symbol [ e %tmp.142 100 49 50 ];
+    symbol [ getErrorMessage %tmp.143 100 51 66 ];
+    %tmp.143 = getv function %tmp.142 :getErrorMessage;
+    %tmp.144 = invoke %tmp.142 %tmp.143();
+    invoke %tmp.139 %tmp.140(%tmp.141, %tmp.144);
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_99_42_101_4_stop:
+    jsr @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_finally;
+    pop;
+    goto @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_end;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_99_6_101_4_next:
+    try @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_catch @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_99_6_101_4_next @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_99_6_101_4_next @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_finally;
+    jsr @D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_finally;
+    throw %tmp.120;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_finally:
+    jsrret;
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_91_4_101_4_end:
+D__GARMIN_Hydration_WaterTracker_source_WaterTrackerApp_mc_77_39_102_0_stop:
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 105; no_complications_api = true; @symbol_functiondef = [updateComplications,105,9,28]; ]
+function updateComplications() as Void {
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\WaterTrackerApp.mc"; @line = 2; ]
+<init> {
+}

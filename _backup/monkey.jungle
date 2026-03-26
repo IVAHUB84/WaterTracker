@@ -1,0 +1,19 @@
+# monkey.jungle — конфигурация сборки WaterTracker
+
+project.manifest = manifest.xml
+
+# Исходный код
+# touch-устройства: source + source-touch (pill-кнопки)
+base.sourcePath = source;source-touch
+
+# Instinct 3 AMOLED: source + source-instinct (кнопочная навигация)
+instinct3amoled45mm.sourcePath = source;source-instinct
+instinct3amoled50mm.sourcePath = source;source-instinct
+
+# Ресурсы
+base.resourcePath = resources
+
+# Строки по языкам
+base.lang.eng = resources/strings
+base.lang.rus = resources-rus/strings
+base.lang.ara = resources/strings
