@@ -12,9 +12,9 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         _view = view;
     }
 
-    // MENU (долгое нажатие UP) → Formula
+    // MENU (долгое нажатие UP) → Settings
     function onMenu() as Boolean {
-        pushDebugProfileView();
+        pushSettingsMenu();
         return true;
     }
 
@@ -74,10 +74,11 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         var itemIdx = (_view.getScrollTop() + zone) % RIGHT_ITEM_COUNT;
         _view.flashZone(zone);
 
-        if      (itemIdx == 0) { DataStore.addAmount(-100); updateComplications(); }
-        else if (itemIdx == 1) { DataStore.addAmount(100);  updateComplications(); }
-        else if (itemIdx == 2) { DataStore.addAmount(250);  updateComplications(); }
-        else if (itemIdx == 3) { DataStore.addAmount(500);  updateComplications(); }
+        var isOz = (DataStore.getUnits() == 1);
+        if      (itemIdx == 0) { DataStore.addAmount(isOz ? -237 : -100); updateComplications(); }
+        else if (itemIdx == 1) { DataStore.addAmount(isOz ?  237 :  100); updateComplications(); }
+        else if (itemIdx == 2) { DataStore.addAmount(isOz ?  473 :  250); updateComplications(); }
+        else if (itemIdx == 3) { DataStore.addAmount(isOz ?  591 :  500); updateComplications(); }
         else if (itemIdx == 4) { pushQuickAddView(); }
         else if (itemIdx == 5) { pushResetConfirm(); }
         return true;

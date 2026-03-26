@@ -36,12 +36,14 @@ class WaterTrackerView extends WatchUi.View {
     private var _formulaBtnY    as Number  = 0;
     private var _formulaBtnH    as Number  = 0;
     private var _shortLabels    as Boolean = false;
+    private var _microBtnFont   as Boolean = false;
     private var _timer          as Timer.Timer;
 
     function setShowSelection(v as Boolean)  as Void { _showSelection = v; }
     function setBoldWhite(v as Boolean)      as Void { _boldWhite = v; }
     function setShowFormulaBtn(v as Boolean) as Void { _showFormulaBtn = v; }
     function setShortLabels(v as Boolean)    as Void { _shortLabels = v; }
+    function setMicroBtnFont(v as Boolean)   as Void { _microBtnFont = v; }
 
     // Позиция иконки предупреждения и REC строки (левая часть)
     private var _warnX as Number = 0;
@@ -57,12 +59,14 @@ class WaterTrackerView extends WatchUi.View {
         _itemLabels = ["-100", "+100", "+250", "+500", "+/-", "Reset", "GOAL+/-"] as Array<String>;
         _itemColors = [0xB71C1C, 0x0D47A1, 0x1565C0, 0x1976D2, 0xF57F17, 0x37474F, 0x6A0DAD] as Array<Number>;
         _itemCount = 7;
+        _refreshLabels();
     }
 
     function addFormulaBtnItem() as Void {
         _itemLabels = ["-100", "+100", "+250", "+500", "+/-", "Reset", "Formula"] as Array<String>;
         _itemColors = [0xB71C1C, 0x0D47A1, 0x1565C0, 0x1976D2, 0xF57F17, 0x37474F, 0x6A0DAD] as Array<Number>;
         _itemCount = 7;
+        _refreshLabels();
     }
 
     function initialize() {
@@ -74,7 +78,22 @@ class WaterTrackerView extends WatchUi.View {
     }
 
     function onShow() as Void {
+        _refreshLabels();
         WatchUi.requestUpdate();
+    }
+
+    private function _refreshLabels() as Void {
+        if (DataStore.getUnits() == 1) {
+            _itemLabels[0] = "-8 oz";
+            _itemLabels[1] = "+8 oz";
+            _itemLabels[2] = "+16 oz";
+            _itemLabels[3] = "+20 oz";
+        } else {
+            _itemLabels[0] = "-100";
+            _itemLabels[1] = "+100";
+            _itemLabels[2] = "+250";
+            _itemLabels[3] = "+500";
+        }
     }
 
     function getScrollTop() as Number { return _scrollTop; }
@@ -348,13 +367,13 @@ class WaterTrackerView extends WatchUi.View {
         }
 
         dc.drawText(x + w / 2, y + h / 2,
-            _boldWhite ? Graphics.FONT_SMALL : Graphics.FONT_TINY,
+            _boldWhite ? Graphics.FONT_SMALL : (_microBtnFont ? Graphics.FONT_XTINY : Graphics.FONT_TINY),
             label,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 
     private function _fmtNum(ml as Number, units as Number) as String {
         if (units == 0) { return ml.toString(); }
-        return (ml.toFloat() / 29.5735f).format("%.1f");
+        return (ml.toFloat() / 29.5735f).format("%.0f");
     }
 }

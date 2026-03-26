@@ -1,4 +1,4 @@
-// WaterTrackerDelegate.mc — делегат главного экрана (Instinct 3 AMOLED)
+// WaterTrackerDelegate.mc — делегат главного экрана (кнопочные устройства Fenix 6)
 import Toybox.Lang;
 import Toybox.WatchUi;
 
@@ -10,13 +10,12 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         BehaviorDelegate.initialize();
         _view = view;
         _view.setShowSelection(true);
-        _view.setBoldWhite(true);
-        _view.addFormulaItem();
+        _view.addFormulaItem();  // добавляет 7-й пункт "GOAL+/-"
     }
 
-    // MENU (долгое нажатие UP) → Formula
+    // MENU (долгое нажатие UP) → Settings
     function onMenu() as Boolean {
-        pushDebugProfileView();
+        pushSettingsMenu();
         return true;
     }
 
@@ -36,10 +35,11 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
     function onSelect() as Boolean {
         var itemIdx = _view.getScrollTop() % 7;
         _view.flashZone(ZONE_SLOT0);
-        if      (itemIdx == 0) { DataStore.addAmount(-100); updateComplications(); }
-        else if (itemIdx == 1) { DataStore.addAmount(100);  updateComplications(); }
-        else if (itemIdx == 2) { DataStore.addAmount(250);  updateComplications(); }
-        else if (itemIdx == 3) { DataStore.addAmount(500);  updateComplications(); }
+        var isOz = (DataStore.getUnits() == 1);
+        if      (itemIdx == 0) { DataStore.addAmount(isOz ? -237 : -100); updateComplications(); }
+        else if (itemIdx == 1) { DataStore.addAmount(isOz ?  237 :  100); updateComplications(); }
+        else if (itemIdx == 2) { DataStore.addAmount(isOz ?  473 :  250); updateComplications(); }
+        else if (itemIdx == 3) { DataStore.addAmount(isOz ?  591 :  500); updateComplications(); }
         else if (itemIdx == 4) { pushQuickAddView(); }
         else if (itemIdx == 5) { pushResetConfirm(); }
         else if (itemIdx == 6) { pushGoalPickerView(); }

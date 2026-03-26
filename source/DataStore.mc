@@ -18,12 +18,24 @@ class DataStore {
     private static const KEY_GOAL        as String = "goal";
     private static const KEY_GOAL_MANUAL as String = "goalManual";
     private static const KEY_INTERVAL    as String = "interval";
+    private static const KEY_INTERVAL_PERIOD as String = "intervalPeriod";
     private static const KEY_UNITS       as String = "units";
+    private static const KEY_SMART       as String = "smart";
+    private static const KEY_FROM_HOUR   as String = "fromHour";
+    private static const KEY_TO_HOUR     as String = "toHour";
+    private static const KEY_VIBRATE     as String = "vibrate";
+    private static const KEY_TONE        as String = "tone";
 
     // Значения по умолчанию
     private static const DEFAULT_GOAL     as Number = 2000; // мл
-    private static const DEFAULT_INTERVAL as Number = 60;   // минут (0 = выкл)
+    private static const DEFAULT_INTERVAL as Number = 0;    // 0 = выкл
+    private static const DEFAULT_INTERVAL_PERIOD as Number = 60; // минут
     private static const DEFAULT_UNITS    as Number = 0;    // 0 = мл, 1 = oz
+    private static const DEFAULT_SMART    as Boolean = false;
+    private static const DEFAULT_FROM     as Number = 8;    // час начала
+    private static const DEFAULT_TO       as Number = 20;   // час окончания
+    private static const DEFAULT_VIBRATE  as Boolean = true;
+    private static const DEFAULT_TONE     as Boolean = false;
 
     // -------------------------------------------------------------------------
     // Основные методы работы с объёмом
@@ -114,6 +126,17 @@ class DataStore {
         Application.Storage.setValue(KEY_INTERVAL, minutes);
     }
 
+    // Период напоминаний (30/60/90/120 мин) — хранится отдельно от ON/OFF
+    (:background)
+    static function getIntervalPeriod() as Number {
+        var value = Application.Storage.getValue(KEY_INTERVAL_PERIOD);
+        return (value instanceof Number) ? (value as Number) : DEFAULT_INTERVAL_PERIOD;
+    }
+
+    static function setIntervalPeriod(minutes as Number) as Void {
+        Application.Storage.setValue(KEY_INTERVAL_PERIOD, minutes);
+    }
+
     // -------------------------------------------------------------------------
     // Единицы измерения
 
@@ -125,6 +148,82 @@ class DataStore {
 
     static function setUnits(units as Number) as Void {
         Application.Storage.setValue(KEY_UNITS, units);
+    }
+
+    // -------------------------------------------------------------------------
+    // Умные напоминания
+
+    (:background)
+    static function getSmart() as Boolean {
+        var value = Application.Storage.getValue(KEY_SMART);
+        return (value instanceof Boolean) ? (value as Boolean) : DEFAULT_SMART;
+    }
+
+    static function setSmart(smart as Boolean) as Void {
+        Application.Storage.setValue(KEY_SMART, smart);
+    }
+
+    // Час начала окна напоминаний (fallback: UserProfile.wakeTime → 8:00)
+    (:background)
+    static function getFromHour() as Number {
+        var value = Application.Storage.getValue(KEY_FROM_HOUR);
+        if (value instanceof Number) { return value as Number; }
+        if (Toybox has :UserProfile) {
+            var profile = UserProfile.getProfile();
+            if (profile != null && profile.wakeTime != null) {
+                var wt = profile.wakeTime;
+                if (wt instanceof Long)   { return (wt as Long).toNumber()   / 3600; }
+                if (wt instanceof Number) { return (wt as Number) / 3600; }
+            }
+        }
+        return DEFAULT_FROM;
+    }
+
+    static function setFromHour(hour as Number) as Void {
+        Application.Storage.setValue(KEY_FROM_HOUR, hour);
+    }
+
+    // Час окончания окна напоминаний (fallback: UserProfile.sleepTime → 20:00)
+    (:background)
+    static function getToHour() as Number {
+        var value = Application.Storage.getValue(KEY_TO_HOUR);
+        if (value instanceof Number) { return value as Number; }
+        if (Toybox has :UserProfile) {
+            var profile = UserProfile.getProfile();
+            if (profile != null && profile.sleepTime != null) {
+                var st = profile.sleepTime;
+                if (st instanceof Long)   { return (st as Long).toNumber()   / 3600; }
+                if (st instanceof Number) { return (st as Number) / 3600; }
+            }
+        }
+        return DEFAULT_TO;
+    }
+
+    static function setToHour(hour as Number) as Void {
+        Application.Storage.setValue(KEY_TO_HOUR, hour);
+    }
+
+    // -------------------------------------------------------------------------
+    // Настройки уведомлений
+
+    (:background)
+    static function getVibrate() as Boolean {
+        var value = Application.Storage.getValue(KEY_VIBRATE);
+        return (value instanceof Boolean) ? (value as Boolean) : DEFAULT_VIBRATE;
+    }
+
+    static function setVibrate(enabled as Boolean) as Void {
+        Application.Storage.setValue(KEY_VIBRATE, enabled);
+    }
+
+    (:background)
+    static function getTone() as Boolean {
+        var value = Application.Storage.getValue(KEY_TONE);
+        return (value instanceof Boolean) ? (value as Boolean) : DEFAULT_TONE;
+    }
+
+    static function setTone(enabled as Boolean) as Void {
+        Application.Storage.setValue(KEY_TONE, enabled);
     }
 
     // -------------------------------------------------------------------------
@@ -178,6 +277,7 @@ class DataStore {
     }
 
     // Базовая норма без учёта активности (вес × 33 + пол)
+    (:background)
     static function getBaseRecommendedGoal() as Number {
         if (!(Toybox has :UserProfile)) { return 2000; }
         var profile = UserProfile.getProfile();
@@ -195,6 +295,34 @@ class DataStore {
     // Возвращает флаг неполноты профиля (обновляется при вызове getRecommendedGoal)
     static function isProfileIncomplete() as Boolean {
         return _profileIncomplete;
+    }
+
+    // Background-safe версия без доступа к module-level _profileIncomplete
+    (:background)
+    static function getRecommendedGoalBg() as Number {
+        if (!(Toybox has :UserProfile)) { return 2000; }
+        var profile = UserProfile.getProfile();
+        if (profile == null) { return 2000; }
+        var weightG = profile.weight;
+        var gender  = profile.gender;
+        if (weightG == null || gender == null ||
+            gender != UserProfile.GENDER_MALE && gender != UserProfile.GENDER_FEMALE) { return 2000; }
+        var weightKg    = (weightG as Number).toFloat() / 1000.0;
+        var base        = (weightKg * 33.0).toNumber();
+        var genderBonus = (gender == UserProfile.GENDER_MALE) ? 200 : 0;
+        var actBonus = 0;
+        if (Toybox has :ActivityMonitor) {
+            var info = ActivityMonitor.getInfo();
+            if (info != null) {
+                var am = info.activeMinutesDay;
+                if (am != null) {
+                    var mod = (am.moderate != null) ? (am.moderate as Number) : 0;
+                    var vig = (am.vigorous != null) ? (am.vigorous as Number) : 0;
+                    actBonus = (mod + vig * 2) * 8;
+                }
+            }
+        }
+        return base + genderBonus + actBonus;
     }
 
     // -------------------------------------------------------------------------

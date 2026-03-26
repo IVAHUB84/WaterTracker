@@ -1,4 +1,4 @@
-// WaterTrackerDelegate.mc — делегат главного экрана (Venu SQ2)
+// WaterTrackerDelegate.mc — делегат главного экрана (touch-устройства)
 import Toybox.Lang;
 import Toybox.WatchUi;
 
@@ -10,13 +10,19 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
     function initialize(view as WaterTrackerView) {
         BehaviorDelegate.initialize();
         _view = view;
-        _view.setShortLabels(true);
-        _view.addFormulaItem();
     }
 
-    // Долгое нажатие на экран → Formula
+    // MENU (долгое нажатие UP) → Settings
+    function onMenu() as Boolean {
+        pushSettingsMenu();
+        return true;
+    }
+
+    // Долгое нажатие на левую половину (GOAL) → установка цели
     function onHold(evt as WatchUi.ClickEvent) as Boolean {
-        pushDebugProfileView();
+        if (evt.getCoordinates()[0] < _view.getBtnX()) {
+            pushGoalPickerView();
+        }
         return true;
     }
 
@@ -31,7 +37,7 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         return true;
     }
 
-    // Drag пальцем — прокрутка правого столбца
+    // Drag пальцем — надёжная прокрутка правого столбца
     function onDrag(evt as WatchUi.DragEvent) as Boolean {
         var y = evt.getCoordinates()[1];
         if (_lastDragY < 0) {
@@ -65,16 +71,16 @@ class WaterTrackerDelegate extends WatchUi.BehaviorDelegate {
         if (zone == ZONE_WARNING)     { pushProfileWarningView();   return true; }
         if (zone == ZONE_REC)         { return true; }
 
-        var itemIdx = (_view.getScrollTop() + zone) % 7;
+        var itemIdx = (_view.getScrollTop() + zone) % RIGHT_ITEM_COUNT;
         _view.flashZone(zone);
 
-        if      (itemIdx == 0) { DataStore.addAmount(-100); updateComplications(); }
-        else if (itemIdx == 1) { DataStore.addAmount(100);  updateComplications(); }
-        else if (itemIdx == 2) { DataStore.addAmount(250);  updateComplications(); }
-        else if (itemIdx == 3) { DataStore.addAmount(500);  updateComplications(); }
+        var isOz = (DataStore.getUnits() == 1);
+        if      (itemIdx == 0) { DataStore.addAmount(isOz ? -237 : -100); updateComplications(); }
+        else if (itemIdx == 1) { DataStore.addAmount(isOz ?  237 :  100); updateComplications(); }
+        else if (itemIdx == 2) { DataStore.addAmount(isOz ?  473 :  250); updateComplications(); }
+        else if (itemIdx == 3) { DataStore.addAmount(isOz ?  591 :  500); updateComplications(); }
         else if (itemIdx == 4) { pushQuickAddView(); }
         else if (itemIdx == 5) { pushResetConfirm(); }
-        else if (itemIdx == 6) { pushGoalPickerView(); }
         return true;
     }
 

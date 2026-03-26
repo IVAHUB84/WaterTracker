@@ -142,13 +142,17 @@ class DebugProfileView extends WatchUi.View {
         }
 
         // ── Формулы ──────────────────────────────────────────
+        var units = DataStore.getUnits();
+        var goalDisp = (units == 0) ? baseGoal.toString() : (baseGoal.toFloat() / 29.5735f).format("%.0f");
+        var recDisp  = (units == 0) ? recVal.toString()   : (recVal.toFloat()  / 29.5735f).format("%.0f");
+        var uLbl = (units == 0) ? "ml" : "oz";
         var goalLine = "GOAL=" + weightKg.format("%.1f") + "x33+" +
-                       genderBonus.toString() + "=" + baseGoal.toString();
+                       genderBonus.toString() + "=" + goalDisp + uLbl;
         _drawLine(dc, cx, sc * 162 / 260 - s, 0xFFB300, goalLine, h);
         _drawLine(dc, cx, sc * 178 / 260 - s, 0x546E7A, "base daily norm", h);
 
-        var recLine = "REC=" + baseGoal.toString() + "+" +
-                      actBonus.toString() + "=" + recVal.toString();
+        var recLine = "REC=" + goalDisp + "+" +
+                      actBonus.toString() + "=" + recDisp + uLbl;
         _drawLine(dc, cx, sc * 204 / 260 - s, 0x29B6F6, recLine, h);
         _drawLine(dc, cx, sc * 220 / 260 - s, 0x546E7A, "base + ActivityScore", h);
 
