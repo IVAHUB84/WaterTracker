@@ -1,0 +1,300 @@
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 2; @symbol_importdef<0> = [Toybox,2,7,13]; @symbol_importdef<1> = [Graphics,2,14,22]; ]
+import Toybox.Graphics;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 3; @symbol_importdef<0> = [Toybox,3,7,13]; @symbol_importdef<1> = [Lang,3,14,18]; ]
+import Toybox.Lang;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 4; @symbol_importdef<0> = [Toybox,4,7,13]; @symbol_importdef<1> = [WatchUi,4,14,21]; ]
+import Toybox.WatchUi;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 6; @symbol_functiondef = [pushProfileWarningView,6,9,31]; ]
+function pushProfileWarningView() as Void {
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_6_42_10_0_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 7 4 ]
+    symbol [ WatchUi %tmp.1 7 4 11 ];
+    %tmp.1 = getm $.Toybox.WatchUi;
+    symbol [ pushView %tmp.2 7 12 20 ];
+    %tmp.2 = getv function %tmp.1 :pushView;
+    symbol [ ProfileWarningView %tmp.6 7 25 43 ];
+    %tmp.6 = getv ? :ProfileWarningView;
+    %tmp.3 = newc %tmp.6 ();
+    symbol [ ProfileWarningDelegate %tmp.10 8 25 47 ];
+    %tmp.10 = getv ? :ProfileWarningDelegate;
+    %tmp.7 = newc %tmp.10 ();
+    symbol [ WatchUi %tmp.11 9 21 28 ];
+    %tmp.11 = getm $.Toybox.WatchUi;
+    symbol [ SLIDE_UP %tmp.12 9 29 37 ];
+    %tmp.12 = getv %tmp.11 :SLIDE_UP;
+    invoke %tmp.1 %tmp.2(%tmp.3, %tmp.7, %tmp.12);
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_6_42_10_0_stop:
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 13; @symbol_classdef = [ProfileWarningView,13,6,24]; @symbol_extends<0> = [WatchUi,13,33,40]; @symbol_extends<1> = [View,13,41,45]; ]
+class ProfileWarningView extends WatchUi.View {
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 13; ]
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 13; ]
+    static
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 15; @symbol_functiondef = [initialize,15,13,23]; ]
+    function initialize() as Void {
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_15_26_17_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 16 8 ]
+        symbol [ View %tmp.2 16 8 12 ];
+        %tmp.2 = getv ? :View;
+        symbol [ initialize %tmp.3 16 13 23 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_15_26_17_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 19; @symbol_functiondef = [onUpdate,19,13,21]; @symbol_param<0> = [dc,19,22,24]; @symbol_param<0>_type<0> = [Graphics,19,28,36]; @symbol_param<0>_type<1> = [Dc,19,37,39]; ]
+    function onUpdate(dc as Graphics.Dc) as Void {
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 20 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_start" "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_stop" ]
+        %w.1 = local;
+        symbol [ w %w.1 20 12 13 ];
+        %tmp.1 = lgetv %dc;
+        symbol [ dc %tmp.1 20 16 18 ];
+        symbol [ getWidth %tmp.2 20 19 27 ];
+        %tmp.2 = getv function %tmp.1 :getWidth;
+        %tmp.3 = invoke %tmp.1 %tmp.2();
+        lputv %w.1 %tmp.3;
+        symbol [ w %w.1 20 12 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 21 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_start" "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_stop" ]
+        %h.2 = local;
+        symbol [ h %h.2 21 12 13 ];
+        %tmp.4 = lgetv %dc;
+        symbol [ dc %tmp.4 21 16 18 ];
+        symbol [ getHeight %tmp.5 21 19 28 ];
+        %tmp.5 = getv function %tmp.4 :getHeight;
+        %tmp.6 = invoke %tmp.4 %tmp.5();
+        lputv %h.2 %tmp.6;
+        symbol [ h %h.2 21 12 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 23 8 ]
+        %tmp.7 = lgetv %dc;
+        symbol [ dc %tmp.7 23 8 10 ];
+        symbol [ setColor %tmp.8 23 11 19 ];
+        %tmp.8 = getv function %tmp.7 :setColor;
+        symbol [ Graphics %tmp.9 23 20 28 ];
+        %tmp.9 = getm $.Toybox.Graphics;
+        symbol [ COLOR_BLACK %tmp.10 23 29 40 ];
+        %tmp.10 = getv %tmp.9 :COLOR_BLACK;
+        symbol [ Graphics %tmp.11 23 42 50 ];
+        %tmp.11 = getm $.Toybox.Graphics;
+        symbol [ COLOR_BLACK %tmp.12 23 51 62 ];
+        %tmp.12 = getv %tmp.11 :COLOR_BLACK;
+        invoke %tmp.7 %tmp.8(%tmp.10, %tmp.12);
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 24 8 ]
+        %tmp.13 = lgetv %dc;
+        symbol [ dc %tmp.13 24 8 10 ];
+        symbol [ clear %tmp.14 24 11 16 ];
+        %tmp.14 = getv function %tmp.13 :clear;
+        invoke %tmp.13 %tmp.14();
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 27 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_start" "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_stop" ]
+        %cx.3 = local;
+        symbol [ cx %cx.3 27 12 14 ];
+        %tmp.15 = lgetv %w.1;
+        symbol [ w %tmp.15 27 17 18 ];
+        %tmp.16 = 2;
+        %tmp.17 = div %tmp.15 %tmp.16;
+        lputv %cx.3 %tmp.17;
+        symbol [ cx %cx.3 27 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 28 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_start" "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_stop" ]
+        %iconY.4 = local;
+        symbol [ iconY %iconY.4 28 12 17 ];
+        %tmp.18 = lgetv %h.2;
+        symbol [ h %tmp.18 28 20 21 ];
+        %tmp.19 = 22;
+        %tmp.20 = mul %tmp.18 %tmp.19;
+        %tmp.21 = 100;
+        %tmp.22 = div %tmp.20 %tmp.21;
+        lputv %iconY.4 %tmp.22;
+        symbol [ iconY %iconY.4 28 12 17 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 29 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_start" "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_stop" ]
+        %r.5 = local;
+        symbol [ r %r.5 29 12 13 ];
+        %tmp.23 = lgetv %h.2;
+        symbol [ h %tmp.23 29 16 17 ];
+        %tmp.24 = 8;
+        %tmp.25 = mul %tmp.23 %tmp.24;
+        %tmp.26 = 100;
+        %tmp.27 = div %tmp.25 %tmp.26;
+        lputv %r.5 %tmp.27;
+        symbol [ r %r.5 29 12 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 30 8 ]
+        %tmp.28 = lgetv %dc;
+        symbol [ dc %tmp.28 30 8 10 ];
+        symbol [ setColor %tmp.29 30 11 19 ];
+        %tmp.29 = getv function %tmp.28 :setColor;
+        %tmp.30 = 0xFFAA00;
+        symbol [ Graphics %tmp.31 30 30 38 ];
+        %tmp.31 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.32 30 39 56 ];
+        %tmp.32 = getv %tmp.31 :COLOR_TRANSPARENT;
+        invoke %tmp.28 %tmp.29(%tmp.30, %tmp.32);
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 31 8 ]
+        %tmp.33 = lgetv %dc;
+        symbol [ dc %tmp.33 31 8 10 ];
+        symbol [ fillCircle %tmp.34 31 11 21 ];
+        %tmp.34 = getv function %tmp.33 :fillCircle;
+        %tmp.35 = lgetv %cx.3;
+        symbol [ cx %tmp.35 31 22 24 ];
+        %tmp.36 = lgetv %iconY.4;
+        symbol [ iconY %tmp.36 31 26 31 ];
+        %tmp.37 = lgetv %r.5;
+        symbol [ r %tmp.37 31 33 34 ];
+        invoke %tmp.33 %tmp.34(%tmp.35, %tmp.36, %tmp.37);
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 32 8 ]
+        %tmp.38 = lgetv %dc;
+        symbol [ dc %tmp.38 32 8 10 ];
+        symbol [ setColor %tmp.39 32 11 19 ];
+        %tmp.39 = getv function %tmp.38 :setColor;
+        symbol [ Graphics %tmp.40 32 20 28 ];
+        %tmp.40 = getm $.Toybox.Graphics;
+        symbol [ COLOR_BLACK %tmp.41 32 29 40 ];
+        %tmp.41 = getv %tmp.40 :COLOR_BLACK;
+        symbol [ Graphics %tmp.42 32 42 50 ];
+        %tmp.42 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.43 32 51 68 ];
+        %tmp.43 = getv %tmp.42 :COLOR_TRANSPARENT;
+        invoke %tmp.38 %tmp.39(%tmp.41, %tmp.43);
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 33 8 ]
+        %tmp.44 = lgetv %dc;
+        symbol [ dc %tmp.44 33 8 10 ];
+        symbol [ drawText %tmp.45 33 11 19 ];
+        %tmp.45 = getv function %tmp.44 :drawText;
+        %tmp.46 = lgetv %cx.3;
+        symbol [ cx %tmp.46 33 20 22 ];
+        %tmp.47 = lgetv %iconY.4;
+        symbol [ iconY %tmp.47 33 24 29 ];
+        symbol [ Graphics %tmp.48 33 31 39 ];
+        %tmp.48 = getm $.Toybox.Graphics;
+        symbol [ FONT_SMALL %tmp.49 33 40 50 ];
+        %tmp.49 = getv %tmp.48 :FONT_SMALL;
+        %tmp.50 = "!";
+        symbol [ Graphics %tmp.51 35 12 20 ];
+        %tmp.51 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_CENTER %tmp.52 35 21 40 ];
+        %tmp.52 = getv %tmp.51 :TEXT_JUSTIFY_CENTER;
+        symbol [ Graphics %tmp.53 35 43 51 ];
+        %tmp.53 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.54 35 52 72 ];
+        %tmp.54 = getv %tmp.53 :TEXT_JUSTIFY_VCENTER;
+        %tmp.55 = bitor %tmp.52 %tmp.54;
+        invoke %tmp.44 %tmp.45(%tmp.46, %tmp.47, %tmp.49, %tmp.50, %tmp.55);
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 38 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_start" "D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_stop" ]
+        %msg.6 = local;
+        symbol [ msg %msg.6 38 12 15 ];
+        %tmp.56 = "Fill your profile\nin Garmin Connect\nfor accurate\nhydration goal";
+        lputv %msg.6 %tmp.56;
+        symbol [ msg %msg.6 38 12 15 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 39 8 ]
+        %tmp.57 = lgetv %dc;
+        symbol [ dc %tmp.57 39 8 10 ];
+        symbol [ setColor %tmp.58 39 11 19 ];
+        %tmp.58 = getv function %tmp.57 :setColor;
+        symbol [ Graphics %tmp.59 39 20 28 ];
+        %tmp.59 = getm $.Toybox.Graphics;
+        symbol [ COLOR_WHITE %tmp.60 39 29 40 ];
+        %tmp.60 = getv %tmp.59 :COLOR_WHITE;
+        symbol [ Graphics %tmp.61 39 42 50 ];
+        %tmp.61 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.62 39 51 68 ];
+        %tmp.62 = getv %tmp.61 :COLOR_TRANSPARENT;
+        invoke %tmp.57 %tmp.58(%tmp.60, %tmp.62);
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 40 8 ]
+        %tmp.63 = lgetv %dc;
+        symbol [ dc %tmp.63 40 8 10 ];
+        symbol [ drawText %tmp.64 40 11 19 ];
+        %tmp.64 = getv function %tmp.63 :drawText;
+        %tmp.65 = lgetv %cx.3;
+        symbol [ cx %tmp.65 40 20 22 ];
+        %tmp.66 = lgetv %h.2;
+        symbol [ h %tmp.66 40 24 25 ];
+        %tmp.67 = 60;
+        %tmp.68 = mul %tmp.66 %tmp.67;
+        %tmp.69 = 100;
+        %tmp.70 = div %tmp.68 %tmp.69;
+        symbol [ Graphics %tmp.71 40 38 46 ];
+        %tmp.71 = getm $.Toybox.Graphics;
+        symbol [ FONT_XTINY %tmp.72 40 47 57 ];
+        %tmp.72 = getv %tmp.71 :FONT_XTINY;
+        %tmp.73 = lgetv %msg.6;
+        symbol [ msg %tmp.73 41 12 15 ];
+        symbol [ Graphics %tmp.74 42 12 20 ];
+        %tmp.74 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_CENTER %tmp.75 42 21 40 ];
+        %tmp.75 = getv %tmp.74 :TEXT_JUSTIFY_CENTER;
+        symbol [ Graphics %tmp.76 42 43 51 ];
+        %tmp.76 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.77 42 52 72 ];
+        %tmp.77 = getv %tmp.76 :TEXT_JUSTIFY_VCENTER;
+        %tmp.78 = bitor %tmp.75 %tmp.77;
+        invoke %tmp.63 %tmp.64(%tmp.65, %tmp.70, %tmp.72, %tmp.73, %tmp.78);
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_19_49_43_4_stop:
+    }
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 47; @symbol_classdef = [ProfileWarningDelegate,47,6,28]; @symbol_extends<0> = [WatchUi,47,37,44]; @symbol_extends<1> = [BehaviorDelegate,47,45,61]; ]
+class ProfileWarningDelegate extends WatchUi.BehaviorDelegate {
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 47; ]
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 47; ]
+    static
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 49; @symbol_functiondef = [initialize,49,13,23]; ]
+    function initialize() as Void {
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_49_26_51_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 50 8 ]
+        symbol [ BehaviorDelegate %tmp.2 50 8 24 ];
+        %tmp.2 = getv ? :BehaviorDelegate;
+        symbol [ initialize %tmp.3 50 25 35 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_49_26_51_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 53; @symbol_functiondef = [onTap,53,13,18]; @symbol_param<0> = [evt,53,19,22]; @symbol_param<0>_type<0> = [WatchUi,53,26,33]; @symbol_param<0>_type<1> = [ClickEvent,53,34,44]; @symbol_return<0> = [Boolean,53,49,56]; ]
+    function onTap(evt as WatchUi.ClickEvent) as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_53_57_56_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 54 8 ]
+        symbol [ WatchUi %tmp.1 54 8 15 ];
+        %tmp.1 = getm $.Toybox.WatchUi;
+        symbol [ popView %tmp.2 54 16 23 ];
+        %tmp.2 = getv function %tmp.1 :popView;
+        symbol [ WatchUi %tmp.3 54 24 31 ];
+        %tmp.3 = getm $.Toybox.WatchUi;
+        symbol [ SLIDE_DOWN %tmp.4 54 32 42 ];
+        %tmp.4 = getv %tmp.3 :SLIDE_DOWN;
+        invoke %tmp.1 %tmp.2(%tmp.4);
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 55 8 ]
+        %tmp.5 = true;
+        ret %tmp.5;
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_53_57_56_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 58; @symbol_functiondef = [onBack,58,13,19]; @symbol_return<0> = [Boolean,58,25,32]; ]
+    function onBack() as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_58_33_61_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 59 8 ]
+        symbol [ WatchUi %tmp.1 59 8 15 ];
+        %tmp.1 = getm $.Toybox.WatchUi;
+        symbol [ popView %tmp.2 59 16 23 ];
+        %tmp.2 = getv function %tmp.1 :popView;
+        symbol [ WatchUi %tmp.3 59 24 31 ];
+        %tmp.3 = getm $.Toybox.WatchUi;
+        symbol [ SLIDE_DOWN %tmp.4 59 32 42 ];
+        %tmp.4 = getv %tmp.3 :SLIDE_DOWN;
+        invoke %tmp.1 %tmp.2(%tmp.4);
+[ "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc" 60 8 ]
+        %tmp.5 = true;
+        ret %tmp.5;
+D__GARMIN_Hydration_WaterTracker_source_ProfileWarningView_mc_58_33_61_4_stop:
+    }
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\ProfileWarningView.mc"; @line = 2; ]
+<init> {
+}

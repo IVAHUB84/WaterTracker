@@ -1,0 +1,2048 @@
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 2; @symbol_importdef<0> = [Toybox,2,7,13]; @symbol_importdef<1> = [ActivityMonitor,2,14,29]; ]
+import Toybox.ActivityMonitor;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 3; @symbol_importdef<0> = [Toybox,3,7,13]; @symbol_importdef<1> = [Application,3,14,25]; ]
+import Toybox.Application;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 4; @symbol_importdef<0> = [Toybox,4,7,13]; @symbol_importdef<1> = [Graphics,4,14,22]; ]
+import Toybox.Graphics;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 5; @symbol_importdef<0> = [Toybox,5,7,13]; @symbol_importdef<1> = [Lang,5,14,18]; ]
+import Toybox.Lang;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 6; @symbol_importdef<0> = [Toybox,6,7,13]; @symbol_importdef<1> = [Time,6,14,18]; ]
+import Toybox.Time;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 7; @symbol_importdef<0> = [Toybox,7,7,13]; @symbol_importdef<1> = [UserProfile,7,14,25]; ]
+import Toybox.UserProfile;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 8; @symbol_importdef<0> = [Toybox,8,7,13]; @symbol_importdef<1> = [WatchUi,8,14,21]; ]
+import Toybox.WatchUi;
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 10; @symbol_functiondef = [pushDebugProfileView,10,9,29]; ]
+function pushDebugProfileView() as Void {
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_10_40_13_0_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 11 4 ]
+    [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_10_40_13_0_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_10_40_13_0_stop" ]
+    %view.1 = local;
+    symbol [ view %view.1 11 8 12 ];
+    symbol [ DebugProfileView %tmp.4 11 19 35 ];
+    %tmp.4 = getv ? :DebugProfileView;
+    %tmp.1 = newc %tmp.4 ();
+    lputv %view.1 %tmp.1;
+    symbol [ view %view.1 11 8 12 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 12 4 ]
+    symbol [ WatchUi %tmp.5 12 4 11 ];
+    %tmp.5 = getm $.Toybox.WatchUi;
+    symbol [ pushView %tmp.6 12 12 20 ];
+    %tmp.6 = getv function %tmp.5 :pushView;
+    %tmp.7 = lgetv %view.1;
+    symbol [ view %tmp.7 12 21 25 ];
+    symbol [ DebugProfileDelegate %tmp.11 12 31 51 ];
+    %tmp.11 = getv ? :DebugProfileDelegate;
+    %tmp.12 = lgetv %view.1;
+    symbol [ view %tmp.12 12 52 56 ];
+    %tmp.8 = newc %tmp.11 (%tmp.12);
+    symbol [ WatchUi %tmp.13 12 59 66 ];
+    %tmp.13 = getm $.Toybox.WatchUi;
+    symbol [ SLIDE_DOWN %tmp.14 12 67 77 ];
+    %tmp.14 = getv %tmp.13 :SLIDE_DOWN;
+    invoke %tmp.5 %tmp.6(%tmp.7, %tmp.8, %tmp.14);
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_10_40_13_0_stop:
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 16; @symbol_classdef = [DebugProfileView,16,6,22]; @symbol_extends<0> = [WatchUi,16,31,38]; @symbol_extends<1> = [View,16,39,43]; ]
+class DebugProfileView extends WatchUi.View {
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 16; ]
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 16; ]
+    static
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 18; @position = 16; @symbol_vardef = [_scrollY,18,16,24]; @symbol_type<0> = [Number,18,28,34]; ]
+    private
+    var _scrollY as Number = 0;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 19; @position = 25; @symbol_constdef = [LINE,19,25,29]; @symbol_type<0> = [Number,19,33,39]; ]
+    private static
+    const LINE as Number = 25;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 20; @position = 25; @symbol_constdef = [TOTAL,20,25,30]; @symbol_type<0> = [Number,20,34,40]; ]
+    private static
+    const TOTAL as Number = 280;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 22; @symbol_functiondef = [initialize,22,13,23]; ]
+    function initialize() as Void {
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_22_26_24_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 23 8 ]
+        symbol [ View %tmp.2 23 8 12 ];
+        %tmp.2 = getv ? :View;
+        symbol [ initialize %tmp.3 23 13 23 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_22_26_24_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 26; @symbol_functiondef = [scroll,26,13,19]; @symbol_param<0> = [dy,26,20,22]; @symbol_param<0>_type<0> = [Number,26,26,32]; ]
+    function scroll(dy as Number) as Void {
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_26_42_32_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 27 8 ]
+        symbol [ _scrollY %tmp.2 27 19 27 ];
+        %tmp.2 = getv ? :_scrollY;
+        %tmp.3 = lgetv %dy;
+        symbol [ dy %tmp.3 27 30 32 ];
+        %tmp.4 = add %tmp.2 %tmp.3;
+        symbol [ _scrollY ? 27 8 16 ];
+        putv self :_scrollY %tmp.4;
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 28 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_26_42_32_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_26_42_32_4_stop" ]
+        %maxS.1 = local;
+        symbol [ maxS %maxS.1 28 12 16 ];
+        symbol [ TOTAL %tmp.6 28 19 24 ];
+        %tmp.6 = getv ? :TOTAL;
+        %tmp.7 = 220;
+        %tmp.8 = sub %tmp.6 %tmp.7;
+        lputv %maxS.1 %tmp.8;
+        symbol [ maxS %maxS.1 28 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 29 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_29_8_29_45_if_stmt:
+        symbol [ _scrollY %tmp.10 29 12 20 ];
+        %tmp.10 = getv ? :_scrollY;
+        %tmp.11 = 0;
+        %tmp.12 = lt %tmp.10 %tmp.11;
+        bf %tmp.12 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_29_8_29_45_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_29_8_29_45_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_29_29_29_45_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 29 31 ]
+        %tmp.13 = 0;
+        symbol [ _scrollY ? 29 31 39 ];
+        putv self :_scrollY %tmp.13;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_29_29_29_45_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_29_8_29_45_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_29_8_29_45_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 30 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_30_8_30_48_if_stmt:
+        symbol [ _scrollY %tmp.15 30 12 20 ];
+        %tmp.15 = getv ? :_scrollY;
+        %tmp.16 = lgetv %maxS.1;
+        symbol [ maxS %tmp.16 30 23 27 ];
+        %tmp.17 = gt %tmp.15 %tmp.16;
+        bf %tmp.17 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_30_8_30_48_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_30_8_30_48_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_30_29_30_48_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 30 31 ]
+        %tmp.18 = lgetv %maxS.1;
+        symbol [ maxS %tmp.18 30 42 46 ];
+        symbol [ _scrollY ? 30 31 39 ];
+        putv self :_scrollY %tmp.18;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_30_29_30_48_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_30_8_30_48_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_30_8_30_48_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 31 8 ]
+        symbol [ WatchUi %tmp.19 31 8 15 ];
+        %tmp.19 = getm $.Toybox.WatchUi;
+        symbol [ requestUpdate %tmp.20 31 16 29 ];
+        %tmp.20 = getv function %tmp.19 :requestUpdate;
+        invoke %tmp.19 %tmp.20();
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_26_42_32_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 34; @symbol_functiondef = [onUpdate,34,13,21]; @symbol_param<0> = [dc,34,22,24]; @symbol_param<0>_type<0> = [Graphics,34,28,36]; @symbol_param<0>_type<1> = [Dc,34,37,39]; ]
+    function onUpdate(dc as Graphics.Dc) as Void {
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 35 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %w.1 = local;
+        symbol [ w %w.1 35 12 13 ];
+        %tmp.1 = lgetv %dc;
+        symbol [ dc %tmp.1 35 17 19 ];
+        symbol [ getWidth %tmp.2 35 20 28 ];
+        %tmp.2 = getv function %tmp.1 :getWidth;
+        %tmp.3 = invoke %tmp.1 %tmp.2();
+        lputv %w.1 %tmp.3;
+        symbol [ w %w.1 35 12 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 36 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %h.2 = local;
+        symbol [ h %h.2 36 12 13 ];
+        %tmp.4 = lgetv %dc;
+        symbol [ dc %tmp.4 36 17 19 ];
+        symbol [ getHeight %tmp.5 36 20 29 ];
+        %tmp.5 = getv function %tmp.4 :getHeight;
+        %tmp.6 = invoke %tmp.4 %tmp.5();
+        lputv %h.2 %tmp.6;
+        symbol [ h %h.2 36 12 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 37 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %cx.3 = local;
+        symbol [ cx %cx.3 37 12 14 ];
+        %tmp.7 = lgetv %w.1;
+        symbol [ w %tmp.7 37 17 18 ];
+        %tmp.8 = 2;
+        %tmp.9 = div %tmp.7 %tmp.8;
+        lputv %cx.3 %tmp.9;
+        symbol [ cx %cx.3 37 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 38 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %s.4 = local;
+        symbol [ s %s.4 38 12 13 ];
+        symbol [ _scrollY %tmp.11 38 17 25 ];
+        %tmp.11 = getv ? :_scrollY;
+        lputv %s.4 %tmp.11;
+        symbol [ s %s.4 38 12 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 40 8 ]
+        %tmp.12 = lgetv %dc;
+        symbol [ dc %tmp.12 40 8 10 ];
+        symbol [ setColor %tmp.13 40 11 19 ];
+        %tmp.13 = getv function %tmp.12 :setColor;
+        symbol [ Graphics %tmp.14 40 20 28 ];
+        %tmp.14 = getm $.Toybox.Graphics;
+        symbol [ COLOR_BLACK %tmp.15 40 29 40 ];
+        %tmp.15 = getv %tmp.14 :COLOR_BLACK;
+        symbol [ Graphics %tmp.16 40 42 50 ];
+        %tmp.16 = getm $.Toybox.Graphics;
+        symbol [ COLOR_BLACK %tmp.17 40 51 62 ];
+        %tmp.17 = getv %tmp.16 :COLOR_BLACK;
+        invoke %tmp.12 %tmp.13(%tmp.15, %tmp.17);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 41 8 ]
+        %tmp.18 = lgetv %dc;
+        symbol [ dc %tmp.18 41 8 10 ];
+        symbol [ clear %tmp.19 41 11 16 ];
+        %tmp.19 = getv function %tmp.18 :clear;
+        invoke %tmp.18 %tmp.19();
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 44 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %weightKg.5 = local;
+        symbol [ weightKg %weightKg.5 44 12 20 ];
+        %tmp.20 = 0.0;
+        lputv %weightKg.5 %tmp.20;
+        symbol [ weightKg %weightKg.5 44 12 20 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 45 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %genderMale.6 = local;
+        symbol [ genderMale %genderMale.6 45 12 22 ];
+        %tmp.21 = false;
+        lputv %genderMale.6 %tmp.21;
+        symbol [ genderMale %genderMale.6 45 12 22 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 46 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %profileOk.7 = local;
+        symbol [ profileOk %profileOk.7 46 12 21 ];
+        %tmp.22 = false;
+        lputv %profileOk.7 %tmp.22;
+        symbol [ profileOk %profileOk.7 46 12 21 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 47 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %ageStr.8 = local;
+        symbol [ ageStr %ageStr.8 47 12 18 ];
+        %tmp.23 = "n/a";
+        lputv %ageStr.8 %tmp.23;
+        symbol [ ageStr %ageStr.8 47 12 18 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 48 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %heightStr.9 = local;
+        symbol [ heightStr %heightStr.9 48 12 21 ];
+        %tmp.24 = "n/a";
+        lputv %heightStr.9 %tmp.24;
+        symbol [ heightStr %heightStr.9 48 12 21 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 50 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_50_8_69_8_if_stmt:
+        symbol [ Toybox %tmp.26 50 12 18 ];
+        %tmp.26 = getv ? :Toybox;
+        %tmp.28 = const :UserProfile;
+        symbol [ UserProfile %tmp.28 50 24 35 const ];
+        %tmp.29 = canhazplz %tmp.26 %tmp.28;
+        bf %tmp.29 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_50_8_69_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_50_8_69_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_50_37_69_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 51 12 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_50_37_69_8_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_50_37_69_8_stop" ]
+        %profile.10 = local;
+        symbol [ profile %profile.10 51 16 23 ];
+        symbol [ UserProfile %tmp.30 51 26 37 ];
+        %tmp.30 = getm $.Toybox.UserProfile;
+        symbol [ getProfile %tmp.31 51 38 48 ];
+        %tmp.31 = getv function %tmp.30 :getProfile;
+        %tmp.32 = invoke %tmp.30 %tmp.31();
+        lputv %profile.10 %tmp.32;
+        symbol [ profile %profile.10 51 16 23 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 52 12 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_12_68_12_if_stmt:
+        %tmp.33 = lgetv %profile.10;
+        symbol [ profile %tmp.33 52 16 23 ];
+        %tmp.34 = null;
+        %tmp.35 = ne %tmp.33 %tmp.34;
+        bf %tmp.35 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_12_68_12_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_12_68_12_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_33_68_12_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 53 16 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_33_68_12_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_33_68_12_stop" ]
+        %wG.11 = local;
+        symbol [ wG %wG.11 53 20 22 ];
+        %tmp.36 = lgetv %profile.10;
+        symbol [ profile %tmp.36 53 25 32 ];
+        %tmp.37 = as %tmp.36 { (!Null) };
+        symbol [ weight %tmp.38 53 33 39 ];
+        %tmp.38 = getv %tmp.37 :weight;
+        lputv %wG.11 %tmp.38;
+        symbol [ wG %wG.11 53 20 22 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 54 16 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_54_16_54_80_if_stmt:
+        %tmp.39 = lgetv %wG.11;
+        symbol [ wG %tmp.39 54 20 22 ];
+        %tmp.40 = null;
+        %tmp.41 = ne %tmp.39 %tmp.40;
+        bf %tmp.41 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_54_16_54_80_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_54_16_54_80_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_54_32_54_80_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 54 34 ]
+        %tmp.42 = lgetv %wG.11;
+        symbol [ wG %tmp.42 54 46 48 ];
+        %tmp.43 = as %tmp.42 { (!Null) };
+        %tmp.44 = as %tmp.43 Number;
+        symbol [ Number %tmp.44 54 52 58 ];
+        symbol [ toFloat %tmp.45 54 60 67 ];
+        %tmp.45 = getv function %tmp.44 :toFloat;
+        %tmp.46 = invoke %tmp.44 %tmp.45();
+        %tmp.47 = 1000.0;
+        %tmp.48 = div %tmp.46 %tmp.47;
+        lputv %weightKg.5 %tmp.48;
+        symbol [ weightKg %weightKg.5 54 34 42 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_54_32_54_80_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_54_16_54_80_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_54_16_54_80_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 56 16 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_33_68_12_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_33_68_12_stop" ]
+        %hCm.12 = local;
+        symbol [ hCm %hCm.12 56 20 23 ];
+        %tmp.49 = lgetv %profile.10;
+        symbol [ profile %tmp.49 56 26 33 ];
+        %tmp.50 = as %tmp.49 { (!Null) };
+        symbol [ height %tmp.51 56 34 40 ];
+        %tmp.51 = getv %tmp.50 :height;
+        lputv %hCm.12 %tmp.51;
+        symbol [ hCm %hCm.12 56 20 23 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 57 16 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_57_16_57_83_if_stmt:
+        %tmp.52 = lgetv %hCm.12;
+        symbol [ hCm %tmp.52 57 20 23 ];
+        %tmp.53 = null;
+        %tmp.54 = ne %tmp.52 %tmp.53;
+        bf %tmp.54 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_57_16_57_83_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_57_16_57_83_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_57_33_57_83_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 57 35 ]
+        %tmp.55 = lgetv %hCm.12;
+        symbol [ hCm %tmp.55 57 48 51 ];
+        %tmp.56 = as %tmp.55 { (!Null) };
+        %tmp.57 = as %tmp.56 Number;
+        symbol [ Number %tmp.57 57 55 61 ];
+        symbol [ toString %tmp.58 57 63 71 ];
+        %tmp.58 = getv function %tmp.57 :toString;
+        %tmp.59 = invoke %tmp.57 %tmp.58();
+        %tmp.60 = " cm";
+        %tmp.61 = add %tmp.59 %tmp.60;
+        lputv %heightStr.9 %tmp.61;
+        symbol [ heightStr %heightStr.9 57 35 44 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_57_33_57_83_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_57_16_57_83_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_57_16_57_83_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 59 16 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_33_68_12_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_33_68_12_stop" ]
+        %by.13 = local;
+        symbol [ by %by.13 59 20 22 ];
+        %tmp.62 = lgetv %profile.10;
+        symbol [ profile %tmp.62 59 25 32 ];
+        %tmp.63 = as %tmp.62 { (!Null) };
+        symbol [ birthYear %tmp.64 59 33 42 ];
+        %tmp.64 = getv %tmp.63 :birthYear;
+        lputv %by.13 %tmp.64;
+        symbol [ by %by.13 59 20 22 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 60 16 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_60_16_63_16_if_stmt:
+        %tmp.65 = lgetv %by.13;
+        symbol [ by %tmp.65 60 20 22 ];
+        %tmp.66 = null;
+        %tmp.67 = ne %tmp.65 %tmp.66;
+        bf %tmp.67 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_60_16_63_16_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_60_16_63_16_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_60_32_63_16_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 61 20 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_60_32_63_16_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_60_32_63_16_stop" ]
+        %yr.14 = local;
+        symbol [ yr %yr.14 61 24 26 ];
+        symbol [ Time %tmp.68 61 29 33 ];
+        %tmp.68 = getm $.Toybox.Time;
+        symbol [ Gregorian %tmp.69 61 34 43 ];
+        %tmp.69 = getv %tmp.68 :Gregorian;
+        symbol [ info %tmp.70 61 44 48 ];
+        %tmp.70 = getv function %tmp.69 :info;
+        symbol [ Time %tmp.71 61 49 53 ];
+        %tmp.71 = getm $.Toybox.Time;
+        symbol [ now %tmp.72 61 54 57 ];
+        %tmp.72 = getv function %tmp.71 :now;
+        %tmp.73 = invoke %tmp.71 %tmp.72();
+        symbol [ Time %tmp.74 61 61 65 ];
+        %tmp.74 = getm $.Toybox.Time;
+        symbol [ FORMAT_SHORT %tmp.75 61 66 78 ];
+        %tmp.75 = getv %tmp.74 :FORMAT_SHORT;
+        %tmp.76 = invoke %tmp.69 %tmp.70(%tmp.73, %tmp.75);
+        symbol [ year %tmp.77 61 80 84 ];
+        %tmp.77 = getv %tmp.76 :year;
+        lputv %yr.14 %tmp.77;
+        symbol [ yr %yr.14 61 24 26 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 62 20 ]
+        %tmp.78 = lgetv %yr.14;
+        symbol [ yr %tmp.78 62 30 32 ];
+        %tmp.79 = lgetv %by.13;
+        symbol [ by %tmp.79 62 36 38 ];
+        %tmp.80 = as %tmp.79 { (!Null) };
+        %tmp.81 = as %tmp.80 Number;
+        symbol [ Number %tmp.81 62 42 48 ];
+        %tmp.82 = sub %tmp.78 %tmp.81;
+        symbol [ toString %tmp.83 62 51 59 ];
+        %tmp.83 = getv function %tmp.82 :toString;
+        %tmp.84 = invoke %tmp.82 %tmp.83();
+        %tmp.85 = " yr";
+        %tmp.86 = add %tmp.84 %tmp.85;
+        lputv %ageStr.8 %tmp.86;
+        symbol [ ageStr %ageStr.8 62 20 26 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_60_32_63_16_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_60_16_63_16_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_60_16_63_16_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 65 16 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_33_68_12_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_33_68_12_stop" ]
+        %g.15 = local;
+        symbol [ g %g.15 65 20 21 ];
+        %tmp.87 = lgetv %profile.10;
+        symbol [ profile %tmp.87 65 24 31 ];
+        %tmp.88 = as %tmp.87 { (!Null) };
+        symbol [ gender %tmp.89 65 32 38 ];
+        %tmp.89 = getv %tmp.88 :gender;
+        lputv %g.15 %tmp.89;
+        symbol [ g %g.15 65 20 21 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 66 16 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_66_16_67_107_if_stmt:
+        %tmp.90 = lgetv %g.15;
+        symbol [ g %tmp.90 66 20 21 ];
+        symbol [ UserProfile %tmp.91 66 25 36 ];
+        %tmp.91 = getm $.Toybox.UserProfile;
+        symbol [ GENDER_MALE %tmp.92 66 37 48 ];
+        %tmp.92 = getv %tmp.91 :GENDER_MALE;
+        %tmp.93 = eq %tmp.90 %tmp.92;
+        bf %tmp.93 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_66_16_67_107_if_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_66_16_67_107_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_66_57_66_107_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 66 59 ]
+        %tmp.94 = true;
+        lputv %genderMale.6 %tmp.94;
+        symbol [ genderMale %genderMale.6 66 59 69 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 66 79 ]
+        %tmp.95 = lgetv %weightKg.5;
+        symbol [ weightKg %tmp.95 66 92 100 ];
+        %tmp.96 = 0;
+        %tmp.97 = gt %tmp.95 %tmp.96;
+        lputv %profileOk.7 %tmp.97;
+        symbol [ profileOk %profileOk.7 66 79 88 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_66_57_66_107_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_66_16_67_107_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_66_16_67_107_if_false:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 67 21 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_67_21_67_107_if_stmt:
+        %tmp.98 = lgetv %g.15;
+        symbol [ g %tmp.98 67 25 26 ];
+        symbol [ UserProfile %tmp.99 67 30 41 ];
+        %tmp.99 = getm $.Toybox.UserProfile;
+        symbol [ GENDER_FEMALE %tmp.100 67 42 55 ];
+        %tmp.100 = getv %tmp.99 :GENDER_FEMALE;
+        %tmp.101 = eq %tmp.98 %tmp.100;
+        bf %tmp.101 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_67_21_67_107_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_67_21_67_107_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_67_57_67_107_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 67 59 ]
+        %tmp.102 = false;
+        lputv %genderMale.6 %tmp.102;
+        symbol [ genderMale %genderMale.6 67 59 69 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 67 79 ]
+        %tmp.103 = lgetv %weightKg.5;
+        symbol [ weightKg %tmp.103 67 92 100 ];
+        %tmp.104 = 0;
+        %tmp.105 = gt %tmp.103 %tmp.104;
+        lputv %profileOk.7 %tmp.105;
+        symbol [ profileOk %profileOk.7 67 79 88 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_67_57_67_107_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_67_21_67_107_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_67_21_67_107_if_end:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_66_16_67_107_if_end:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_33_68_12_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_12_68_12_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_52_12_68_12_if_end:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_50_37_69_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_50_8_69_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_50_8_69_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 71 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %mod.16 = local;
+        symbol [ mod %mod.16 71 12 15 ];
+        %tmp.106 = 0;
+        lputv %mod.16 %tmp.106;
+        symbol [ mod %mod.16 71 12 15 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 71 21 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %vig.17 = local;
+        symbol [ vig %vig.17 71 25 28 ];
+        %tmp.107 = 0;
+        lputv %vig.17 %tmp.107;
+        symbol [ vig %vig.17 71 25 28 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 72 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_72_8_81_8_if_stmt:
+        symbol [ Toybox %tmp.109 72 12 18 ];
+        %tmp.109 = getv ? :Toybox;
+        %tmp.111 = const :ActivityMonitor;
+        symbol [ ActivityMonitor %tmp.111 72 24 39 const ];
+        %tmp.112 = canhazplz %tmp.109 %tmp.111;
+        bf %tmp.112 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_72_8_81_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_72_8_81_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_72_41_81_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 73 12 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_72_41_81_8_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_72_41_81_8_stop" ]
+        %info.18 = local;
+        symbol [ info %info.18 73 16 20 ];
+        symbol [ ActivityMonitor %tmp.113 73 23 38 ];
+        %tmp.113 = getm $.Toybox.ActivityMonitor;
+        symbol [ getInfo %tmp.114 73 39 46 ];
+        %tmp.114 = getv function %tmp.113 :getInfo;
+        %tmp.115 = invoke %tmp.113 %tmp.114();
+        lputv %info.18 %tmp.115;
+        symbol [ info %info.18 73 16 20 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 74 12 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_74_12_80_12_if_stmt:
+        %tmp.116 = lgetv %info.18;
+        symbol [ info %tmp.116 74 16 20 ];
+        %tmp.117 = null;
+        %tmp.118 = ne %tmp.116 %tmp.117;
+        bf %tmp.118 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_74_12_80_12_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_74_12_80_12_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_74_30_80_12_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 75 16 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_74_30_80_12_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_74_30_80_12_stop" ]
+        %am.19 = local;
+        symbol [ am %am.19 75 20 22 ];
+        %tmp.119 = lgetv %info.18;
+        symbol [ info %tmp.119 75 25 29 ];
+        %tmp.120 = as %tmp.119 { (!Null) };
+        symbol [ activeMinutesDay %tmp.121 75 30 46 ];
+        %tmp.121 = getv %tmp.120 :activeMinutesDay;
+        lputv %am.19 %tmp.121;
+        symbol [ am %am.19 75 20 22 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 76 16 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_76_16_79_16_if_stmt:
+        %tmp.122 = lgetv %am.19;
+        symbol [ am %tmp.122 76 20 22 ];
+        %tmp.123 = null;
+        %tmp.124 = ne %tmp.122 %tmp.123;
+        bf %tmp.124 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_76_16_79_16_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_76_16_79_16_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_76_32_79_16_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 77 20 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_77_26_77_76_begin:
+        %tmp.125 = lgetv %am.19;
+        symbol [ am %tmp.125 77 27 29 ];
+        %tmp.126 = as %tmp.125 { (!Null) };
+        symbol [ moderate %tmp.127 77 30 38 ];
+        %tmp.127 = getv %tmp.126 :moderate;
+        %tmp.128 = null;
+        %tmp.129 = ne %tmp.127 %tmp.128;
+        bf %tmp.129 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_77_26_77_76_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_77_26_77_76_true:
+        %tmp.130 = lgetv %am.19;
+        symbol [ am %tmp.130 77 51 53 ];
+        %tmp.131 = as %tmp.130 { (!Null) };
+        symbol [ moderate %tmp.132 77 54 62 ];
+        %tmp.132 = getv %tmp.131 :moderate;
+        %tmp.133 = as %tmp.132 Number;
+        symbol [ Number %tmp.133 77 66 72 ];
+        push %tmp.133;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_77_26_77_76_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_77_26_77_76_else_false:
+        %tmp.134 = 0;
+        push %tmp.134;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_77_26_77_76_end:
+        %tmp.135 = phi [%tmp.129 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_77_26_77_76_begin] [%tmp.133 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_77_26_77_76_true] [%tmp.134 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_77_26_77_76_else_false] [%tmp.135 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_77_26_77_76_end];
+        lputv %mod.16 %tmp.135;
+        symbol [ mod %mod.16 77 20 23 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 78 20 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_78_26_78_76_begin:
+        %tmp.136 = lgetv %am.19;
+        symbol [ am %tmp.136 78 27 29 ];
+        %tmp.137 = as %tmp.136 { (!Null) };
+        symbol [ vigorous %tmp.138 78 30 38 ];
+        %tmp.138 = getv %tmp.137 :vigorous;
+        %tmp.139 = null;
+        %tmp.140 = ne %tmp.138 %tmp.139;
+        bf %tmp.140 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_78_26_78_76_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_78_26_78_76_true:
+        %tmp.141 = lgetv %am.19;
+        symbol [ am %tmp.141 78 51 53 ];
+        %tmp.142 = as %tmp.141 { (!Null) };
+        symbol [ vigorous %tmp.143 78 54 62 ];
+        %tmp.143 = getv %tmp.142 :vigorous;
+        %tmp.144 = as %tmp.143 Number;
+        symbol [ Number %tmp.144 78 66 72 ];
+        push %tmp.144;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_78_26_78_76_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_78_26_78_76_else_false:
+        %tmp.145 = 0;
+        push %tmp.145;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_78_26_78_76_end:
+        %tmp.146 = phi [%tmp.140 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_78_26_78_76_begin] [%tmp.144 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_78_26_78_76_true] [%tmp.145 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_78_26_78_76_else_false] [%tmp.146 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_78_26_78_76_end];
+        lputv %vig.17 %tmp.146;
+        symbol [ vig %vig.17 78 20 23 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_76_32_79_16_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_76_16_79_16_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_76_16_79_16_if_end:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_74_30_80_12_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_74_12_80_12_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_74_12_80_12_if_end:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_72_41_81_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_72_8_81_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_72_8_81_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 84 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %base.20 = local;
+        symbol [ base %base.20 84 12 16 ];
+        %tmp.147 = lgetv %weightKg.5;
+        symbol [ weightKg %tmp.147 84 27 35 ];
+        %tmp.148 = 33.0;
+        %tmp.149 = mul %tmp.147 %tmp.148;
+        symbol [ toNumber %tmp.150 84 44 52 ];
+        %tmp.150 = getv function %tmp.149 :toNumber;
+        %tmp.151 = invoke %tmp.149 %tmp.150();
+        lputv %base.20 %tmp.151;
+        symbol [ base %base.20 84 12 16 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 85 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %genderBonus.21 = local;
+        symbol [ genderBonus %genderBonus.21 85 12 23 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_85_26_85_45_begin:
+        %tmp.152 = lgetv %genderMale.6;
+        symbol [ genderMale %tmp.152 85 26 36 ];
+        bf %tmp.152 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_85_26_85_45_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_85_26_85_45_true:
+        %tmp.153 = 200;
+        push %tmp.153;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_85_26_85_45_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_85_26_85_45_else_false:
+        %tmp.154 = 0;
+        push %tmp.154;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_85_26_85_45_end:
+        %tmp.155 = phi [%tmp.152 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_85_26_85_45_begin] [%tmp.153 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_85_26_85_45_true] [%tmp.154 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_85_26_85_45_else_false] [%tmp.155 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_85_26_85_45_end];
+        lputv %genderBonus.21 %tmp.155;
+        symbol [ genderBonus %genderBonus.21 85 12 23 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 86 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %actBonus.22 = local;
+        symbol [ actBonus %actBonus.22 86 12 20 ];
+        %tmp.156 = lgetv %mod.16;
+        symbol [ mod %tmp.156 86 27 30 ];
+        %tmp.157 = lgetv %vig.17;
+        symbol [ vig %tmp.157 86 33 36 ];
+        %tmp.158 = 2;
+        %tmp.159 = mul %tmp.157 %tmp.158;
+        %tmp.160 = add %tmp.156 %tmp.159;
+        %tmp.161 = 8;
+        %tmp.162 = mul %tmp.160 %tmp.161;
+        lputv %actBonus.22 %tmp.162;
+        symbol [ actBonus %actBonus.22 86 12 20 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 87 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %recVal.23 = local;
+        symbol [ recVal %recVal.23 87 12 18 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_87_26_87_72_begin:
+        %tmp.163 = lgetv %profileOk.7;
+        symbol [ profileOk %tmp.163 87 26 35 ];
+        bf %tmp.163 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_87_26_87_72_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_87_26_87_72_true:
+        %tmp.164 = lgetv %base.20;
+        symbol [ base %tmp.164 87 39 43 ];
+        %tmp.165 = lgetv %genderBonus.21;
+        symbol [ genderBonus %tmp.165 87 46 57 ];
+        %tmp.166 = add %tmp.164 %tmp.165;
+        %tmp.167 = lgetv %actBonus.22;
+        symbol [ actBonus %tmp.167 87 60 68 ];
+        %tmp.168 = add %tmp.166 %tmp.167;
+        push %tmp.168;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_87_26_87_72_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_87_26_87_72_else_false:
+        %tmp.169 = 2000;
+        push %tmp.169;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_87_26_87_72_end:
+        %tmp.170 = phi [%tmp.163 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_87_26_87_72_begin] [%tmp.168 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_87_26_87_72_true] [%tmp.169 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_87_26_87_72_else_false] [%tmp.170 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_87_26_87_72_end];
+        lputv %recVal.23 %tmp.170;
+        symbol [ recVal %recVal.23 87 12 18 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 88 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %baseGoal.24 = local;
+        symbol [ baseGoal %baseGoal.24 88 12 20 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_88_26_88_61_begin:
+        %tmp.171 = lgetv %profileOk.7;
+        symbol [ profileOk %tmp.171 88 26 35 ];
+        bf %tmp.171 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_88_26_88_61_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_88_26_88_61_true:
+        %tmp.172 = lgetv %base.20;
+        symbol [ base %tmp.172 88 39 43 ];
+        %tmp.173 = lgetv %genderBonus.21;
+        symbol [ genderBonus %tmp.173 88 46 57 ];
+        %tmp.174 = add %tmp.172 %tmp.173;
+        push %tmp.174;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_88_26_88_61_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_88_26_88_61_else_false:
+        %tmp.175 = 2000;
+        push %tmp.175;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_88_26_88_61_end:
+        %tmp.176 = phi [%tmp.171 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_88_26_88_61_begin] [%tmp.174 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_88_26_88_61_true] [%tmp.175 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_88_26_88_61_else_false] [%tmp.176 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_88_26_88_61_end];
+        lputv %baseGoal.24 %tmp.176;
+        symbol [ baseGoal %baseGoal.24 88 12 20 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 89 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %genderLbl.25 = local;
+        symbol [ genderLbl %genderLbl.25 89 12 21 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_89_26_89_45_begin:
+        %tmp.177 = lgetv %genderMale.6;
+        symbol [ genderMale %tmp.177 89 26 36 ];
+        bf %tmp.177 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_89_26_89_45_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_89_26_89_45_true:
+        %tmp.178 = "M";
+        push %tmp.178;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_89_26_89_45_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_89_26_89_45_else_false:
+        %tmp.179 = "F";
+        push %tmp.179;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_89_26_89_45_end:
+        %tmp.180 = phi [%tmp.177 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_89_26_89_45_begin] [%tmp.178 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_89_26_89_45_true] [%tmp.179 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_89_26_89_45_else_false] [%tmp.180 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_89_26_89_45_end];
+        lputv %genderLbl.25 %tmp.180;
+        symbol [ genderLbl %genderLbl.25 89 12 21 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 92 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %today.26 = local;
+        symbol [ today %today.26 92 12 17 ];
+        symbol [ Time %tmp.181 92 20 24 ];
+        %tmp.181 = getm $.Toybox.Time;
+        symbol [ Gregorian %tmp.182 92 25 34 ];
+        %tmp.182 = getv %tmp.181 :Gregorian;
+        symbol [ info %tmp.183 92 35 39 ];
+        %tmp.183 = getv function %tmp.182 :info;
+        symbol [ Time %tmp.184 92 40 44 ];
+        %tmp.184 = getm $.Toybox.Time;
+        symbol [ now %tmp.185 92 45 48 ];
+        %tmp.185 = getv function %tmp.184 :now;
+        %tmp.186 = invoke %tmp.184 %tmp.185();
+        symbol [ Time %tmp.187 92 52 56 ];
+        %tmp.187 = getm $.Toybox.Time;
+        symbol [ FORMAT_SHORT %tmp.188 92 57 69 ];
+        %tmp.188 = getv %tmp.187 :FORMAT_SHORT;
+        %tmp.189 = invoke %tmp.182 %tmp.183(%tmp.186, %tmp.188);
+        lputv %today.26 %tmp.189;
+        symbol [ today %today.26 92 12 17 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 93 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %mm.27 = local;
+        symbol [ mm %mm.27 93 12 14 ];
+        %tmp.190 = lgetv %today.26;
+        symbol [ today %tmp.190 93 17 22 ];
+        symbol [ month %tmp.191 93 23 28 ];
+        %tmp.191 = getv %tmp.190 :month;
+        %tmp.192 = as %tmp.191 Number;
+        symbol [ Number %tmp.192 93 32 38 ];
+        lputv %mm.27 %tmp.192;
+        symbol [ mm %mm.27 93 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 94 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %dd.28 = local;
+        symbol [ dd %dd.28 94 12 14 ];
+        %tmp.193 = lgetv %today.26;
+        symbol [ today %tmp.193 94 17 22 ];
+        symbol [ day %tmp.194 94 23 26 ];
+        %tmp.194 = getv %tmp.193 :day;
+        %tmp.195 = as %tmp.194 Number;
+        symbol [ Number %tmp.195 94 30 36 ];
+        lputv %dd.28 %tmp.195;
+        symbol [ dd %dd.28 94 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 95 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %hr.29 = local;
+        symbol [ hr %hr.29 95 12 14 ];
+        %tmp.196 = lgetv %today.26;
+        symbol [ today %tmp.196 95 17 22 ];
+        symbol [ hour %tmp.197 95 23 27 ];
+        %tmp.197 = getv %tmp.196 :hour;
+        %tmp.198 = as %tmp.197 Number;
+        symbol [ Number %tmp.198 95 31 37 ];
+        lputv %hr.29 %tmp.198;
+        symbol [ hr %hr.29 95 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 96 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %mn.30 = local;
+        symbol [ mn %mn.30 96 12 14 ];
+        %tmp.199 = lgetv %today.26;
+        symbol [ today %tmp.199 96 17 22 ];
+        symbol [ min %tmp.200 96 23 26 ];
+        %tmp.200 = getv %tmp.199 :min;
+        %tmp.201 = as %tmp.200 Number;
+        symbol [ Number %tmp.201 96 30 36 ];
+        lputv %mn.30 %tmp.201;
+        symbol [ mn %mn.30 96 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 97 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %monthStr.31 = local;
+        symbol [ monthStr %monthStr.31 97 12 20 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_97_23_97_71_begin:
+        %tmp.202 = lgetv %mm.27;
+        symbol [ mm %tmp.202 97 24 26 ];
+        %tmp.203 = 10;
+        %tmp.204 = lt %tmp.202 %tmp.203;
+        bf %tmp.204 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_97_23_97_71_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_97_23_97_71_true:
+        %tmp.205 = "0";
+        %tmp.206 = lgetv %mm.27;
+        symbol [ mm %tmp.206 97 42 44 ];
+        symbol [ toString %tmp.207 97 45 53 ];
+        %tmp.207 = getv function %tmp.206 :toString;
+        %tmp.208 = invoke %tmp.206 %tmp.207();
+        %tmp.209 = add %tmp.205 %tmp.208;
+        push %tmp.209;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_97_23_97_71_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_97_23_97_71_else_false:
+        %tmp.210 = lgetv %mm.27;
+        symbol [ mm %tmp.210 97 59 61 ];
+        symbol [ toString %tmp.211 97 62 70 ];
+        %tmp.211 = getv function %tmp.210 :toString;
+        %tmp.212 = invoke %tmp.210 %tmp.211();
+        push %tmp.212;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_97_23_97_71_end:
+        %tmp.213 = phi [%tmp.204 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_97_23_97_71_begin] [%tmp.209 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_97_23_97_71_true] [%tmp.212 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_97_23_97_71_else_false] [%tmp.213 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_97_23_97_71_end];
+        lputv %monthStr.31 %tmp.213;
+        symbol [ monthStr %monthStr.31 97 12 20 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 98 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %dayStr.32 = local;
+        symbol [ dayStr %dayStr.32 98 12 18 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_98_23_98_71_begin:
+        %tmp.214 = lgetv %dd.28;
+        symbol [ dd %tmp.214 98 24 26 ];
+        %tmp.215 = 10;
+        %tmp.216 = lt %tmp.214 %tmp.215;
+        bf %tmp.216 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_98_23_98_71_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_98_23_98_71_true:
+        %tmp.217 = "0";
+        %tmp.218 = lgetv %dd.28;
+        symbol [ dd %tmp.218 98 42 44 ];
+        symbol [ toString %tmp.219 98 45 53 ];
+        %tmp.219 = getv function %tmp.218 :toString;
+        %tmp.220 = invoke %tmp.218 %tmp.219();
+        %tmp.221 = add %tmp.217 %tmp.220;
+        push %tmp.221;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_98_23_98_71_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_98_23_98_71_else_false:
+        %tmp.222 = lgetv %dd.28;
+        symbol [ dd %tmp.222 98 59 61 ];
+        symbol [ toString %tmp.223 98 62 70 ];
+        %tmp.223 = getv function %tmp.222 :toString;
+        %tmp.224 = invoke %tmp.222 %tmp.223();
+        push %tmp.224;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_98_23_98_71_end:
+        %tmp.225 = phi [%tmp.216 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_98_23_98_71_begin] [%tmp.221 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_98_23_98_71_true] [%tmp.224 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_98_23_98_71_else_false] [%tmp.225 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_98_23_98_71_end];
+        lputv %dayStr.32 %tmp.225;
+        symbol [ dayStr %dayStr.32 98 12 18 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 99 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %hrStr.33 = local;
+        symbol [ hrStr %hrStr.33 99 12 17 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_99_23_99_71_begin:
+        %tmp.226 = lgetv %hr.29;
+        symbol [ hr %tmp.226 99 24 26 ];
+        %tmp.227 = 10;
+        %tmp.228 = lt %tmp.226 %tmp.227;
+        bf %tmp.228 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_99_23_99_71_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_99_23_99_71_true:
+        %tmp.229 = "0";
+        %tmp.230 = lgetv %hr.29;
+        symbol [ hr %tmp.230 99 42 44 ];
+        symbol [ toString %tmp.231 99 45 53 ];
+        %tmp.231 = getv function %tmp.230 :toString;
+        %tmp.232 = invoke %tmp.230 %tmp.231();
+        %tmp.233 = add %tmp.229 %tmp.232;
+        push %tmp.233;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_99_23_99_71_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_99_23_99_71_else_false:
+        %tmp.234 = lgetv %hr.29;
+        symbol [ hr %tmp.234 99 59 61 ];
+        symbol [ toString %tmp.235 99 62 70 ];
+        %tmp.235 = getv function %tmp.234 :toString;
+        %tmp.236 = invoke %tmp.234 %tmp.235();
+        push %tmp.236;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_99_23_99_71_end:
+        %tmp.237 = phi [%tmp.228 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_99_23_99_71_begin] [%tmp.233 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_99_23_99_71_true] [%tmp.236 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_99_23_99_71_else_false] [%tmp.237 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_99_23_99_71_end];
+        lputv %hrStr.33 %tmp.237;
+        symbol [ hrStr %hrStr.33 99 12 17 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 100 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %mnStr.34 = local;
+        symbol [ mnStr %mnStr.34 100 12 17 ];
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_100_23_100_71_begin:
+        %tmp.238 = lgetv %mn.30;
+        symbol [ mn %tmp.238 100 24 26 ];
+        %tmp.239 = 10;
+        %tmp.240 = lt %tmp.238 %tmp.239;
+        bf %tmp.240 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_100_23_100_71_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_100_23_100_71_true:
+        %tmp.241 = "0";
+        %tmp.242 = lgetv %mn.30;
+        symbol [ mn %tmp.242 100 42 44 ];
+        symbol [ toString %tmp.243 100 45 53 ];
+        %tmp.243 = getv function %tmp.242 :toString;
+        %tmp.244 = invoke %tmp.242 %tmp.243();
+        %tmp.245 = add %tmp.241 %tmp.244;
+        push %tmp.245;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_100_23_100_71_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_100_23_100_71_else_false:
+        %tmp.246 = lgetv %mn.30;
+        symbol [ mn %tmp.246 100 59 61 ];
+        symbol [ toString %tmp.247 100 62 70 ];
+        %tmp.247 = getv function %tmp.246 :toString;
+        %tmp.248 = invoke %tmp.246 %tmp.247();
+        push %tmp.248;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_100_23_100_71_end:
+        %tmp.249 = phi [%tmp.240 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_100_23_100_71_begin] [%tmp.245 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_100_23_100_71_true] [%tmp.248 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_100_23_100_71_else_false] [%tmp.249 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_100_23_100_71_end];
+        lputv %mnStr.34 %tmp.249;
+        symbol [ mnStr %mnStr.34 100 12 17 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 101 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %dateStr.35 = local;
+        symbol [ dateStr %dateStr.35 101 12 19 ];
+        %tmp.250 = lgetv %dayStr.32;
+        symbol [ dayStr %tmp.250 101 23 29 ];
+        %tmp.251 = ".";
+        %tmp.252 = add %tmp.250 %tmp.251;
+        %tmp.253 = lgetv %monthStr.31;
+        symbol [ monthStr %tmp.253 101 38 46 ];
+        %tmp.254 = add %tmp.252 %tmp.253;
+        %tmp.255 = ".";
+        %tmp.256 = add %tmp.254 %tmp.255;
+        %tmp.257 = lgetv %today.26;
+        symbol [ today %tmp.257 101 55 60 ];
+        symbol [ year %tmp.258 101 61 65 ];
+        %tmp.258 = getv %tmp.257 :year;
+        symbol [ toString %tmp.259 101 66 74 ];
+        %tmp.259 = getv function %tmp.258 :toString;
+        %tmp.260 = invoke %tmp.258 %tmp.259();
+        %tmp.261 = add %tmp.256 %tmp.260;
+        lputv %dateStr.35 %tmp.261;
+        symbol [ dateStr %dateStr.35 101 12 19 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 102 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %timeStr.36 = local;
+        symbol [ timeStr %timeStr.36 102 12 19 ];
+        %tmp.262 = lgetv %hrStr.33;
+        symbol [ hrStr %tmp.262 102 23 28 ];
+        %tmp.263 = ":";
+        %tmp.264 = add %tmp.262 %tmp.263;
+        %tmp.265 = lgetv %mnStr.34;
+        symbol [ mnStr %tmp.265 102 37 42 ];
+        %tmp.266 = add %tmp.264 %tmp.265;
+        lputv %timeStr.36 %tmp.266;
+        symbol [ timeStr %timeStr.36 102 12 19 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 105 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %sc.37 = local;
+        symbol [ sc %sc.37 105 12 14 ];
+        %tmp.267 = lgetv %h.2;
+        symbol [ h %tmp.267 105 17 18 ];
+        lputv %sc.37 %tmp.267;
+        symbol [ sc %sc.37 105 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 108 8 ]
+        %tmp.268 = lgetv %dc;
+        symbol [ dc %tmp.268 108 8 10 ];
+        symbol [ setColor %tmp.269 108 11 19 ];
+        %tmp.269 = getv function %tmp.268 :setColor;
+        %tmp.270 = 0xFFAA00;
+        symbol [ Graphics %tmp.271 108 30 38 ];
+        %tmp.271 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.272 108 39 56 ];
+        %tmp.272 = getv %tmp.271 :COLOR_TRANSPARENT;
+        invoke %tmp.268 %tmp.269(%tmp.270, %tmp.272);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 109 8 ]
+        %tmp.273 = lgetv %dc;
+        symbol [ dc %tmp.273 109 8 10 ];
+        symbol [ drawText %tmp.274 109 11 19 ];
+        %tmp.274 = getv function %tmp.273 :drawText;
+        %tmp.275 = lgetv %cx.3;
+        symbol [ cx %tmp.275 109 20 22 ];
+        %tmp.276 = lgetv %sc.37;
+        symbol [ sc %tmp.276 109 24 26 ];
+        %tmp.277 = 14;
+        %tmp.278 = mul %tmp.276 %tmp.277;
+        %tmp.279 = 260;
+        %tmp.280 = div %tmp.278 %tmp.279;
+        symbol [ Graphics %tmp.281 109 39 47 ];
+        %tmp.281 = getm $.Toybox.Graphics;
+        symbol [ FONT_XTINY %tmp.282 109 48 58 ];
+        %tmp.282 = getv %tmp.281 :FONT_XTINY;
+        %tmp.283 = "Formula";
+        symbol [ Graphics %tmp.284 110 12 20 ];
+        %tmp.284 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_CENTER %tmp.285 110 21 40 ];
+        %tmp.285 = getv %tmp.284 :TEXT_JUSTIFY_CENTER;
+        symbol [ Graphics %tmp.286 110 43 51 ];
+        %tmp.286 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.287 110 52 72 ];
+        %tmp.287 = getv %tmp.286 :TEXT_JUSTIFY_VCENTER;
+        %tmp.288 = bitor %tmp.285 %tmp.287;
+        invoke %tmp.273 %tmp.274(%tmp.275, %tmp.280, %tmp.282, %tmp.283, %tmp.288);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 111 8 ]
+        %tmp.289 = lgetv %dc;
+        symbol [ dc %tmp.289 111 8 10 ];
+        symbol [ setColor %tmp.290 111 11 19 ];
+        %tmp.290 = getv function %tmp.289 :setColor;
+        %tmp.291 = 0x555555;
+        symbol [ Graphics %tmp.292 111 30 38 ];
+        %tmp.292 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.293 111 39 56 ];
+        %tmp.293 = getv %tmp.292 :COLOR_TRANSPARENT;
+        invoke %tmp.289 %tmp.290(%tmp.291, %tmp.293);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 112 8 ]
+        %tmp.294 = lgetv %dc;
+        symbol [ dc %tmp.294 112 8 10 ];
+        symbol [ drawText %tmp.295 112 11 19 ];
+        %tmp.295 = getv function %tmp.294 :drawText;
+        %tmp.296 = lgetv %cx.3;
+        symbol [ cx %tmp.296 112 20 22 ];
+        %tmp.297 = lgetv %sc.37;
+        symbol [ sc %tmp.297 112 24 26 ];
+        %tmp.298 = 32;
+        %tmp.299 = mul %tmp.297 %tmp.298;
+        %tmp.300 = 260;
+        %tmp.301 = div %tmp.299 %tmp.300;
+        symbol [ Graphics %tmp.302 112 39 47 ];
+        %tmp.302 = getm $.Toybox.Graphics;
+        symbol [ FONT_XTINY %tmp.303 112 48 58 ];
+        %tmp.303 = getv %tmp.302 :FONT_XTINY;
+        %tmp.304 = lgetv %dateStr.35;
+        symbol [ dateStr %tmp.304 112 60 67 ];
+        symbol [ Graphics %tmp.305 113 12 20 ];
+        %tmp.305 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_CENTER %tmp.306 113 21 40 ];
+        %tmp.306 = getv %tmp.305 :TEXT_JUSTIFY_CENTER;
+        symbol [ Graphics %tmp.307 113 43 51 ];
+        %tmp.307 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.308 113 52 72 ];
+        %tmp.308 = getv %tmp.307 :TEXT_JUSTIFY_VCENTER;
+        %tmp.309 = bitor %tmp.306 %tmp.308;
+        invoke %tmp.294 %tmp.295(%tmp.296, %tmp.301, %tmp.303, %tmp.304, %tmp.309);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 114 8 ]
+        %tmp.310 = lgetv %dc;
+        symbol [ dc %tmp.310 114 8 10 ];
+        symbol [ setColor %tmp.311 114 11 19 ];
+        %tmp.311 = getv function %tmp.310 :setColor;
+        %tmp.312 = 0x333333;
+        symbol [ Graphics %tmp.313 114 30 38 ];
+        %tmp.313 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.314 114 39 56 ];
+        %tmp.314 = getv %tmp.313 :COLOR_TRANSPARENT;
+        invoke %tmp.310 %tmp.311(%tmp.312, %tmp.314);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 115 8 ]
+        %tmp.315 = lgetv %dc;
+        symbol [ dc %tmp.315 115 8 10 ];
+        symbol [ drawLine %tmp.316 115 11 19 ];
+        %tmp.316 = getv function %tmp.315 :drawLine;
+        %tmp.317 = lgetv %cx.3;
+        symbol [ cx %tmp.317 115 20 22 ];
+        %tmp.318 = 60;
+        %tmp.319 = sub %tmp.317 %tmp.318;
+        %tmp.320 = lgetv %sc.37;
+        symbol [ sc %tmp.320 115 29 31 ];
+        %tmp.321 = 44;
+        %tmp.322 = mul %tmp.320 %tmp.321;
+        %tmp.323 = 260;
+        %tmp.324 = div %tmp.322 %tmp.323;
+        %tmp.325 = lgetv %cx.3;
+        symbol [ cx %tmp.325 115 44 46 ];
+        %tmp.326 = 60;
+        %tmp.327 = add %tmp.325 %tmp.326;
+        %tmp.328 = lgetv %sc.37;
+        symbol [ sc %tmp.328 115 53 55 ];
+        %tmp.329 = 44;
+        %tmp.330 = mul %tmp.328 %tmp.329;
+        %tmp.331 = 260;
+        %tmp.332 = div %tmp.330 %tmp.331;
+        invoke %tmp.315 %tmp.316(%tmp.319, %tmp.324, %tmp.327, %tmp.332);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 118 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %jL.38 = local;
+        symbol [ jL %jL.38 118 12 14 ];
+        symbol [ Graphics %tmp.333 118 17 25 ];
+        %tmp.333 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_RIGHT %tmp.334 118 26 44 ];
+        %tmp.334 = getv %tmp.333 :TEXT_JUSTIFY_RIGHT;
+        symbol [ Graphics %tmp.335 118 47 55 ];
+        %tmp.335 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.336 118 56 76 ];
+        %tmp.336 = getv %tmp.335 :TEXT_JUSTIFY_VCENTER;
+        %tmp.337 = bitor %tmp.334 %tmp.336;
+        lputv %jL.38 %tmp.337;
+        symbol [ jL %jL.38 118 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 119 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %jR.39 = local;
+        symbol [ jR %jR.39 119 12 14 ];
+        symbol [ Graphics %tmp.338 119 17 25 ];
+        %tmp.338 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_LEFT %tmp.339 119 26 43 ];
+        %tmp.339 = getv %tmp.338 :TEXT_JUSTIFY_LEFT;
+        symbol [ Graphics %tmp.340 119 47 55 ];
+        %tmp.340 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.341 119 56 76 ];
+        %tmp.341 = getv %tmp.340 :TEXT_JUSTIFY_VCENTER;
+        %tmp.342 = bitor %tmp.339 %tmp.341;
+        lputv %jR.39 %tmp.342;
+        symbol [ jR %jR.39 119 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 120 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %col1x.40 = local;
+        symbol [ col1x %col1x.40 120 12 17 ];
+        %tmp.343 = lgetv %cx.3;
+        symbol [ cx %tmp.343 120 20 22 ];
+        %tmp.344 = 8;
+        %tmp.345 = sub %tmp.343 %tmp.344;
+        lputv %col1x.40 %tmp.345;
+        symbol [ col1x %col1x.40 120 12 17 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 121 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %col2x.41 = local;
+        symbol [ col2x %col2x.41 121 12 17 ];
+        %tmp.346 = lgetv %cx.3;
+        symbol [ cx %tmp.346 121 20 22 ];
+        %tmp.347 = 8;
+        %tmp.348 = add %tmp.346 %tmp.347;
+        lputv %col2x.41 %tmp.348;
+        symbol [ col2x %col2x.41 121 12 17 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 122 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %row1y.42 = local;
+        symbol [ row1y %row1y.42 122 12 17 ];
+        %tmp.349 = lgetv %sc.37;
+        symbol [ sc %tmp.349 122 20 22 ];
+        %tmp.350 = 60;
+        %tmp.351 = mul %tmp.349 %tmp.350;
+        %tmp.352 = 260;
+        %tmp.353 = div %tmp.351 %tmp.352;
+        %tmp.354 = lgetv %s.4;
+        symbol [ s %tmp.354 122 37 38 ];
+        %tmp.355 = sub %tmp.353 %tmp.354;
+        lputv %row1y.42 %tmp.355;
+        symbol [ row1y %row1y.42 122 12 17 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 123 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %row2y.43 = local;
+        symbol [ row2y %row2y.43 123 12 17 ];
+        %tmp.356 = lgetv %sc.37;
+        symbol [ sc %tmp.356 123 20 22 ];
+        %tmp.357 = 84;
+        %tmp.358 = mul %tmp.356 %tmp.357;
+        %tmp.359 = 260;
+        %tmp.360 = div %tmp.358 %tmp.359;
+        %tmp.361 = lgetv %s.4;
+        symbol [ s %tmp.361 123 37 38 ];
+        %tmp.362 = sub %tmp.360 %tmp.361;
+        lputv %row2y.43 %tmp.362;
+        symbol [ row2y %row2y.43 123 12 17 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 124 8 ]
+        %tmp.363 = lgetv %dc;
+        symbol [ dc %tmp.363 124 8 10 ];
+        symbol [ setColor %tmp.364 124 11 19 ];
+        %tmp.364 = getv function %tmp.363 :setColor;
+        %tmp.365 = 0xE0E0E0;
+        symbol [ Graphics %tmp.366 124 30 38 ];
+        %tmp.366 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.367 124 39 56 ];
+        %tmp.367 = getv %tmp.366 :COLOR_TRANSPARENT;
+        invoke %tmp.363 %tmp.364(%tmp.365, %tmp.367);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 125 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_8_128_8_if_stmt:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_12_125_49_begin:
+        %tmp.368 = lgetv %row1y.42;
+        symbol [ row1y %tmp.368 125 12 17 ];
+        %tmp.369 = lgetv %sc.37;
+        symbol [ sc %tmp.369 125 20 22 ];
+        %tmp.370 = 44;
+        %tmp.371 = mul %tmp.369 %tmp.370;
+        %tmp.372 = 260;
+        %tmp.373 = div %tmp.371 %tmp.372;
+        %tmp.374 = gt %tmp.368 %tmp.373;
+        bf %tmp.374 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_8_128_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_37_125_49_true:
+        %tmp.375 = lgetv %row1y.42;
+        symbol [ row1y %tmp.375 125 37 42 ];
+        %tmp.376 = lgetv %h.2;
+        symbol [ h %tmp.376 125 45 46 ];
+        %tmp.377 = 10;
+        %tmp.378 = sub %tmp.376 %tmp.377;
+        %tmp.379 = lt %tmp.375 %tmp.378;
+        push %tmp.379;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_37_125_49_end:
+        %tmp.380 = phi [%tmp.374 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_12_125_49_begin] [%tmp.379 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_37_125_49_true] [%tmp.380 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_37_125_49_end];
+        bf %tmp.380 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_8_128_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_8_128_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_53_128_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 126 12 ]
+        %tmp.381 = lgetv %dc;
+        symbol [ dc %tmp.381 126 12 14 ];
+        symbol [ drawText %tmp.382 126 15 23 ];
+        %tmp.382 = getv function %tmp.381 :drawText;
+        %tmp.383 = lgetv %col1x.40;
+        symbol [ col1x %tmp.383 126 24 29 ];
+        %tmp.384 = lgetv %row1y.42;
+        symbol [ row1y %tmp.384 126 31 36 ];
+        symbol [ Graphics %tmp.385 126 38 46 ];
+        %tmp.385 = getm $.Toybox.Graphics;
+        symbol [ FONT_XTINY %tmp.386 126 47 57 ];
+        %tmp.386 = getv %tmp.385 :FONT_XTINY;
+        %tmp.387 = "Wt: ";
+        %tmp.388 = lgetv %weightKg.5;
+        symbol [ weightKg %tmp.388 126 68 76 ];
+        symbol [ format %tmp.389 126 77 83 ];
+        %tmp.389 = getv function %tmp.388 :format;
+        %tmp.390 = "%.1f";
+        %tmp.391 = invoke %tmp.388 %tmp.389(%tmp.390);
+        %tmp.392 = add %tmp.387 %tmp.391;
+        %tmp.393 = " kg";
+        %tmp.394 = add %tmp.392 %tmp.393;
+        %tmp.395 = lgetv %jL.38;
+        symbol [ jL %tmp.395 126 101 103 ];
+        invoke %tmp.381 %tmp.382(%tmp.383, %tmp.384, %tmp.386, %tmp.394, %tmp.395);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 127 12 ]
+        %tmp.396 = lgetv %dc;
+        symbol [ dc %tmp.396 127 12 14 ];
+        symbol [ drawText %tmp.397 127 15 23 ];
+        %tmp.397 = getv function %tmp.396 :drawText;
+        %tmp.398 = lgetv %col2x.41;
+        symbol [ col2x %tmp.398 127 24 29 ];
+        %tmp.399 = lgetv %row1y.42;
+        symbol [ row1y %tmp.399 127 31 36 ];
+        symbol [ Graphics %tmp.400 127 38 46 ];
+        %tmp.400 = getm $.Toybox.Graphics;
+        symbol [ FONT_XTINY %tmp.401 127 47 57 ];
+        %tmp.401 = getv %tmp.400 :FONT_XTINY;
+        %tmp.402 = "Ht: ";
+        %tmp.403 = lgetv %heightStr.9;
+        symbol [ heightStr %tmp.403 127 68 77 ];
+        %tmp.404 = add %tmp.402 %tmp.403;
+        %tmp.405 = lgetv %jR.39;
+        symbol [ jR %tmp.405 127 79 81 ];
+        invoke %tmp.396 %tmp.397(%tmp.398, %tmp.399, %tmp.401, %tmp.404, %tmp.405);
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_53_128_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_8_128_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_125_8_128_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 129 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_8_132_8_if_stmt:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_12_129_49_begin:
+        %tmp.406 = lgetv %row2y.43;
+        symbol [ row2y %tmp.406 129 12 17 ];
+        %tmp.407 = lgetv %sc.37;
+        symbol [ sc %tmp.407 129 20 22 ];
+        %tmp.408 = 44;
+        %tmp.409 = mul %tmp.407 %tmp.408;
+        %tmp.410 = 260;
+        %tmp.411 = div %tmp.409 %tmp.410;
+        %tmp.412 = gt %tmp.406 %tmp.411;
+        bf %tmp.412 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_8_132_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_37_129_49_true:
+        %tmp.413 = lgetv %row2y.43;
+        symbol [ row2y %tmp.413 129 37 42 ];
+        %tmp.414 = lgetv %h.2;
+        symbol [ h %tmp.414 129 45 46 ];
+        %tmp.415 = 10;
+        %tmp.416 = sub %tmp.414 %tmp.415;
+        %tmp.417 = lt %tmp.413 %tmp.416;
+        push %tmp.417;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_37_129_49_end:
+        %tmp.418 = phi [%tmp.412 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_12_129_49_begin] [%tmp.417 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_37_129_49_true] [%tmp.418 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_37_129_49_end];
+        bf %tmp.418 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_8_132_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_8_132_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_53_132_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 130 12 ]
+        %tmp.419 = lgetv %dc;
+        symbol [ dc %tmp.419 130 12 14 ];
+        symbol [ drawText %tmp.420 130 15 23 ];
+        %tmp.420 = getv function %tmp.419 :drawText;
+        %tmp.421 = lgetv %col1x.40;
+        symbol [ col1x %tmp.421 130 24 29 ];
+        %tmp.422 = lgetv %row2y.43;
+        symbol [ row2y %tmp.422 130 31 36 ];
+        symbol [ Graphics %tmp.423 130 38 46 ];
+        %tmp.423 = getm $.Toybox.Graphics;
+        symbol [ FONT_XTINY %tmp.424 130 47 57 ];
+        %tmp.424 = getv %tmp.423 :FONT_XTINY;
+        %tmp.425 = "Age: ";
+        %tmp.426 = lgetv %ageStr.8;
+        symbol [ ageStr %tmp.426 130 69 75 ];
+        %tmp.427 = add %tmp.425 %tmp.426;
+        %tmp.428 = lgetv %jL.38;
+        symbol [ jL %tmp.428 130 77 79 ];
+        invoke %tmp.419 %tmp.420(%tmp.421, %tmp.422, %tmp.424, %tmp.427, %tmp.428);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 131 12 ]
+        %tmp.429 = lgetv %dc;
+        symbol [ dc %tmp.429 131 12 14 ];
+        symbol [ drawText %tmp.430 131 15 23 ];
+        %tmp.430 = getv function %tmp.429 :drawText;
+        %tmp.431 = lgetv %col2x.41;
+        symbol [ col2x %tmp.431 131 24 29 ];
+        %tmp.432 = lgetv %row2y.43;
+        symbol [ row2y %tmp.432 131 31 36 ];
+        symbol [ Graphics %tmp.433 131 38 46 ];
+        %tmp.433 = getm $.Toybox.Graphics;
+        symbol [ FONT_XTINY %tmp.434 131 47 57 ];
+        %tmp.434 = getv %tmp.433 :FONT_XTINY;
+        %tmp.435 = "Sex: ";
+        %tmp.436 = lgetv %genderLbl.25;
+        symbol [ genderLbl %tmp.436 131 69 78 ];
+        %tmp.437 = add %tmp.435 %tmp.436;
+        %tmp.438 = lgetv %jR.39;
+        symbol [ jR %tmp.438 131 80 82 ];
+        invoke %tmp.429 %tmp.430(%tmp.431, %tmp.432, %tmp.434, %tmp.437, %tmp.438);
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_53_132_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_8_132_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_129_8_132_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 133 8 ]
+        %tmp.439 = self;
+        symbol [ _drawLine %tmp.440 133 8 17 ];
+        %tmp.440 = getv function %tmp.439 :_drawLine;
+        %tmp.441 = lgetv %dc;
+        symbol [ dc %tmp.441 133 18 20 ];
+        %tmp.442 = lgetv %cx.3;
+        symbol [ cx %tmp.442 133 22 24 ];
+        %tmp.443 = lgetv %sc.37;
+        symbol [ sc %tmp.443 133 26 28 ];
+        %tmp.444 = 110;
+        %tmp.445 = mul %tmp.443 %tmp.444;
+        %tmp.446 = 260;
+        %tmp.447 = div %tmp.445 %tmp.446;
+        %tmp.448 = lgetv %s.4;
+        symbol [ s %tmp.448 133 43 44 ];
+        %tmp.449 = sub %tmp.447 %tmp.448;
+        %tmp.450 = 0xE0E0E0;
+        %tmp.451 = "ActivityScore = ";
+        %tmp.452 = lgetv %mod.16;
+        symbol [ mod %tmp.452 134 33 36 ];
+        symbol [ toString %tmp.453 134 37 45 ];
+        %tmp.453 = getv function %tmp.452 :toString;
+        %tmp.454 = invoke %tmp.452 %tmp.453();
+        %tmp.455 = add %tmp.451 %tmp.454;
+        %tmp.456 = " mod + ";
+        %tmp.457 = add %tmp.455 %tmp.456;
+        %tmp.458 = lgetv %vig.17;
+        symbol [ vig %tmp.458 134 62 65 ];
+        symbol [ toString %tmp.459 134 66 74 ];
+        %tmp.459 = getv function %tmp.458 :toString;
+        %tmp.460 = invoke %tmp.458 %tmp.459();
+        %tmp.461 = add %tmp.457 %tmp.460;
+        %tmp.462 = " vig";
+        %tmp.463 = add %tmp.461 %tmp.462;
+        %tmp.464 = lgetv %h.2;
+        symbol [ h %tmp.464 134 87 88 ];
+        invoke %tmp.439 %tmp.440(%tmp.441, %tmp.442, %tmp.449, %tmp.450, %tmp.463, %tmp.464);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 135 8 ]
+        %tmp.465 = self;
+        symbol [ _drawLine %tmp.466 135 8 17 ];
+        %tmp.466 = getv function %tmp.465 :_drawLine;
+        %tmp.467 = lgetv %dc;
+        symbol [ dc %tmp.467 135 18 20 ];
+        %tmp.468 = lgetv %cx.3;
+        symbol [ cx %tmp.468 135 22 24 ];
+        %tmp.469 = lgetv %sc.37;
+        symbol [ sc %tmp.469 135 26 28 ];
+        %tmp.470 = 126;
+        %tmp.471 = mul %tmp.469 %tmp.470;
+        %tmp.472 = 260;
+        %tmp.473 = div %tmp.471 %tmp.472;
+        %tmp.474 = lgetv %s.4;
+        symbol [ s %tmp.474 135 43 44 ];
+        %tmp.475 = sub %tmp.473 %tmp.474;
+        %tmp.476 = 0x546E7A;
+        %tmp.477 = "moderate + vigorous \u00D72";
+        %tmp.478 = lgetv %h.2;
+        symbol [ h %tmp.478 135 87 88 ];
+        invoke %tmp.465 %tmp.466(%tmp.467, %tmp.468, %tmp.475, %tmp.476, %tmp.477, %tmp.478);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 138 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %dv.44 = local;
+        symbol [ dv %dv.44 138 12 14 ];
+        %tmp.479 = lgetv %sc.37;
+        symbol [ sc %tmp.479 138 17 19 ];
+        %tmp.480 = 142;
+        %tmp.481 = mul %tmp.479 %tmp.480;
+        %tmp.482 = 260;
+        %tmp.483 = div %tmp.481 %tmp.482;
+        %tmp.484 = lgetv %s.4;
+        symbol [ s %tmp.484 138 34 35 ];
+        %tmp.485 = sub %tmp.483 %tmp.484;
+        lputv %dv.44 %tmp.485;
+        symbol [ dv %dv.44 138 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 139 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_8_142_8_if_stmt:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_12_139_43_begin:
+        %tmp.486 = lgetv %dv.44;
+        symbol [ dv %tmp.486 139 12 14 ];
+        %tmp.487 = lgetv %sc.37;
+        symbol [ sc %tmp.487 139 17 19 ];
+        %tmp.488 = 44;
+        %tmp.489 = mul %tmp.487 %tmp.488;
+        %tmp.490 = 260;
+        %tmp.491 = div %tmp.489 %tmp.490;
+        %tmp.492 = gt %tmp.486 %tmp.491;
+        bf %tmp.492 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_8_142_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_34_139_43_true:
+        %tmp.493 = lgetv %dv.44;
+        symbol [ dv %tmp.493 139 34 36 ];
+        %tmp.494 = lgetv %h.2;
+        symbol [ h %tmp.494 139 39 40 ];
+        %tmp.495 = 10;
+        %tmp.496 = sub %tmp.494 %tmp.495;
+        %tmp.497 = lt %tmp.493 %tmp.496;
+        push %tmp.497;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_34_139_43_end:
+        %tmp.498 = phi [%tmp.492 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_12_139_43_begin] [%tmp.497 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_34_139_43_true] [%tmp.498 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_34_139_43_end];
+        bf %tmp.498 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_8_142_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_8_142_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_47_142_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 140 12 ]
+        %tmp.499 = lgetv %dc;
+        symbol [ dc %tmp.499 140 12 14 ];
+        symbol [ setColor %tmp.500 140 15 23 ];
+        %tmp.500 = getv function %tmp.499 :setColor;
+        %tmp.501 = 0x333333;
+        symbol [ Graphics %tmp.502 140 34 42 ];
+        %tmp.502 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.503 140 43 60 ];
+        %tmp.503 = getv %tmp.502 :COLOR_TRANSPARENT;
+        invoke %tmp.499 %tmp.500(%tmp.501, %tmp.503);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 141 12 ]
+        %tmp.504 = lgetv %dc;
+        symbol [ dc %tmp.504 141 12 14 ];
+        symbol [ drawLine %tmp.505 141 15 23 ];
+        %tmp.505 = getv function %tmp.504 :drawLine;
+        %tmp.506 = lgetv %cx.3;
+        symbol [ cx %tmp.506 141 24 26 ];
+        %tmp.507 = 55;
+        %tmp.508 = sub %tmp.506 %tmp.507;
+        %tmp.509 = lgetv %dv.44;
+        symbol [ dv %tmp.509 141 33 35 ];
+        %tmp.510 = lgetv %cx.3;
+        symbol [ cx %tmp.510 141 37 39 ];
+        %tmp.511 = 55;
+        %tmp.512 = add %tmp.510 %tmp.511;
+        %tmp.513 = lgetv %dv.44;
+        symbol [ dv %tmp.513 141 46 48 ];
+        invoke %tmp.504 %tmp.505(%tmp.508, %tmp.509, %tmp.512, %tmp.513);
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_47_142_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_8_142_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_139_8_142_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 145 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %goalLine.45 = local;
+        symbol [ goalLine %goalLine.45 145 12 20 ];
+        %tmp.514 = "GOAL = ";
+        %tmp.515 = lgetv %weightKg.5;
+        symbol [ weightKg %tmp.515 145 35 43 ];
+        symbol [ format %tmp.516 145 44 50 ];
+        %tmp.516 = getv function %tmp.515 :format;
+        %tmp.517 = "%.1f";
+        %tmp.518 = invoke %tmp.515 %tmp.516(%tmp.517);
+        %tmp.519 = add %tmp.514 %tmp.518;
+        %tmp.520 = "x33+";
+        %tmp.521 = add %tmp.519 %tmp.520;
+        %tmp.522 = lgetv %genderBonus.21;
+        symbol [ genderBonus %tmp.522 146 23 34 ];
+        symbol [ toString %tmp.523 146 35 43 ];
+        %tmp.523 = getv function %tmp.522 :toString;
+        %tmp.524 = invoke %tmp.522 %tmp.523();
+        %tmp.525 = add %tmp.521 %tmp.524;
+        %tmp.526 = " = ";
+        %tmp.527 = add %tmp.525 %tmp.526;
+        %tmp.528 = lgetv %baseGoal.24;
+        symbol [ baseGoal %tmp.528 146 56 64 ];
+        symbol [ toString %tmp.529 146 65 73 ];
+        %tmp.529 = getv function %tmp.528 :toString;
+        %tmp.530 = invoke %tmp.528 %tmp.529();
+        %tmp.531 = add %tmp.527 %tmp.530;
+        lputv %goalLine.45 %tmp.531;
+        symbol [ goalLine %goalLine.45 145 12 20 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 147 8 ]
+        %tmp.532 = self;
+        symbol [ _drawLine %tmp.533 147 8 17 ];
+        %tmp.533 = getv function %tmp.532 :_drawLine;
+        %tmp.534 = lgetv %dc;
+        symbol [ dc %tmp.534 147 18 20 ];
+        %tmp.535 = lgetv %cx.3;
+        symbol [ cx %tmp.535 147 22 24 ];
+        %tmp.536 = lgetv %sc.37;
+        symbol [ sc %tmp.536 147 26 28 ];
+        %tmp.537 = 162;
+        %tmp.538 = mul %tmp.536 %tmp.537;
+        %tmp.539 = 260;
+        %tmp.540 = div %tmp.538 %tmp.539;
+        %tmp.541 = lgetv %s.4;
+        symbol [ s %tmp.541 147 43 44 ];
+        %tmp.542 = sub %tmp.540 %tmp.541;
+        %tmp.543 = 0xFFB300;
+        %tmp.544 = lgetv %goalLine.45;
+        symbol [ goalLine %tmp.544 147 56 64 ];
+        %tmp.545 = lgetv %h.2;
+        symbol [ h %tmp.545 147 66 67 ];
+        invoke %tmp.532 %tmp.533(%tmp.534, %tmp.535, %tmp.542, %tmp.543, %tmp.544, %tmp.545);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 148 8 ]
+        %tmp.546 = self;
+        symbol [ _drawLine %tmp.547 148 8 17 ];
+        %tmp.547 = getv function %tmp.546 :_drawLine;
+        %tmp.548 = lgetv %dc;
+        symbol [ dc %tmp.548 148 18 20 ];
+        %tmp.549 = lgetv %cx.3;
+        symbol [ cx %tmp.549 148 22 24 ];
+        %tmp.550 = lgetv %sc.37;
+        symbol [ sc %tmp.550 148 26 28 ];
+        %tmp.551 = 178;
+        %tmp.552 = mul %tmp.550 %tmp.551;
+        %tmp.553 = 260;
+        %tmp.554 = div %tmp.552 %tmp.553;
+        %tmp.555 = lgetv %s.4;
+        symbol [ s %tmp.555 148 43 44 ];
+        %tmp.556 = sub %tmp.554 %tmp.555;
+        %tmp.557 = 0x546E7A;
+        %tmp.558 = "base daily norm";
+        %tmp.559 = lgetv %h.2;
+        symbol [ h %tmp.559 148 75 76 ];
+        invoke %tmp.546 %tmp.547(%tmp.548, %tmp.549, %tmp.556, %tmp.557, %tmp.558, %tmp.559);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 150 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %recLine.46 = local;
+        symbol [ recLine %recLine.46 150 12 19 ];
+        %tmp.560 = "REC = ";
+        %tmp.561 = lgetv %baseGoal.24;
+        symbol [ baseGoal %tmp.561 150 33 41 ];
+        symbol [ toString %tmp.562 150 42 50 ];
+        %tmp.562 = getv function %tmp.561 :toString;
+        %tmp.563 = invoke %tmp.561 %tmp.562();
+        %tmp.564 = add %tmp.560 %tmp.563;
+        %tmp.565 = "+";
+        %tmp.566 = add %tmp.564 %tmp.565;
+        %tmp.567 = lgetv %actBonus.22;
+        symbol [ actBonus %tmp.567 151 22 30 ];
+        symbol [ toString %tmp.568 151 31 39 ];
+        %tmp.568 = getv function %tmp.567 :toString;
+        %tmp.569 = invoke %tmp.567 %tmp.568();
+        %tmp.570 = add %tmp.566 %tmp.569;
+        %tmp.571 = " = ";
+        %tmp.572 = add %tmp.570 %tmp.571;
+        %tmp.573 = lgetv %recVal.23;
+        symbol [ recVal %tmp.573 151 52 58 ];
+        symbol [ toString %tmp.574 151 59 67 ];
+        %tmp.574 = getv function %tmp.573 :toString;
+        %tmp.575 = invoke %tmp.573 %tmp.574();
+        %tmp.576 = add %tmp.572 %tmp.575;
+        lputv %recLine.46 %tmp.576;
+        symbol [ recLine %recLine.46 150 12 19 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 152 8 ]
+        %tmp.577 = self;
+        symbol [ _drawLine %tmp.578 152 8 17 ];
+        %tmp.578 = getv function %tmp.577 :_drawLine;
+        %tmp.579 = lgetv %dc;
+        symbol [ dc %tmp.579 152 18 20 ];
+        %tmp.580 = lgetv %cx.3;
+        symbol [ cx %tmp.580 152 22 24 ];
+        %tmp.581 = lgetv %sc.37;
+        symbol [ sc %tmp.581 152 26 28 ];
+        %tmp.582 = 204;
+        %tmp.583 = mul %tmp.581 %tmp.582;
+        %tmp.584 = 260;
+        %tmp.585 = div %tmp.583 %tmp.584;
+        %tmp.586 = lgetv %s.4;
+        symbol [ s %tmp.586 152 43 44 ];
+        %tmp.587 = sub %tmp.585 %tmp.586;
+        %tmp.588 = 0x29B6F6;
+        %tmp.589 = lgetv %recLine.46;
+        symbol [ recLine %tmp.589 152 56 63 ];
+        %tmp.590 = lgetv %h.2;
+        symbol [ h %tmp.590 152 65 66 ];
+        invoke %tmp.577 %tmp.578(%tmp.579, %tmp.580, %tmp.587, %tmp.588, %tmp.589, %tmp.590);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 153 8 ]
+        %tmp.591 = self;
+        symbol [ _drawLine %tmp.592 153 8 17 ];
+        %tmp.592 = getv function %tmp.591 :_drawLine;
+        %tmp.593 = lgetv %dc;
+        symbol [ dc %tmp.593 153 18 20 ];
+        %tmp.594 = lgetv %cx.3;
+        symbol [ cx %tmp.594 153 22 24 ];
+        %tmp.595 = lgetv %sc.37;
+        symbol [ sc %tmp.595 153 26 28 ];
+        %tmp.596 = 220;
+        %tmp.597 = mul %tmp.595 %tmp.596;
+        %tmp.598 = 260;
+        %tmp.599 = div %tmp.597 %tmp.598;
+        %tmp.600 = lgetv %s.4;
+        symbol [ s %tmp.600 153 43 44 ];
+        %tmp.601 = sub %tmp.599 %tmp.600;
+        %tmp.602 = 0x546E7A;
+        %tmp.603 = "base + ActivityScore";
+        %tmp.604 = lgetv %h.2;
+        symbol [ h %tmp.604 153 80 81 ];
+        invoke %tmp.591 %tmp.592(%tmp.593, %tmp.594, %tmp.601, %tmp.602, %tmp.603, %tmp.604);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 156 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %dv2.47 = local;
+        symbol [ dv2 %dv2.47 156 12 15 ];
+        %tmp.605 = lgetv %sc.37;
+        symbol [ sc %tmp.605 156 18 20 ];
+        %tmp.606 = 236;
+        %tmp.607 = mul %tmp.605 %tmp.606;
+        %tmp.608 = 260;
+        %tmp.609 = div %tmp.607 %tmp.608;
+        %tmp.610 = lgetv %s.4;
+        symbol [ s %tmp.610 156 35 36 ];
+        %tmp.611 = sub %tmp.609 %tmp.610;
+        lputv %dv2.47 %tmp.611;
+        symbol [ dv2 %dv2.47 156 12 15 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 157 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_8_160_8_if_stmt:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_12_157_45_begin:
+        %tmp.612 = lgetv %dv2.47;
+        symbol [ dv2 %tmp.612 157 12 15 ];
+        %tmp.613 = lgetv %sc.37;
+        symbol [ sc %tmp.613 157 18 20 ];
+        %tmp.614 = 44;
+        %tmp.615 = mul %tmp.613 %tmp.614;
+        %tmp.616 = 260;
+        %tmp.617 = div %tmp.615 %tmp.616;
+        %tmp.618 = gt %tmp.612 %tmp.617;
+        bf %tmp.618 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_8_160_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_35_157_45_true:
+        %tmp.619 = lgetv %dv2.47;
+        symbol [ dv2 %tmp.619 157 35 38 ];
+        %tmp.620 = lgetv %h.2;
+        symbol [ h %tmp.620 157 41 42 ];
+        %tmp.621 = 10;
+        %tmp.622 = sub %tmp.620 %tmp.621;
+        %tmp.623 = lt %tmp.619 %tmp.622;
+        push %tmp.623;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_35_157_45_end:
+        %tmp.624 = phi [%tmp.618 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_12_157_45_begin] [%tmp.623 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_35_157_45_true] [%tmp.624 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_35_157_45_end];
+        bf %tmp.624 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_8_160_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_8_160_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_49_160_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 158 12 ]
+        %tmp.625 = lgetv %dc;
+        symbol [ dc %tmp.625 158 12 14 ];
+        symbol [ setColor %tmp.626 158 15 23 ];
+        %tmp.626 = getv function %tmp.625 :setColor;
+        %tmp.627 = 0x2A2A2A;
+        symbol [ Graphics %tmp.628 158 34 42 ];
+        %tmp.628 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.629 158 43 60 ];
+        %tmp.629 = getv %tmp.628 :COLOR_TRANSPARENT;
+        invoke %tmp.625 %tmp.626(%tmp.627, %tmp.629);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 159 12 ]
+        %tmp.630 = lgetv %dc;
+        symbol [ dc %tmp.630 159 12 14 ];
+        symbol [ drawLine %tmp.631 159 15 23 ];
+        %tmp.631 = getv function %tmp.630 :drawLine;
+        %tmp.632 = lgetv %cx.3;
+        symbol [ cx %tmp.632 159 24 26 ];
+        %tmp.633 = 55;
+        %tmp.634 = sub %tmp.632 %tmp.633;
+        %tmp.635 = lgetv %dv2.47;
+        symbol [ dv2 %tmp.635 159 33 36 ];
+        %tmp.636 = lgetv %cx.3;
+        symbol [ cx %tmp.636 159 38 40 ];
+        %tmp.637 = 55;
+        %tmp.638 = add %tmp.636 %tmp.637;
+        %tmp.639 = lgetv %dv2.47;
+        symbol [ dv2 %tmp.639 159 47 50 ];
+        invoke %tmp.630 %tmp.631(%tmp.634, %tmp.635, %tmp.638, %tmp.639);
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_49_160_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_8_160_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_157_8_160_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 161 8 ]
+        %tmp.640 = self;
+        symbol [ _drawLine %tmp.641 161 8 17 ];
+        %tmp.641 = getv function %tmp.640 :_drawLine;
+        %tmp.642 = lgetv %dc;
+        symbol [ dc %tmp.642 161 18 20 ];
+        %tmp.643 = lgetv %cx.3;
+        symbol [ cx %tmp.643 161 22 24 ];
+        %tmp.644 = lgetv %sc.37;
+        symbol [ sc %tmp.644 161 26 28 ];
+        %tmp.645 = 248;
+        %tmp.646 = mul %tmp.644 %tmp.645;
+        %tmp.647 = 260;
+        %tmp.648 = div %tmp.646 %tmp.647;
+        %tmp.649 = lgetv %s.4;
+        symbol [ s %tmp.649 161 43 44 ];
+        %tmp.650 = sub %tmp.648 %tmp.649;
+        %tmp.651 = 0x3A3A3A;
+        %tmp.652 = "Activity updated ";
+        %tmp.653 = lgetv %timeStr.36;
+        symbol [ timeStr %tmp.653 161 78 85 ];
+        %tmp.654 = add %tmp.652 %tmp.653;
+        %tmp.655 = lgetv %h.2;
+        symbol [ h %tmp.655 161 87 88 ];
+        invoke %tmp.640 %tmp.641(%tmp.642, %tmp.643, %tmp.650, %tmp.651, %tmp.654, %tmp.655);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 164 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %cmpStat.48 = local;
+        symbol [ cmpStat %cmpStat.48 164 12 19 ];
+        symbol [ Application %tmp.656 164 22 33 ];
+        %tmp.656 = getm $.Toybox.Application;
+        symbol [ Storage %tmp.657 164 34 41 ];
+        %tmp.657 = getv %tmp.656 :Storage;
+        symbol [ getValue %tmp.658 164 42 50 ];
+        %tmp.658 = getv function %tmp.657 :getValue;
+        %tmp.659 = "_cmpStat";
+        %tmp.660 = invoke %tmp.657 %tmp.658(%tmp.659);
+        lputv %cmpStat.48 %tmp.660;
+        symbol [ cmpStat %cmpStat.48 164 12 19 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 165 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop" ]
+        %cmpStr.49 = local;
+        symbol [ cmpStr %cmpStr.49 165 12 18 ];
+        %tmp.661 = "CMP: ";
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_165_33_165_74_begin:
+        %tmp.662 = lgetv %cmpStat.48;
+        symbol [ cmpStat %tmp.662 165 34 41 ];
+        %tmp.663 = null;
+        %tmp.664 = ne %tmp.662 %tmp.663;
+        bf %tmp.664 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_165_33_165_74_else_false;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_165_33_165_74_true:
+        %tmp.665 = lgetv %cmpStat.48;
+        symbol [ cmpStat %tmp.665 165 53 60 ];
+        %tmp.666 = as %tmp.665 { (!Null) };
+        symbol [ toString %tmp.667 165 61 69 ];
+        %tmp.667 = getv function %tmp.666 :toString;
+        %tmp.668 = invoke %tmp.666 %tmp.667();
+        push %tmp.668;
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_165_33_165_74_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_165_33_165_74_else_false:
+        %tmp.669 = "—";
+        push %tmp.669;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_165_33_165_74_end:
+        %tmp.670 = phi [%tmp.664 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_165_33_165_74_begin] [%tmp.668 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_165_33_165_74_true] [%tmp.669 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_165_33_165_74_else_false] [%tmp.670 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_165_33_165_74_end];
+        %tmp.671 = add %tmp.661 %tmp.670;
+        lputv %cmpStr.49 %tmp.671;
+        symbol [ cmpStr %cmpStr.49 165 12 18 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 166 8 ]
+        %tmp.672 = self;
+        symbol [ _drawLine %tmp.673 166 8 17 ];
+        %tmp.673 = getv function %tmp.672 :_drawLine;
+        %tmp.674 = lgetv %dc;
+        symbol [ dc %tmp.674 166 18 20 ];
+        %tmp.675 = lgetv %cx.3;
+        symbol [ cx %tmp.675 166 22 24 ];
+        %tmp.676 = lgetv %sc.37;
+        symbol [ sc %tmp.676 166 26 28 ];
+        %tmp.677 = 268;
+        %tmp.678 = mul %tmp.676 %tmp.677;
+        %tmp.679 = 260;
+        %tmp.680 = div %tmp.678 %tmp.679;
+        %tmp.681 = lgetv %s.4;
+        symbol [ s %tmp.681 166 43 44 ];
+        %tmp.682 = sub %tmp.680 %tmp.681;
+        %tmp.683 = 0x1565C0;
+        %tmp.684 = lgetv %cmpStr.49;
+        symbol [ cmpStr %tmp.684 166 56 62 ];
+        %tmp.685 = lgetv %h.2;
+        symbol [ h %tmp.685 166 64 65 ];
+        invoke %tmp.672 %tmp.673(%tmp.674, %tmp.675, %tmp.682, %tmp.683, %tmp.684, %tmp.685);
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_34_49_168_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 170; @symbol_functiondef = [_drawLine,170,21,30]; @symbol_param<0> = [dc,170,31,33]; @symbol_param<0>_type<0> = [Graphics,170,37,45]; @symbol_param<0>_type<1> = [Dc,170,46,48]; @symbol_param<1> = [cx,170,50,52]; @symbol_param<1>_type<0> = [Number,170,56,62]; @symbol_param<2> = [y,170,64,65]; @symbol_param<2>_type<0> = [Number,170,69,75]; @symbol_param<3> = [color,171,32,37]; @symbol_param<3>_type<0> = [Number,171,41,47]; @symbol_param<4> = [text,171,49,53]; @symbol_param<4>_type<0> = [String,171,57,63]; @symbol_param<5> = [h,171,65,66]; @symbol_param<5>_type<0> = [Number,171,70,76]; ]
+    private
+    function _drawLine(dc as Graphics.Dc, cx as Number, y as Number, color as Number, text as String, h as Number) as Void {
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_171_86_176_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 172 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_8_172_44_if_stmt:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_12_172_30_begin:
+        %tmp.1 = lgetv %y;
+        symbol [ y %tmp.1 172 12 13 ];
+        %tmp.2 = 34;
+        %tmp.3 = lt %tmp.1 %tmp.2;
+        bt %tmp.3 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_8_172_44_if_true;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_22_172_30_false:
+        %tmp.4 = lgetv %y;
+        symbol [ y %tmp.4 172 22 23 ];
+        %tmp.5 = lgetv %h;
+        symbol [ h %tmp.5 172 26 27 ];
+        %tmp.6 = 20;
+        %tmp.7 = sub %tmp.5 %tmp.6;
+        %tmp.8 = gt %tmp.4 %tmp.7;
+        push %tmp.8;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_22_172_30_end:
+        %tmp.9 = phi [%tmp.3 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_12_172_30_begin] [%tmp.8 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_22_172_30_false] [%tmp.9 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_22_172_30_end];
+        bf %tmp.9 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_8_172_44_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_8_172_44_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_34_172_44_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 172 36 ]
+        ret ?;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_34_172_44_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_8_172_44_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_172_8_172_44_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 173 8 ]
+        %tmp.10 = lgetv %dc;
+        symbol [ dc %tmp.10 173 8 10 ];
+        symbol [ setColor %tmp.11 173 11 19 ];
+        %tmp.11 = getv function %tmp.10 :setColor;
+        %tmp.12 = lgetv %color;
+        symbol [ color %tmp.12 173 20 25 ];
+        symbol [ Graphics %tmp.13 173 27 35 ];
+        %tmp.13 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.14 173 36 53 ];
+        %tmp.14 = getv %tmp.13 :COLOR_TRANSPARENT;
+        invoke %tmp.10 %tmp.11(%tmp.12, %tmp.14);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 174 8 ]
+        %tmp.15 = lgetv %dc;
+        symbol [ dc %tmp.15 174 8 10 ];
+        symbol [ drawText %tmp.16 174 11 19 ];
+        %tmp.16 = getv function %tmp.15 :drawText;
+        %tmp.17 = lgetv %cx;
+        symbol [ cx %tmp.17 174 20 22 ];
+        %tmp.18 = lgetv %y;
+        symbol [ y %tmp.18 174 24 25 ];
+        symbol [ Graphics %tmp.19 174 27 35 ];
+        %tmp.19 = getm $.Toybox.Graphics;
+        symbol [ FONT_XTINY %tmp.20 174 36 46 ];
+        %tmp.20 = getv %tmp.19 :FONT_XTINY;
+        %tmp.21 = lgetv %text;
+        symbol [ text %tmp.21 174 48 52 ];
+        symbol [ Graphics %tmp.22 175 12 20 ];
+        %tmp.22 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_CENTER %tmp.23 175 21 40 ];
+        %tmp.23 = getv %tmp.22 :TEXT_JUSTIFY_CENTER;
+        symbol [ Graphics %tmp.24 175 43 51 ];
+        %tmp.24 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.25 175 52 72 ];
+        %tmp.25 = getv %tmp.24 :TEXT_JUSTIFY_VCENTER;
+        %tmp.26 = bitor %tmp.23 %tmp.25;
+        invoke %tmp.15 %tmp.16(%tmp.17, %tmp.18, %tmp.20, %tmp.21, %tmp.26);
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_171_86_176_4_stop:
+    }
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 181; @symbol_classdef = [DebugProfileDelegate,181,6,26]; @symbol_extends<0> = [WatchUi,181,35,42]; @symbol_extends<1> = [BehaviorDelegate,181,43,59]; ]
+class DebugProfileDelegate extends WatchUi.BehaviorDelegate {
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 181; ]
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 181; ]
+    static
+    <init> {
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 183; @position = 16; @symbol_vardef = [_view,183,16,21]; @symbol_type<0> = [DebugProfileView,183,28,44]; ]
+    private
+    var _view as DebugProfileView;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 184; @position = 16; @symbol_vardef = [_lastY,184,16,22]; @symbol_type<0> = [Number,184,28,34]; ]
+    private
+    var _lastY as Number = -1;
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 186; @symbol_functiondef = [initialize,186,13,23]; @symbol_param<0> = [view,186,24,28]; @symbol_param<0>_type<0> = [DebugProfileView,186,32,48]; ]
+    function initialize(view as DebugProfileView) as Void {
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_186_50_189_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 187 8 ]
+        symbol [ BehaviorDelegate %tmp.2 187 8 24 ];
+        %tmp.2 = getv ? :BehaviorDelegate;
+        symbol [ initialize %tmp.3 187 25 35 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 188 8 ]
+        %tmp.4 = lgetv %view;
+        symbol [ view %tmp.4 188 16 20 ];
+        symbol [ _view ? 188 8 13 ];
+        putv self :_view %tmp.4;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_186_50_189_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 191; @symbol_functiondef = [onDrag,191,13,19]; @symbol_param<0> = [evt,191,20,23]; @symbol_param<0>_type<0> = [WatchUi,191,27,34]; @symbol_param<0>_type<1> = [DragEvent,191,35,44]; @symbol_return<0> = [Boolean,191,49,56]; ]
+    function onDrag(evt as WatchUi.DragEvent) as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_191_57_200_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 192 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_191_57_200_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_191_57_200_4_stop" ]
+        %y.1 = local;
+        symbol [ y %y.1 192 12 13 ];
+        %tmp.1 = lgetv %evt;
+        symbol [ evt %tmp.1 192 16 19 ];
+        symbol [ getCoordinates %tmp.2 192 20 34 ];
+        %tmp.2 = getv function %tmp.1 :getCoordinates;
+        %tmp.3 = invoke %tmp.1 %tmp.2();
+        %tmp.4 = 1;
+        %tmp.5 = agetv %tmp.3 %tmp.4;
+        lputv %y.1 %tmp.5;
+        symbol [ y %y.1 192 12 13 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 193 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_193_8_193_51_if_stmt:
+        symbol [ _lastY %tmp.7 193 12 18 ];
+        %tmp.7 = getv ? :_lastY;
+        %tmp.8 = 0;
+        %tmp.9 = lt %tmp.7 %tmp.8;
+        bf %tmp.9 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_193_8_193_51_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_193_8_193_51_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_193_24_193_51_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 193 26 ]
+        %tmp.10 = lgetv %y.1;
+        symbol [ y %tmp.10 193 35 36 ];
+        symbol [ _lastY ? 193 26 32 ];
+        putv self :_lastY %tmp.10;
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 193 38 ]
+        %tmp.11 = true;
+        ret %tmp.11;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_193_24_193_51_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_193_8_193_51_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_193_8_193_51_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 194 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_191_57_200_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_191_57_200_4_stop" ]
+        %dy.2 = local;
+        symbol [ dy %dy.2 194 12 14 ];
+        symbol [ _lastY %tmp.13 194 17 23 ];
+        %tmp.13 = getv ? :_lastY;
+        %tmp.14 = lgetv %y.1;
+        symbol [ y %tmp.14 194 26 27 ];
+        %tmp.15 = sub %tmp.13 %tmp.14;
+        lputv %dy.2 %tmp.15;
+        symbol [ dy %dy.2 194 12 14 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 195 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_8_198_8_if_stmt:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_12_195_28_begin:
+        %tmp.16 = lgetv %dy.2;
+        symbol [ dy %tmp.16 195 12 14 ];
+        %tmp.17 = 8;
+        %tmp.18 = gt %tmp.16 %tmp.17;
+        bt %tmp.18 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_8_198_8_if_true;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_22_195_28_false:
+        %tmp.19 = lgetv %dy.2;
+        symbol [ dy %tmp.19 195 22 24 ];
+        %tmp.20 = -8;
+        %tmp.21 = lt %tmp.19 %tmp.20;
+        push %tmp.21;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_22_195_28_end:
+        %tmp.22 = phi [%tmp.18 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_12_195_28_begin] [%tmp.21 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_22_195_28_false] [%tmp.22 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_22_195_28_end];
+        bf %tmp.22 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_8_198_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_8_198_8_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_31_198_8_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 196 12 ]
+        symbol [ _view %tmp.24 196 12 17 ];
+        %tmp.24 = getv ? :_view;
+        symbol [ scroll %tmp.25 196 18 24 ];
+        %tmp.25 = getv function %tmp.24 :scroll;
+        %tmp.26 = lgetv %dy.2;
+        symbol [ dy %tmp.26 196 25 27 ];
+        invoke %tmp.24 %tmp.25(%tmp.26);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 197 12 ]
+        %tmp.27 = lgetv %y.1;
+        symbol [ y %tmp.27 197 21 22 ];
+        symbol [ _lastY ? 197 12 18 ];
+        putv self :_lastY %tmp.27;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_31_198_8_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_8_198_8_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_195_8_198_8_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 199 8 ]
+        %tmp.28 = true;
+        ret %tmp.28;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_191_57_200_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 202; @symbol_functiondef = [onSwipe,202,13,20]; @symbol_param<0> = [evt,202,21,24]; @symbol_param<0>_type<0> = [WatchUi,202,28,35]; @symbol_param<0>_type<1> = [SwipeEvent,202,36,46]; @symbol_return<0> = [Boolean,202,51,58]; ]
+    function onSwipe(evt as WatchUi.SwipeEvent) as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_202_59_207_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 203 8 ]
+        [ "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_202_59_207_4_start" "D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_202_59_207_4_stop" ]
+        %dir.1 = local;
+        symbol [ dir %dir.1 203 12 15 ];
+        %tmp.1 = lgetv %evt;
+        symbol [ evt %tmp.1 203 18 21 ];
+        symbol [ getDirection %tmp.2 203 22 34 ];
+        %tmp.2 = getv function %tmp.1 :getDirection;
+        %tmp.3 = invoke %tmp.1 %tmp.2();
+        lputv %dir.1 %tmp.3;
+        symbol [ dir %dir.1 203 12 15 ];
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 204 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_204_8_204_59_if_stmt:
+        %tmp.4 = lgetv %dir.1;
+        symbol [ dir %tmp.4 204 12 15 ];
+        symbol [ WatchUi %tmp.5 204 19 26 ];
+        %tmp.5 = getm $.Toybox.WatchUi;
+        symbol [ SWIPE_UP %tmp.6 204 27 35 ];
+        %tmp.6 = getv %tmp.5 :SWIPE_UP;
+        %tmp.7 = eq %tmp.4 %tmp.6;
+        bf %tmp.7 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_204_8_204_59_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_204_8_204_59_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_204_39_204_59_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 204 41 ]
+        symbol [ _view %tmp.9 204 41 46 ];
+        %tmp.9 = getv ? :_view;
+        symbol [ scroll %tmp.10 204 47 53 ];
+        %tmp.10 = getv function %tmp.9 :scroll;
+        %tmp.11 = 60;
+        invoke %tmp.9 %tmp.10(%tmp.11);
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_204_39_204_59_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_204_8_204_59_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_204_8_204_59_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 205 8 ]
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_205_8_205_60_if_stmt:
+        %tmp.12 = lgetv %dir.1;
+        symbol [ dir %tmp.12 205 12 15 ];
+        symbol [ WatchUi %tmp.13 205 19 26 ];
+        %tmp.13 = getm $.Toybox.WatchUi;
+        symbol [ SWIPE_DOWN %tmp.14 205 27 37 ];
+        %tmp.14 = getv %tmp.13 :SWIPE_DOWN;
+        %tmp.15 = eq %tmp.12 %tmp.14;
+        bf %tmp.15 @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_205_8_205_60_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_205_8_205_60_if_true:
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_205_39_205_60_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 205 41 ]
+        symbol [ _view %tmp.17 205 41 46 ];
+        %tmp.17 = getv ? :_view;
+        symbol [ scroll %tmp.18 205 47 53 ];
+        %tmp.18 = getv function %tmp.17 :scroll;
+        %tmp.19 = -60;
+        invoke %tmp.17 %tmp.18(%tmp.19);
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_205_39_205_60_stop:
+        goto @D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_205_8_205_60_if_end;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_205_8_205_60_if_end:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 206 8 ]
+        %tmp.20 = true;
+        ret %tmp.20;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_202_59_207_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 209; @symbol_functiondef = [onTap,209,13,18]; @symbol_param<0> = [evt,209,19,22]; @symbol_param<0>_type<0> = [WatchUi,209,26,33]; @symbol_param<0>_type<1> = [ClickEvent,209,34,44]; @symbol_return<0> = [Boolean,209,49,56]; ]
+    function onTap(evt as WatchUi.ClickEvent) as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_209_57_213_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 210 8 ]
+        %tmp.1 = -1;
+        symbol [ _lastY ? 210 8 14 ];
+        putv self :_lastY %tmp.1;
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 211 8 ]
+        symbol [ WatchUi %tmp.2 211 8 15 ];
+        %tmp.2 = getm $.Toybox.WatchUi;
+        symbol [ popView %tmp.3 211 16 23 ];
+        %tmp.3 = getv function %tmp.2 :popView;
+        symbol [ WatchUi %tmp.4 211 24 31 ];
+        %tmp.4 = getm $.Toybox.WatchUi;
+        symbol [ SLIDE_DOWN %tmp.5 211 32 42 ];
+        %tmp.5 = getv %tmp.4 :SLIDE_DOWN;
+        invoke %tmp.2 %tmp.3(%tmp.5);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 212 8 ]
+        %tmp.6 = true;
+        ret %tmp.6;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_209_57_213_4_stop:
+    }
+    [ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 215; @symbol_functiondef = [onBack,215,13,19]; @symbol_return<0> = [Boolean,215,25,32]; ]
+    function onBack() as Boolean {
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_215_33_218_4_start:
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 216 8 ]
+        symbol [ WatchUi %tmp.1 216 8 15 ];
+        %tmp.1 = getm $.Toybox.WatchUi;
+        symbol [ popView %tmp.2 216 16 23 ];
+        %tmp.2 = getv function %tmp.1 :popView;
+        symbol [ WatchUi %tmp.3 216 24 31 ];
+        %tmp.3 = getm $.Toybox.WatchUi;
+        symbol [ SLIDE_DOWN %tmp.4 216 32 42 ];
+        %tmp.4 = getv %tmp.3 :SLIDE_DOWN;
+        invoke %tmp.1 %tmp.2(%tmp.4);
+[ "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc" 217 8 ]
+        %tmp.5 = true;
+        ret %tmp.5;
+D__GARMIN_Hydration_WaterTracker_source_DebugProfileView_mc_215_33_218_4_stop:
+    }
+}
+[ @file = "D:\GARMIN\Hydration\WaterTracker\source\DebugProfileView.mc"; @line = 2; ]
+<init> {
+}
